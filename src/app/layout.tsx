@@ -1,4 +1,8 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppSidebar } from "./components/siderbar/appSidebarClient";
@@ -31,10 +35,10 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar />
-          <main>
+          <SidebarInset>
             <SidebarTrigger />
             {children}
-          </main>
+          </SidebarInset>
         </SidebarProvider>
       </body>
     </html>
