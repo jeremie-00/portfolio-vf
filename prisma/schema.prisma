@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id       String     @id @default(uuid())
+  title    String
+  display  Boolean    @default(true)
+  image    ImageFile? @relation("SkillImage")
+  projects Project[]  @relation("ProjectSkills")
+}
+
+model Project {
+  id        String      @id @default(cuid())
+  title     String
+  shortDesc String
+  longDesc  String
+  order     Int         @default(0)
+  type      String?
+  cover     ImageFile?  @relation("CoverProject")
+  medias    ImageFile[] @relation("MediasProject")
+  links     Link[]      @relation("ProjectLinks")
+  skills    Skill[]     @relation("ProjectSkills")
+}
+
+model ImageFile {
+  id              String       @id @default(cuid())
+  url             String
+  alt             String
+  skillId         String?      @unique
+  coverProjectId  String?      @unique
+  mediasProjectId String?
+  SectionPageId   String?      @unique
+  SectionPage     SectionPage? @relation("SectionPageImage", fields: [SectionPageId], references: [id], onDelete: Cascade)
+  coverProject    Project?     @relation("CoverProject", fields: [coverProjectId], references: [id], onDelete: Cascade)
+  mediasProject   Project?     @relation("MediasProject", fields: [mediasProjectId], references: [id], onDelete: Cascade)
+  skill           Skill?       @relation("SkillImage", fields: [skillId], references: [id], onDelete: Cascade)
+}
+
+model Link {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  title     String
+  order     Int      @default(0)
+  target    String?  @default("__blank")
+  type      String? //navigation, github principal, github page ou github repo
+  inNav     Boolean  @default(true)
+  isAdmin   Boolean  @default(false)
+  projectId String?
+  iconId    String?
+  icon      Icon?    @relation(fields: [iconId], references: [id])
+  project   Project? @relation("ProjectLinks", fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Icon {
+  id   String @id @default(cuid())
+  name String
+  Link Link[]
+}
+
+model SectionPage {
+  id       String     @id @default(cuid())
+  type     String
+  order    Int?       @default(1)
+  contents Content[]
+  image    ImageFile? @relation("SectionPageImage")
+  titles   Title[]
+}
+
+model Title {
+  id            String       @id @default(cuid())
+  text          String
+  sectionPageId String?
+  sectionPage   SectionPage? @relation(fields: [sectionPageId], references: [id], onDelete: Cascade)
+}
+
+model Content {
+  id            String       @id @default(cuid())
+  text          String
+  sectionPageId String?
+  sectionPage   SectionPage? @relation(fields: [sectionPageId], references: [id], onDelete: Cascade)
+}
