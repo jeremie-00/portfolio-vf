@@ -14,33 +14,33 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "Accueil",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Projets",
+    url: "/pages/projets",
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "Competence",
+    url: "/pages/skills",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
+    title: "Contact",
+    url: "/pages/contact",
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "#",
+    title: "login",
+    url: "/login",
     icon: Settings,
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebarClient() {
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarContent>
