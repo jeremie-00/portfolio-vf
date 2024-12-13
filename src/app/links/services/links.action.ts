@@ -10,11 +10,3 @@ export async function getAllLinks() {
   });
   return links;
 }
-
-export async function getLinkById(id: string) {
-  const link = await prisma.link.findUnique({
-    where: { id },
-    include: { project: true, icon: true },
-  });
-  return link;
-}
