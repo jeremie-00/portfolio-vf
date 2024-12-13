@@ -8,7 +8,6 @@ import { AppSidebarClient } from "./AppSidebarClient";
 
 export async function AppSidebar() {
   const session = await getServerSession(authOptions);
-  console.log(session);
   const linksClient = await getAllLinksClient();
   const linksAdmin = session ? await getAllLinksAdmin() : null;
   return (

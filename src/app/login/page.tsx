@@ -17,7 +17,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (session) {
       setIsRedirecting(true); // Active l'état de redirection
-      router.push("/dashboard/sectionPage");
+      router.push("/dashboard/sections");
     }
   }, [session, router]);
 
