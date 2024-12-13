@@ -12,11 +12,6 @@ export default async function middleware(req: NextApiRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Vérifier la validité du token si nécessaire
-  if (Date.now() / 1000 > (token.exp as number)) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
   return NextResponse.next();
 }
 
