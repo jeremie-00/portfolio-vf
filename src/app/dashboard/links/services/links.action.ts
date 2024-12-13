@@ -35,21 +35,16 @@ export async function getAllLinksClient() {
 }
 
 export async function getAllLinksAdmin() {
-  try {
-    const links = await prisma.link.findMany({
-      where: {
-        isAdmin: true,
-      },
-      orderBy: {
-        order: "asc",
-      },
-      include: { project: true, icon: true },
-    });
-    return links;
-  } catch (error) {
-    // Gestion d'erreur explicite
-    return { error: error };
-  }
+  const links = await prisma.link.findMany({
+    where: {
+      isAdmin: true,
+    },
+    orderBy: {
+      order: "asc",
+    },
+    include: { project: true, icon: true },
+  });
+  return links;
 }
 
 export async function getLinkById(id: string) {
