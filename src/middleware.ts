@@ -6,7 +6,6 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export default async function middleware(req: NextApiRequest) {
   const token = await getToken({ req, secret });
-
   // Si aucun token, redirigez vers la page de connexion
   if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
