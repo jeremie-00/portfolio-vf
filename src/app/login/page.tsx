@@ -10,12 +10,6 @@ import { TbLoader2 } from "react-icons/tb";
 export default function LoginPage() {
   const { data: session, status } = useSession();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  /* useEffect(() => {
-    if (session) {
-      setIsRedirecting(true); // Active l'état de redirection
-      router.push("/dashboard/sections");
-    }
-  }, [session, router]); */
 
   const handleSignIn = async () => {
     setIsAuthenticating(true); // Active l'état d'authentification
@@ -25,10 +19,10 @@ export default function LoginPage() {
       console.error("Erreur lors de l'authentification :", error);
     }
   };
+
   if (session)
     return (
       <div className="w-full h-full flex justify-center items-center text-3xl">
-        {" "}
         hello {session.user.name}
       </div>
     );
