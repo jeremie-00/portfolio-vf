@@ -1,7 +1,7 @@
 import {
   getAllLinksAdmin,
   getAllLinksClient,
-} from "@/app/links/services/links.action";
+} from "@/app/dashboard/links/services/links.action";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { AppSidebarClient } from "./AppSidebarClient";

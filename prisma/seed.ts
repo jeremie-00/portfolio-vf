@@ -48,6 +48,12 @@ const items = [
     isAdmin: true,
   },
   {
+    title: "Liens",
+    url: "/dashboard/links",
+    inNav: false,
+    isAdmin: true,
+  },
+  {
     title: "Icones",
     url: "/dashboard/icons",
     inNav: false,

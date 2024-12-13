@@ -26,7 +26,7 @@ model Project {
   title     String
   shortDesc String
   longDesc  String
-  order     Int         @default(0)
+  order     String      @default("1")
   type      String?
   cover     ImageFile?  @relation("CoverProject")
   medias    ImageFile[] @relation("MediasProject")
@@ -52,7 +52,7 @@ model Link {
   id        String   @id @default(cuid())
   url       String   @unique
   title     String
-  order     Int      @default(0)
+  order     String   @default("1")
   target    String?  @default("__blank")
   type      String? //navigation, github principal, github page ou github repo
   inNav     Boolean  @default(true)
@@ -72,7 +72,7 @@ model Icon {
 model SectionPage {
   id       String     @id @default(cuid())
   type     String
-  order    Int?       @default(1)
+  order    String     @default("1")
   contents Content[]
   image    ImageFile? @relation("SectionPageImage")
   titles   Title[]
