@@ -22,8 +22,11 @@ export function Toast(res: {
       ...(res.validationErrors.url?._errors || []),
       ...(res.validationErrors.title?._errors || []),
     ];
+
     message =
-      errors.length > 0 ? errors : "Des erreurs de validation sont survenues.";
+      errors.length > 0
+        ? errors.join(" ")
+        : "Des erreurs de validation sont survenues.";
   }
   // Message de succès
   else if (res.data) {
