@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
+import { Toast } from "@/app/components/Toast";
 import { FullLink } from "@/types/prismaTypes";
 import Form from "next/form";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { upsertLink } from "../services/upsertLink";
+import { upsertLinkAction } from "../services/upsertLink.action";
 
 interface LinksProps {
   isCreate: boolean;
@@ -39,11 +40,23 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
   };
 
   const handleSubmit = async (formData: FormData) => {
-    const res = await upsertLink(formData);
-    //Toast(res)
-    console.log(res);
-    if (isCreate && res) {
-      setLinkCount(Number(linkCount) + 1);
+    const result = await upsertLinkAction(formData);
+
+    // Vérification des erreurs spécifiques (serveur et validation)
+    if (result?.serverError || result?.validationErrors) {
+      Toast({
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+      return;
+    }
+
+    // Affichage du message de succès
+    if (result?.data) {
+      Toast({ data: result.data });
+      if (isCreate) {
+        setLinkCount(linkCount + 1);
+      }
     }
   };
 
@@ -57,7 +70,7 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
           {!isCreate && (
             <span className="text-primary text-xl font-bold">{link?.url}</span>
           )}
-          <input type="hidden" name="id" value={link?.id} />
+          {!isCreate && <input type="hidden" name="id" value={link?.id} />}
           <input
             type="hidden"
             name="status"

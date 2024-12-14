@@ -1,27 +1,10 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { authentificationAction } from "@/lib/safe-action";
-import { ActionPrismaResponse } from "@/types/prismaTypes";
+import { ActionError, authentificationAction } from "@/lib/safe-action";
+import { LinkSchema } from "@/types/zodType";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
-import { zfd } from "zod-form-data";
 
-// Définir le schéma Zod pour valider les données du lien
-const LinkSchema = zfd.formData({
-  url: z
-    .string()
-    .refine((url) => /^\/.*$/.test(url) || /^https?:\/\//.test(url), {
-      message: "L'URL doit être une URL valide ou un chemin relatif",
-    }),
-  title: z.string().min(1, { message: "Le titre est requis" }),
-  id: z.string().optional(),
-  type: z.string().optional(),
-  order: z.string().optional(),
-  iconId: z.string().optional(),
-  projectId: z.string().optional(),
-});
-
-export async function getAllLinksClient() {
+export async function getAllLinksClientAction() {
   const links = await prisma.link.findMany({
     where: {
       inNav: true,
@@ -34,7 +17,7 @@ export async function getAllLinksClient() {
   return links;
 }
 
-export async function getAllLinksAdmin() {
+export async function getAllLinksAdminAction() {
   const links = await prisma.link.findMany({
     where: {
       isAdmin: true,
@@ -47,29 +30,25 @@ export async function getAllLinksAdmin() {
   return links;
 }
 
-export async function getLinkById(id: string) {
-  try {
-    const link = await prisma.link.findUnique({
-      where: {
-        id,
-      },
-      include: { icon: true, project: true },
-    });
+export async function getLinkByIdAction(id: string) {
+  const link = await prisma.link.findUnique({
+    where: {
+      id,
+    },
+    include: { icon: true, project: true },
+  });
 
-    if (!link) {
-      throw new Error("Link not found");
-    }
-
-    return link;
-  } catch {
-    return null;
+  if (!link) {
+    throw new ActionError("Link not found");
   }
+
+  return link;
 }
 
-export const createLink = authentificationAction
+export const createLinkAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
-    await prisma.link.create({
+    const createdLink = await prisma.link.create({
       data: {
         ...link,
         iconId: link.iconId || undefined,
@@ -77,10 +56,10 @@ export const createLink = authentificationAction
       },
     });
     revalidatePath("/", "layout");
-    return { success: "Lien créé avec succès" } as ActionPrismaResponse;
+    return createdLink;
   });
 
-export const updateLink = authentificationAction
+export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
     await prisma.link.update({
@@ -92,5 +71,5 @@ export const updateLink = authentificationAction
       },
     });
     revalidatePath("/", "layout");
-    return { success: "Lien modifié avec succès" } as ActionPrismaResponse;
+    //return { success: "Lien modifié avec succès" } as ActionPrismaResponse;
   });

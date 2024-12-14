@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getLinkById } from "../services/links.action";
 import LinkForm from "../components/LinkForm";
+import { getLinkByIdAction } from "../services/links.action";
 
 export default async function LinksFormPage({
   params,
@@ -8,7 +8,7 @@ export default async function LinksFormPage({
   params: Promise<{ id: string }>;
 }) {
   const paramsId = (await params).id;
-  const link = paramsId !== "create" ? await getLinkById(paramsId) : null;
+  const link = paramsId !== "create" ? await getLinkByIdAction(paramsId) : null;
 
   if (paramsId !== "create" && !link) {
     return (
