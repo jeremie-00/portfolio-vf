@@ -33,6 +33,6 @@ export function Toast(res: {
   // Affichage du toast
   return toast({
     description: message,
-    variant: message ? "default" : "destructive",
+    variant: res.data ? "default" : "destructive",
   });
 }
