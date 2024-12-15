@@ -1,13 +1,23 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { ActionError, authentificationAction } from "@/lib/safe-action";
-import { LinkSchema } from "@/types/zodType";
+import { LinkIdSchema, LinkSchema } from "@/types/zodType";
 import { revalidatePath } from "next/cache";
+
+export async function getAllLinksAction() {
+  const links = await prisma.link.findMany({
+    orderBy: {
+      order: "asc",
+    },
+    include: { project: true, icon: true },
+  });
+  return links;
+}
 
 export async function getAllLinksClientAction() {
   const links = await prisma.link.findMany({
     where: {
-      inNav: true,
+      inNav: "on",
     },
     orderBy: {
       order: "asc",
@@ -20,7 +30,7 @@ export async function getAllLinksClientAction() {
 export async function getAllLinksAdminAction() {
   const links = await prisma.link.findMany({
     where: {
-      isAdmin: true,
+      isAdmin: "on",
     },
     orderBy: {
       order: "asc",
@@ -62,7 +72,7 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
-    await prisma.link.update({
+    const updatedLink = await prisma.link.update({
       where: { id: link.id },
       data: {
         ...link,
@@ -71,5 +81,14 @@ export const updateLinkActionAction = authentificationAction
       },
     });
     revalidatePath("/", "layout");
-    //return { success: "Lien modifié avec succès" } as ActionPrismaResponse;
+    return updatedLink;
+  });
+
+export const deleteLinkByIdAction = authentificationAction
+  .schema(LinkIdSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    await prisma.link.delete({
+      where: { id },
+    });
+    revalidatePath("/", "layout");
   });

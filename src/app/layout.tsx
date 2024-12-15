@@ -3,12 +3,12 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AppSidebar } from "../app/components/sidebar/AppSidebar";
 import SessionWrapper from "./components/SessionWrapper";
+import { AppSidebar } from "./components/sidebar/AppSidebar";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +38,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
+            <SidebarInset className="flex-1 overflow-x-auto">
               <SidebarTrigger />
               {children}
               <Toaster />

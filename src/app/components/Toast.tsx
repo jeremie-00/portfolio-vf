@@ -2,6 +2,7 @@ import { toast } from "@/hooks/use-toast";
 import { Link } from "@prisma/client";
 
 export function Toast(res: {
+  isAction?: "creer" | "modifier" | "supprimer";
   data?: Link;
   serverError?: string;
   validationErrors?: {
@@ -30,7 +31,7 @@ export function Toast(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `Lien ${res.data.title} créé avec succès à l'URL ${res.data.url}.`;
+    message = `Lien ${res.data.title} ${res.isAction} avec succès : URL ${res.data.url}.`;
   }
 
   // Affichage du toast

@@ -21,8 +21,10 @@ interface LinksProps {
 export default function LinkForm({ isCreate, link }: LinksProps) {
   const [linkCount, setLinkCount] = useState(1);
 
-  const [inNavToggle, setInNavToggle] = useState(link?.inNav || false);
-  const [isAdminToggle, setIsAdminToggle] = useState(link?.isAdmin || false);
+  const [inNavToggle, setInNavToggle] = useState<string>(link?.inNav || "on");
+  const [isAdminToggle, setIsAdminToggle] = useState<string>(
+    link?.isAdmin || ""
+  );
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
@@ -30,21 +32,23 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
   };
 
   const toggleInNav = () => {
-    setInNavToggle((prev) => !prev);
-    if (isAdminToggle) setIsAdminToggle(false);
+    setInNavToggle((prev) => (prev === "on" ? "" : "on"));
+    if (isAdminToggle) setIsAdminToggle("");
   };
 
   const toggleIsAdmin = () => {
-    setIsAdminToggle((prev) => !prev);
-    if (inNavToggle) setInNavToggle(false);
+    setIsAdminToggle((prev) => (prev === "on" ? "" : "on"));
+    if (inNavToggle) setInNavToggle("");
   };
 
   const handleSubmit = async (formData: FormData) => {
+    console.log(formData);
     const result = await upsertLinkAction(formData);
-
+    const isAction = isCreate ? "creer" : "modifier";
     // Vérification des erreurs spécifiques (serveur et validation)
     if (result?.serverError || result?.validationErrors) {
       Toast({
+        isAction,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
       });
@@ -53,7 +57,7 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
 
     // Affichage du message de succès
     if (result?.data) {
-      Toast({ data: result.data });
+      Toast({ data: result.data, isAction });
       if (isCreate) {
         setLinkCount(linkCount + 1);
       }
@@ -124,8 +128,9 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
             <Switch
               id="inNav"
               name="inNav"
-              checked={inNavToggle}
+              checked={inNavToggle === "on"}
               onCheckedChange={toggleInNav}
+              value={inNavToggle}
             />
           </CardSwitch>
           <CardSwitch
@@ -135,8 +140,9 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
             <Switch
               id="isAdmin"
               name="isAdmin"
-              checked={isAdminToggle}
+              checked={isAdminToggle === "on"}
               onCheckedChange={toggleIsAdmin}
+              value={isAdminToggle}
             />
           </CardSwitch>
           <div className="w-full flex justify-center p-0">

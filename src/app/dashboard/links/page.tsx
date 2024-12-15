@@ -1,5 +1,11 @@
-import React from "react";
+import { LinkTab } from "./components/LinkTab";
+import { getAllLinksAction } from "./services/links.action";
 
-export default function page() {
-  return <div>page</div>;
+export default async function page() {
+  const links = await getAllLinksAction();
+  return (
+    <div className="px-4">
+      <LinkTab links={links} />
+    </div>
+  );
 }

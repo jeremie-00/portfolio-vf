@@ -55,8 +55,8 @@ model Link {
   order     String   @default("1")
   target    String?  @default("__blank")
   type      String? //navigation, github principal, github page ou github repo
-  inNav     Boolean  @default(true)
-  isAdmin   Boolean  @default(false)
+  inNav     String?  @default("on")
+  isAdmin   String?  @default("off")
   projectId String?
   iconId    String?
   icon      Icon?    @relation(fields: [iconId], references: [id])
