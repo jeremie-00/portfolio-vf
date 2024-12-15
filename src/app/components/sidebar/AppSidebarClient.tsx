@@ -1,4 +1,5 @@
 "use client";
+import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -53,9 +54,16 @@ export function AppSidebarClient({
                     {isLoading ? (
                       <Skeleton className="h-8 w-full" />
                     ) : (
-                      <Link href={link.url}>
-                        <span>{link.title}</span>
-                      </Link>
+                      <div key={link.id}>
+                        <DynamicIcon
+                          name={link.icon ? link.icon.name : "CircleOff"}
+                          size={40}
+                          className="text-primary"
+                        />
+                        <Link href={link.url}>
+                          <span>{link.title}</span>
+                        </Link>
+                      </div>
                     )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -75,9 +83,16 @@ export function AppSidebarClient({
                         {isLoading ? (
                           <Skeleton className="h-8 w-full" />
                         ) : (
-                          <Link href={link.url}>
-                            <span>{link.title}</span>
-                          </Link>
+                          <div key={link.id}>
+                            <DynamicIcon
+                              name={link.icon ? link.icon.name : "CircleOff"}
+                              size={40}
+                              className="text-primary"
+                            />
+                            <Link href={link.url}>
+                              <span>{link.title}</span>
+                            </Link>
+                          </div>
                         )}
                       </SidebarMenuButton>
                       <DropdownMenu>

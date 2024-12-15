@@ -1,13 +1,13 @@
 import { toast } from "@/hooks/use-toast";
-import { Link } from "@prisma/client";
+import { Icon } from "@prisma/client";
 
-export function Toast(res: {
+export function ToastIconAction(res: {
   isAction?: "creer" | "modifier" | "supprimer";
-  data?: Link;
+  data?: Icon;
   serverError?: string;
   validationErrors?: {
-    url?: { _errors?: string[] };
-    title?: { _errors?: string[] };
+    name?: { _errors?: string[] };
+    id?: { _errors?: string[] };
   };
 }) {
   // Déclaration du message à afficher
@@ -20,8 +20,8 @@ export function Toast(res: {
   // Gestion des erreurs de validation
   else if (res.validationErrors) {
     const errors = [
-      ...(res.validationErrors.url?._errors || []),
-      ...(res.validationErrors.title?._errors || []),
+      ...(res.validationErrors.name?._errors || []),
+      ...(res.validationErrors.id?._errors || []),
     ];
 
     message =
@@ -31,7 +31,7 @@ export function Toast(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `Lien ${res.data.title} ${res.isAction} avec succès : URL ${res.data.url}.`;
+    message = `L'icone ${res.data.name} ${res.isAction} avec succès.`;
   }
 
   // Affichage du toast

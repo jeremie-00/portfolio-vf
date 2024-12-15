@@ -14,7 +14,7 @@ const items = [
     inNav: "on",
   },
   {
-    title: "Competence",
+    title: "Compétences",
     url: "/pages/skills",
     inNav: "on",
   },
@@ -42,7 +42,7 @@ const items = [
     isAdmin: "on",
   },
   {
-    title: "Competence",
+    title: "Compétences",
     url: "/dashboard/skills",
     inNav: "off",
     isAdmin: "on",

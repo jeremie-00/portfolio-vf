@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getAllIconsAction } from "../../icons/services/icons.action";
 import LinkForm from "../components/LinkForm";
 import { getLinkByIdAction } from "../services/links.action";
 
@@ -9,6 +10,7 @@ export default async function LinksFormPage({
 }) {
   const paramsId = (await params).id;
   const link = paramsId !== "create" ? await getLinkByIdAction(paramsId) : null;
+  const icons = await getAllIconsAction();
 
   if (paramsId !== "create" && !link) {
     return (
@@ -21,7 +23,7 @@ export default async function LinksFormPage({
 
   return (
     <div className="flex items-center justify-center">
-      <LinkForm isCreate={paramsId === "create"} link={link} />
+      <LinkForm isCreate={paramsId === "create"} link={link} icons={icons} />
     </div>
   );
 }

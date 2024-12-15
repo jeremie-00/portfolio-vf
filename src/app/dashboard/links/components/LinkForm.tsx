@@ -6,20 +6,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
-import { Toast } from "@/app/components/Toast";
-import { FullLink } from "@/types/prismaTypes";
+import { ToastLinkAction } from "@/app/dashboard/links/components/ToastLink";
+import { FullIcon, FullLink } from "@/types/prismaTypes";
 import Form from "next/form";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
+import { IconPicker } from "../../icons/components/IconPicker";
 import { upsertLinkAction } from "../services/upsertLink.action";
-
 interface LinksProps {
   isCreate: boolean;
   link: FullLink | null;
+  icons: FullIcon[];
 }
 
-export default function LinkForm({ isCreate, link }: LinksProps) {
+export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   const [linkCount, setLinkCount] = useState(1);
+
+  const [iconId, setIconId] = useState<string>(
+    isCreate ? "" : link?.icon?.name || ""
+  );
+  const [iconName, setIconName] = useState<string>(
+    isCreate ? "" : link?.icon?.name || ""
+  );
 
   const [inNavToggle, setInNavToggle] = useState<string>(link?.inNav || "on");
   const [isAdminToggle, setIsAdminToggle] = useState<string>(
@@ -41,13 +49,19 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
     if (inNavToggle) setInNavToggle("");
   };
 
+  const handleIconChange = (value: string) => {
+    const selectedIcon = icons.find((icon) => icon.name === value);
+    const formattedValue = value.charAt(0).toUpperCase() + value.slice(1);
+    setIconName(formattedValue);
+    setIconId(selectedIcon?.id || iconId);
+  };
+
   const handleSubmit = async (formData: FormData) => {
-    console.log(formData);
     const result = await upsertLinkAction(formData);
     const isAction = isCreate ? "creer" : "modifier";
     // Vérification des erreurs spécifiques (serveur et validation)
     if (result?.serverError || result?.validationErrors) {
-      Toast({
+      ToastLinkAction({
         isAction,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
@@ -57,9 +71,11 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
 
     // Affichage du message de succès
     if (result?.data) {
-      Toast({ data: result.data, isAction });
+      ToastLinkAction({ data: result.data, isAction });
       if (isCreate) {
         setLinkCount(linkCount + 1);
+        setIconName("");
+        setIconId("");
       }
     }
   };
@@ -74,7 +90,7 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
           {!isCreate && (
             <span className="text-primary text-xl font-bold">{link?.url}</span>
           )}
-          {!isCreate && <input type="hidden" name="id" value={link?.id} />}
+          {!isCreate && <input type="hidden" name="ID" value={link?.id} />}
           <input
             type="hidden"
             name="status"
@@ -85,16 +101,12 @@ export default function LinkForm({ isCreate, link }: LinksProps) {
             name="projectId"
             value={link?.projectId || undefined}
           />
-          <input
-            type="hidden"
-            name="iconId"
-            value={link?.iconId || undefined}
-          />
-          {/*} <IconPicker
+          <input type="hidden" name="iconId" value={iconId} />
+          <IconPicker
             icons={icons}
             selectedIcon={iconName}
             onChange={handleIconChange}
-          /> */}
+          />
           <Input
             type="text"
             name="url"

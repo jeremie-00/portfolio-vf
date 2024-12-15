@@ -45,6 +45,7 @@ import { FullLink } from "@/types/prismaTypes";
 import { redirect } from "next/navigation";
 
 import { DeleteButton } from "@/app/dashboard/links/components/DeleteButton";
+import DynamicIcon from "../../icons/components/DynamicIcon";
 
 export function LinkTab({ links }: { links: FullLink[] }) {
   const columns: ColumnDef<FullLink>[] = [
@@ -81,11 +82,11 @@ export function LinkTab({ links }: { links: FullLink[] }) {
               href={link.url}
               className={buttonVariants({ variant: "link" })}
             >
-              {/*               <DynamicIcon
+              <DynamicIcon
                 name={link.icon ? link.icon.name : "CircleOff"}
                 size={40}
                 className="text-primary"
-              /> */}
+              />
 
               {link.title}
             </NextLink>
