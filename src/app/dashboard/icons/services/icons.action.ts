@@ -14,6 +14,7 @@ export const getAllIconsAction = async () => {
 export const getIconByIdAction = async (id: string) => {
   const icon = await prisma.icon.findUnique({
     where: { id },
+    include: { Link: true },
   });
   return icon;
 };
