@@ -30,7 +30,7 @@ export function DeleteButton({ id, setRowSelection }: DeleteButtonProps) {
   const handleDelete = async () => {
     setIsLoading(true); // Active le mode chargement
     try {
-      await Promise.all(id.map((id) => deleteLinkByIdAction({ id })));
+      await Promise.all(id.map((id) => deleteLinkByIdAction({ ID: id })));
     } catch {
       setIsLoading(false);
     } finally {

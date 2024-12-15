@@ -72,7 +72,6 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
-    console.log(link);
     const updatedLink = await prisma.link.update({
       where: { id: link.ID },
       data: {
