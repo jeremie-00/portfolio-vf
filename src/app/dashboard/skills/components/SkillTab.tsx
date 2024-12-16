@@ -20,9 +20,14 @@ export default function SkillTab({ isAdmin, skills }: SkillTabProps) {
   }
 
   return (
-    <div className="w-full h-full grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 sm:p-16 px-8">
+    <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 sm:p-16 px-8 z-[0]">
       {skills.map((skill) => (
-        <SkillCard key={skill.id} skill={skill} isAdmin={isAdmin} />
+        <div
+          key={skill.id}
+          className="min-[380px]:px-12 min-[450px]:px-20 min-[550px]:px-28 sm:p-0"
+        >
+          <SkillCard skill={skill} isAdmin={isAdmin} />
+        </div>
       ))}
     </div>
   );

@@ -41,7 +41,7 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
     }
   };
   return (
-    <MotionCard isRotate={false}>
+    <MotionCard>
       {isAdmin && skill ? (
         <>
           <div className="w-full flex items-center justify-between pb-0 px-3 pt-1">
@@ -67,6 +67,7 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
           </div>
         </>
       ) : null}
+
       <div className="lg:w-full flex flex-col items-center justify-center p-0">
         {skill && skill.image && skill.image.url ? (
           <Image

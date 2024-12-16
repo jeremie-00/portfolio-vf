@@ -4,6 +4,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
+
+import { AnimatePresence } from "motion/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SessionWrapper from "./components/SessionWrapper";
@@ -34,13 +36,13 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
         >
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset className="flex-1 overflow-x-auto">
               <SidebarTrigger />
-              {children}
+              <AnimatePresence mode="wait">{children}</AnimatePresence>
               <Toaster />
             </SidebarInset>
           </SidebarProvider>
