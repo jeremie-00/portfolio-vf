@@ -46,7 +46,8 @@ export const createSkillAction = authentificationAction
           : undefined,
       },
     });
-    revalidatePath("/", "layout");
+    revalidatePath("/dashboard/skill");
+    revalidatePath("/pages/skill");
     return createdSkill;
   });
 
@@ -81,7 +82,8 @@ export const updateSkillAction = authentificationAction
           : undefined,
       },
     });
-    revalidatePath("/", "layout");
+    revalidatePath("/dashboard/skill");
+    revalidatePath("/pages/skill");
     return updatedSkill;
   });
 

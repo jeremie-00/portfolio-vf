@@ -27,8 +27,8 @@ export const LinkIdSchema = z
     ID: z.string(),
     url: z.string().optional(),
     title: z.string().optional(),
-    inNav: z.string().optional(),
-    isAdmin: z.string().optional(),
+    inNav: z.boolean().optional(),
+    isAdmin: z.boolean().optional(),
     type: z.string().optional(),
     order: z.string().optional(),
     iconId: z.string().optional(),
@@ -116,7 +116,7 @@ export const SkillSchema = zfd
     title: z
       .string() // Le titre doit être une chaîne de caractères
       .min(1, { message: "Le titre est obligatoire." }), // Le titre ne doit pas être vide
-    display: z.string().default("on"),
+    display: z.string().optional(),
     file: z.instanceof(File).optional(),
   })
   .refine(async (data) => {

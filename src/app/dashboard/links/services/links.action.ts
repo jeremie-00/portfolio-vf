@@ -17,7 +17,7 @@ export async function getAllLinksAction() {
 export async function getAllLinksClientAction() {
   const links = await prisma.link.findMany({
     where: {
-      inNav: "on",
+      inNav: true,
     },
     orderBy: {
       order: "asc",
@@ -30,7 +30,7 @@ export async function getAllLinksClientAction() {
 export async function getAllLinksAdminAction() {
   const links = await prisma.link.findMany({
     where: {
-      isAdmin: "on",
+      isAdmin: true,
     },
     orderBy: {
       order: "asc",
@@ -58,9 +58,17 @@ export async function getLinkByIdAction(id: string) {
 export const createLinkAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
+    const inNav = link.inNav === "on";
+    const isAdmin = link.isAdmin === "on";
+
     const createdLink = await prisma.link.create({
       data: {
-        ...link,
+        url: link.url,
+        type: link.type || undefined,
+        title: link.title,
+        order: link.order || undefined,
+        inNav,
+        isAdmin,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
       },
@@ -72,7 +80,9 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
-    console.log(link);
+    const inNav = link.inNav === "on";
+    const isAdmin = link.isAdmin === "on";
+    console.log(inNav, isAdmin, link.inNav, link.isAdmin);
     const updatedLink = await prisma.link.update({
       where: { id: link.ID },
       data: {
@@ -80,8 +90,8 @@ export const updateLinkActionAction = authentificationAction
         type: link.type || undefined,
         title: link.title,
         order: link.order || undefined,
-        inNav: link.inNav || undefined,
-        isAdmin: link.isAdmin || undefined,
+        inNav: inNav,
+        isAdmin: isAdmin,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
       },

@@ -6,58 +6,58 @@ const items = [
   {
     title: "Accueil",
     url: "/",
-    inNav: "on",
+    inNav: true,
   },
   {
     title: "Projets",
     url: "/pages/projets",
-    inNav: "on",
+    inNav: true,
   },
   {
     title: "Compétences",
     url: "/pages/skills",
-    inNav: "on",
+    inNav: true,
   },
   {
     title: "Contact",
     url: "/pages/contact",
-    inNav: "on",
+    inNav: true,
   },
   {
     title: "Login",
     url: "/login",
-    inNav: "on",
+    inNav: true,
   },
 
   {
     title: "Sections",
     url: "/dashboard/sections",
-    inNav: "off",
-    isAdmin: "on",
+    inNav: false,
+    isAdmin: true,
   },
   {
     title: "Projets",
     url: "/dashboard/projets",
-    inNav: "off",
-    isAdmin: "on",
+    inNav: false,
+    isAdmin: true,
   },
   {
     title: "Compétences",
     url: "/dashboard/skills",
-    inNav: "off",
-    isAdmin: "on",
+    inNav: false,
+    isAdmin: true,
   },
   {
     title: "Liens",
     url: "/dashboard/links",
-    inNav: "off",
-    isAdmin: "on",
+    inNav: false,
+    isAdmin: true,
   },
   {
     title: "Icones",
     url: "/dashboard/icons",
-    inNav: "off",
-    isAdmin: "on",
+    inNav: false,
+    isAdmin: true,
   },
 ];
 

@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { ToastLinkAction } from "@/app/dashboard/links/components/ToastLink";
 import { FullIcon, FullLink } from "@/types/prismaTypes";
 import Form from "next/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { IconPicker } from "../../icons/components/IconPicker";
 import { upsertLinkAction } from "../services/upsertLink.action";
@@ -29,10 +29,17 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
     isCreate ? "" : link?.icon?.name || ""
   );
 
-  const [inNavToggle, setInNavToggle] = useState<string>(link?.inNav || "on");
-  const [isAdminToggle, setIsAdminToggle] = useState<string>(
-    link?.isAdmin || ""
+  const [inNavToggle, setInNavToggle] = useState<boolean | undefined | null>(
+    true
   );
+  const [isAdminToggle, setIsAdminToggle] = useState<
+    boolean | undefined | null
+  >(false);
+
+  useEffect(() => {
+    setInNavToggle(link?.inNav);
+    setIsAdminToggle(link?.isAdmin);
+  }, [link?.inNav, link?.isAdmin]);
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
@@ -45,13 +52,13 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   };
 
   const toggleInNav = () => {
-    setInNavToggle((prev) => (prev === "on" ? "" : "on"));
-    if (isAdminToggle) setIsAdminToggle("");
+    setInNavToggle((prev) => !prev);
+    if (isAdminToggle) setIsAdminToggle(false);
   };
 
   const toggleIsAdmin = () => {
-    setIsAdminToggle((prev) => (prev === "on" ? "" : "on"));
-    if (inNavToggle) setInNavToggle("");
+    setIsAdminToggle((prev) => !prev);
+    if (inNavToggle) setInNavToggle(false);
   };
 
   const handleIconChange = (value: string) => {
@@ -140,9 +147,9 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
             <Switch
               id="inNav"
               name="inNav"
-              checked={inNavToggle === "on"}
+              checked={inNavToggle}
               onCheckedChange={toggleInNav}
-              value={inNavToggle}
+              //value={inNavToggle}
             />
           </CardSwitch>
           <CardSwitch
@@ -152,9 +159,9 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
             <Switch
               id="isAdmin"
               name="isAdmin"
-              checked={isAdminToggle === "on"}
+              checked={isAdminToggle}
               onCheckedChange={toggleIsAdmin}
-              value={isAdminToggle}
+              //value={isAdminToggle}
             />
           </CardSwitch>
           <div className="w-full flex justify-center p-0">

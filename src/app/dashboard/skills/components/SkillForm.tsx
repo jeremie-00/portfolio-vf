@@ -41,7 +41,7 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
   useEffect(() => {
     return () => {
       if (url) {
-        URL.revokeObjectURL(url); // Clean up the object URL when the component is unmounted
+        URL.revokeObjectURL(url);
       }
     };
   }, [url]);
