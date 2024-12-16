@@ -64,6 +64,8 @@ export default function IconForm({ icons }: IconSettingsProps) {
       if (selectedIcon) {
         setIconId(selectedIcon.id);
         setIconName(selectedIcon.name);
+      } else {
+        setIconId("");
       }
     }
   }, [iconName, icons]);
