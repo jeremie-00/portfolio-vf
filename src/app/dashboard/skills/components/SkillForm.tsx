@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { upsertSkillAction } from "../services/upsertSkill.action";
+import { ToastSkillAction } from "./ToastSkill";
 
 interface SkillFormProps {
   skill: Skill | null;
@@ -35,7 +36,17 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await upsertSkillAction(formData);
-    console.log(result);
+    const actionType = isCreate ? "creer" : "modifier";
+    if (result?.serverError || result?.validationErrors) {
+      ToastSkillAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+    }
+    if (result?.data) {
+      ToastSkillAction({ data: result.data, actionType });
+    }
   };
 
   useEffect(() => {

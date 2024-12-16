@@ -1,12 +1,12 @@
 import { toast } from "@/hooks/use-toast";
-import { Link } from "@prisma/client";
+import { Skill } from "@prisma/client";
 
-export function ToastLinkAction(res: {
+export function ToastSkillAction(res: {
   actionType?: "creer" | "modifier" | "supprimer";
-  data?: Link;
+  data?: Skill;
   serverError?: string;
   validationErrors?: {
-    url?: { _errors?: string[] };
+    ID?: { _errors?: string[] };
     title?: { _errors?: string[] };
   };
 }) {
@@ -19,10 +19,7 @@ export function ToastLinkAction(res: {
   }
   // Gestion des erreurs de validation
   else if (res.validationErrors) {
-    const errors = [
-      ...(res.validationErrors.url?._errors || []),
-      ...(res.validationErrors.title?._errors || []),
-    ];
+    const errors = [...(res.validationErrors.title?._errors || [])];
 
     message =
       errors.length > 0
@@ -31,7 +28,7 @@ export function ToastLinkAction(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `Lien ${res.data.title} ${res.actionType} avec succès : URL ${res.data.url}.`;
+    message = `Compétence ${res.data.title} ${res.actionType} avec succès.`;
   }
 
   // Affichage du toast

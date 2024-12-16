@@ -9,10 +9,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { deleteSkillAction } from "../services/skill.action";
+import { ToastSkillAction } from "./ToastSkill";
 
 interface SkillCardProps {
   skill: FullSkill | null;
-  //image: ImageFile | null;
   isAdmin: boolean;
   roundedFull?: boolean;
   bgColor?: boolean;
@@ -28,7 +28,17 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
       imageUrl: skill?.image?.url,
     });
     setIsLoading(false);
-    console.log("deletedSkill", result);
+    const actionType = "supprimer";
+    if (result?.serverError || result?.validationErrors) {
+      ToastSkillAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+    }
+    if (result?.data) {
+      ToastSkillAction({ data: result.data, actionType });
+    }
   };
   return (
     <MotionCard isRotate={false}>
