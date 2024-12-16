@@ -1,7 +1,7 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { authentificationAction } from "@/lib/safe-action";
-import { IconSchema } from "@/types/zodType";
+import { IconIdSchema, IconSchema } from "@/types/zodType";
 import { revalidatePath } from "next/cache";
 
 export const getAllIconsAction = async () => {
@@ -48,6 +48,16 @@ export const updateIconAction = authentificationAction
 
 export const deleteIconAction = authentificationAction
   .schema(IconSchema)
+  .action(async ({ parsedInput: { ...icon } }) => {
+    const deletedIcon = await prisma.icon.delete({
+      where: { id: icon.ID },
+    });
+    revalidatePath("/", "layout");
+    return deletedIcon;
+  });
+
+export const deleteIconByIdAction = authentificationAction
+  .schema(IconIdSchema)
   .action(async ({ parsedInput: { ...icon } }) => {
     const deletedIcon = await prisma.icon.delete({
       where: { id: icon.ID },

@@ -22,16 +22,34 @@ export const LinkSchema = zfd.formData({
   projectId: z.string().optional(),
 });
 
-export const LinkIdSchema = z.object({
-  ID: z.string(),
-});
+export const LinkIdSchema = z
+  .object({
+    ID: z.string(),
+    url: z.string().optional(),
+    title: z.string().optional(),
+    inNav: z.string().optional(),
+    isAdmin: z.string().optional(),
+    type: z.string().optional(),
+    order: z.string().optional(),
+    iconId: z.string().optional(),
+    projectId: z.string().optional(),
+  })
+  .refine(async (data) => {
+    const existingLink = await prisma.link.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingLink) throw new ActionError("Lien introuvable.");
+
+    return true;
+  });
 
 export const IconSchema = zfd
   .formData({
     // Champ "ID" : optionnel, utilisé pour les mises à jour
     ID: z.string().optional(),
     // Champ "action" : optionnel, utilisé pour définir l'action (ex : "supprimer")
-    action: z.string().optional(),
+    actionType: z.string().optional(),
     // Champ "name" : le nom de l'icône
     name: z
       .string() // Le nom doit être une chaîne de caractères
@@ -44,7 +62,7 @@ export const IconSchema = zfd
   })
   .refine(
     async (data) => {
-      if (data.action === "creer") {
+      if (data.actionType === "creer") {
         const existingIconName = await prisma.icon.findFirst({
           where: { name: { equals: data.name, mode: "insensitive" } },
         });
@@ -62,7 +80,7 @@ export const IconSchema = zfd
       // Si aucune icône n'est trouvée, une erreur est levée
       if (!existingIcon) throw new ActionError("Icône introuvable.");
 
-      if (data.action === "supprimer") return true;
+      if (data.actionType === "supprimer") return true;
 
       if (existingIcon?.name.toLowerCase() === data.name.toLowerCase())
         throw new ActionError("Aucun changement de nom n'a été effectué.");
@@ -71,3 +89,19 @@ export const IconSchema = zfd
     },
     { message: "Le nom existe déjà pour une autre icône." }
   );
+
+export const IconIdSchema = z
+  .object({
+    ID: z.string(),
+    action: z.string().optional(),
+    name: z.string().optional(),
+  })
+  .refine(async (data) => {
+    const existingIcon = await prisma.icon.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingIcon) throw new ActionError("Icône introuvable.");
+
+    return true;
+  });

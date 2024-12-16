@@ -21,6 +21,7 @@ import {
 import NextLink from "next/link";
 import * as React from "react";
 
+import { DeleteAlerteButton } from "@/app/components/buttons/SubmitButton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -43,11 +44,50 @@ import {
 } from "@/components/ui/table";
 import { FullLink } from "@/types/prismaTypes";
 import { redirect } from "next/navigation";
-
-import { DeleteButton } from "@/app/dashboard/links/components/DeleteButton";
 import DynamicIcon from "../../icons/components/DynamicIcon";
+import { deleteLinkByIdAction } from "../services/links.action";
+
+import { ToastLinkAction } from "./ToastLink";
 
 export function LinkTab({ links }: { links: FullLink[] }) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleDelete = async () => {
+    setIsLoading(true); // Active le mode chargement
+
+    const result = await Promise.all(
+      selectedIds.map((id: string) => {
+        const res = deleteLinkByIdAction({ ID: id });
+        return res;
+      })
+    );
+
+    setIsLoading(false); // Désactive le mode chargement après la suppression
+    setRowSelection({});
+    const actionType = "supprimer";
+    // Vérification de chaque réponse pour gérer les erreurs
+    const errors = result.filter(
+      (res) => res?.serverError || res?.validationErrors
+    );
+    if (errors.length > 0) {
+      // Vous pouvez afficher un message d'erreur pour chaque réponse erronée
+      errors.forEach((err) => {
+        ToastLinkAction({
+          actionType,
+          serverError: err?.serverError,
+          validationErrors: err?.validationErrors,
+        });
+      });
+      return;
+    }
+
+    // Affichage du message de succès si tout est réussi
+    const successResults = result.filter((res) => res?.data);
+    if (successResults.length > 0) {
+      ToastLinkAction({ data: successResults[0]?.data, actionType });
+    }
+  };
+
   const columns: ColumnDef<FullLink>[] = [
     {
       id: "select",
@@ -218,17 +258,6 @@ export function LinkTab({ links }: { links: FullLink[] }) {
                   strokeWidth={1}
                 />
               </DropdownMenuItem>
-              {/*               <DropdownMenuItem
-                className="flex justify-between items-center"
-                onClick={() => handleDelete(links.id)}
-              >
-                Supprimer
-                <Trash2
-                  style={{ width: "14px", height: "14px" }}
-                  color="#ffffff"
-                  strokeWidth={1}
-                />
-              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -285,9 +314,9 @@ export function LinkTab({ links }: { links: FullLink[] }) {
         />
         <div className="w-full flex items-center justify-center">
           {selectedIds.length > 0 ? (
-            <DeleteButton
-              id={selectedIds}
-              setRowSelection={table.setRowSelection}
+            <DeleteAlerteButton
+              actionButtonDelete={handleDelete}
+              pendingDelete={isLoading}
             />
           ) : null}
         </div>

@@ -58,11 +58,11 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await upsertLinkAction(formData);
-    const isAction = isCreate ? "creer" : "modifier";
+    const actionType = isCreate ? "creer" : "modifier";
     // Vérification des erreurs spécifiques (serveur et validation)
     if (result?.serverError || result?.validationErrors) {
       ToastLinkAction({
-        isAction,
+        actionType,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
       });
@@ -71,7 +71,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
 
     // Affichage du message de succès
     if (result?.data) {
-      ToastLinkAction({ data: result.data, isAction });
+      ToastLinkAction({ data: result.data, actionType });
       if (isCreate) {
         setLinkCount(linkCount + 1);
         setIconName("");
@@ -84,7 +84,6 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
     <div className="flex items-center justify-center p-6 gap-2">
       <CardForm
         title={isCreate ? "Création d'un lien" : "Modification du lien"}
-        href="/dashboard/links"
       >
         <Form action={handleSubmit} className="grid w-full items-center gap-4">
           {!isCreate && (

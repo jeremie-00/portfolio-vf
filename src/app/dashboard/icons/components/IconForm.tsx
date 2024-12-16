@@ -1,6 +1,6 @@
 "use client";
 import {
-  DeleteButton,
+  DeleteAlerteButton,
   SubmitButton,
   UpdateButton,
 } from "@/app/components/buttons/SubmitButton";
@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import {
   createIconAction,
-  deleteIconAction,
+  deleteIconByIdAction,
   updateIconAction,
 } from "../services/icons.action";
 import DynamicIcon from "./DynamicIcon";
@@ -23,26 +23,37 @@ import { IconPicker } from "./IconPicker";
 
 interface IconSettingsProps {
   icons: FullIcon[];
-  icon: FullIcon | null;
 }
 
-const ActionButtons = ({ iconId }: { iconId: string }) => {
+const ActionButtons = ({
+  iconId,
+  actionFn,
+  pendingDelete,
+}: {
+  iconId: string;
+  actionFn: () => void;
+  pendingDelete: boolean;
+}) => {
   const { pending } = useFormStatus();
   if (iconId) {
     return (
       <>
         <UpdateButton pending={pending} />
-        <DeleteButton pending={pending} />
+        <DeleteAlerteButton
+          actionButtonDelete={actionFn}
+          pendingDelete={pendingDelete}
+        />
       </>
     );
   }
   return <SubmitButton pending={pending} />;
 };
 
-export default function IconForm({ icons, icon }: IconSettingsProps) {
-  const [iconName, setIconName] = useState<string>(icon?.name || "");
-  const [iconId, setIconId] = useState<string>(icon?.id || "");
+export default function IconForm({ icons }: IconSettingsProps) {
+  const [iconName, setIconName] = useState<string>("");
+  const [iconId, setIconId] = useState<string>("");
   const [isValidIcon, setIsValidIcon] = useState<boolean>(false);
+  const [pendingDelete, setPendingDelete] = useState(false);
 
   useEffect(() => {
     if (iconName) {
@@ -79,35 +90,53 @@ export default function IconForm({ icons, icon }: IconSettingsProps) {
   };
 
   const handleSubmit = async (formData: FormData) => {
-    const action = formData.get("action");
+    const actionTypeForm = formData.get("actionType");
     if (
-      !action ||
-      !["creer", "modifier", "supprimer"].includes(action as string)
+      !actionTypeForm ||
+      !["creer", "modifier"].includes(actionTypeForm as string)
     ) {
       return;
     }
 
     let result;
 
-    if (action === "creer" && isValidIcon) {
+    if (actionTypeForm === "creer" && isValidIcon) {
       result = await createIconAction(formData);
-    } else if (action === "modifier" && isValidIcon) {
+    } else if (actionTypeForm === "modifier" && isValidIcon) {
       result = await updateIconAction(formData);
-    } else if (action === "supprimer") {
-      result = await deleteIconAction(formData);
     }
 
-    const isAction = action as "creer" | "modifier" | "supprimer";
+    const actionType = actionTypeForm as "creer" | "modifier";
     if (result?.serverError || result?.validationErrors) {
       ToastIconAction({
-        isAction,
+        actionType,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
       });
     } else if (result?.data) {
-      ToastIconAction({ data: result.data, isAction });
+      ToastIconAction({ data: result.data, actionType });
       handleReset();
     }
+  };
+
+  const handleDelete = async () => {
+    setPendingDelete(true);
+    const result = await deleteIconByIdAction({ ID: iconId });
+    const actionType = "supprimer";
+    if (!result || "errors" in result) {
+      throw new Error("Erreur lors de la suppression.");
+    }
+    if (result?.serverError || result?.validationErrors) {
+      ToastIconAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+    } else if (result?.data) {
+      ToastIconAction({ data: result.data, actionType });
+      handleReset();
+    }
+    setPendingDelete(false);
   };
 
   return (
@@ -128,7 +157,7 @@ export default function IconForm({ icons, icon }: IconSettingsProps) {
           </div>
 
           <Input
-            type="hidden"
+            type="text"
             name="ID"
             value={iconId}
             onChange={(e) => setIconId(e.target.value)}
@@ -164,7 +193,11 @@ export default function IconForm({ icons, icon }: IconSettingsProps) {
           />
 
           <div className="w-full flex justify-center gap-24">
-            <ActionButtons iconId={iconId} />
+            <ActionButtons
+              iconId={iconId}
+              actionFn={handleDelete}
+              pendingDelete={pendingDelete}
+            />
           </div>
         </Form>
       </CardForm>

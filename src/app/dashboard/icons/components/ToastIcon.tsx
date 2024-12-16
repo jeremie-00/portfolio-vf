@@ -2,7 +2,7 @@ import { toast } from "@/hooks/use-toast";
 import { Icon } from "@prisma/client";
 
 export function ToastIconAction(res: {
-  isAction?: "creer" | "modifier" | "supprimer";
+  actionType?: "creer" | "modifier" | "supprimer";
   data?: Icon;
   serverError?: string;
   validationErrors?: {
@@ -31,7 +31,7 @@ export function ToastIconAction(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `L'icone ${res.data.name} ${res.isAction} avec succès.`;
+    message = `L'icone ${res.data.name} ${res.actionType} avec succès.`;
   }
 
   // Affichage du toast
