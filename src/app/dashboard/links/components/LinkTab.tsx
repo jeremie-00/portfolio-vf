@@ -21,7 +21,7 @@ import {
 import NextLink from "next/link";
 import * as React from "react";
 
-import { DeleteAlerteButton } from "@/app/components/buttons/SubmitButton";
+import { DeleteAlerteButton } from "@/app/components/Buttons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -84,7 +84,20 @@ export function LinkTab({ links }: { links: FullLink[] }) {
     // Affichage du message de succès si tout est réussi
     const successResults = result.filter((res) => res?.data);
     if (successResults.length > 0) {
-      ToastLinkAction({ data: successResults[0]?.data, actionType });
+      // Fonction asynchrone pour afficher les toasts un à un
+      const showToastsSequentially = async () => {
+        for (let i = 0; i < successResults.length; i++) {
+          const res = successResults[i];
+          // Affiche le toast pour le résultat actuel
+          ToastLinkAction({ data: res?.data, actionType });
+
+          // Attendre 1 seconde (1000 ms) avant d'afficher le toast suivant
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      };
+
+      // Appel de la fonction pour afficher les toasts
+      showToastsSequentially();
     }
   };
 

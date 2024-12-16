@@ -3,7 +3,7 @@ import {
   DeleteAlerteButton,
   SubmitButton,
   UpdateButton,
-} from "@/app/components/buttons/SubmitButton";
+} from "@/app/components/Buttons";
 import { CardForm } from "@/app/components/Cards";
 import { ToastIconAction } from "@/app/dashboard/icons/components/ToastIcon";
 import { Button } from "@/components/ui/button";

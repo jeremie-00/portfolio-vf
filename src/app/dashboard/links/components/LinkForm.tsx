@@ -1,5 +1,5 @@
 "use client";
-import { SubmitButton } from "@/app/components/buttons/SubmitButton";
+import { SubmitButton, UpdateButton } from "@/app/components/Buttons";
 import { CardForm, CardSwitch } from "@/app/components/Cards";
 
 import { Input } from "@/components/ui/input";
@@ -23,7 +23,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   const [linkCount, setLinkCount] = useState(1);
 
   const [iconId, setIconId] = useState<string>(
-    isCreate ? "" : link?.icon?.name || ""
+    isCreate ? "" : link?.icon?.id || ""
   );
   const [iconName, setIconName] = useState<string>(
     isCreate ? "" : link?.icon?.name || ""
@@ -36,7 +36,12 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
-    return <SubmitButton pending={pending} />;
+
+    return isCreate ? (
+      <SubmitButton pending={pending} />
+    ) : (
+      <UpdateButton pending={pending} />
+    );
   };
 
   const toggleInNav = () => {
@@ -90,11 +95,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
             <span className="text-primary text-xl font-bold">{link?.url}</span>
           )}
           {!isCreate && <input type="hidden" name="ID" value={link?.id} />}
-          <input
-            type="hidden"
-            name="status"
-            defaultValue={isCreate ? "create" : "edit"}
-          />
+
           <input
             type="hidden"
             name="projectId"

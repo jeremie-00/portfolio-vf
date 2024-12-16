@@ -72,10 +72,16 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
+    console.log(link);
     const updatedLink = await prisma.link.update({
       where: { id: link.ID },
       data: {
-        ...link,
+        url: link.url,
+        type: link.type || undefined,
+        title: link.title,
+        order: link.order || undefined,
+        inNav: link.inNav || undefined,
+        isAdmin: link.isAdmin || undefined,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
       },
@@ -87,8 +93,9 @@ export const updateLinkActionAction = authentificationAction
 export const deleteLinkByIdAction = authentificationAction
   .schema(LinkIdSchema)
   .action(async ({ parsedInput: { ID } }) => {
-    await prisma.link.delete({
+    const deletedLink = await prisma.link.delete({
       where: { id: ID },
     });
     revalidatePath("/", "layout");
+    return deletedLink;
   });
