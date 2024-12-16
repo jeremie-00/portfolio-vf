@@ -62,10 +62,7 @@ export default function IconForm({ icons }: IconSettingsProps) {
       const selectedIcon = icons.find((icon) => icon.name === formattedValue);
       setIsValidIcon(formattedValue in Icons);
       if (selectedIcon) {
-        setIconId(selectedIcon.id);
         setIconName(selectedIcon.name);
-      } else {
-        setIconId("");
       }
     }
   }, [iconName, icons]);
@@ -159,7 +156,7 @@ export default function IconForm({ icons }: IconSettingsProps) {
           </div>
 
           <Input
-            type="text"
+            type="hidden"
             name="ID"
             value={iconId}
             onChange={(e) => setIconId(e.target.value)}

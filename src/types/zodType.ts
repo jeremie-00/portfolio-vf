@@ -105,3 +105,62 @@ export const IconIdSchema = z
 
     return true;
   });
+
+export const SkillSchema = zfd
+  .formData({
+    // Champ "ID" : optionnel, utilisé pour les mises à jour
+    ID: z.string().optional(),
+    // Champ "action" : optionnel, utilisé pour définir l'action (ex : "supprimer")
+    actionType: z.string().optional(),
+    // Champ "title" : le titre de la compétence
+    title: z
+      .string() // Le titre doit être une chaîne de caractères
+      .min(1, { message: "Le titre est obligatoire." }), // Le titre ne doit pas être vide
+    display: z.string().default("on"),
+    file: z.instanceof(File).optional(),
+  })
+  .refine(async (data) => {
+    if (data.actionType === "creer") {
+      const existingSkillName = await prisma.skill.findFirst({
+        where: { title: { equals: data.title, mode: "insensitive" } },
+      });
+
+      if (existingSkillName)
+        throw new ActionError(
+          "Le titre existe déjà pour une autre compétence."
+        );
+
+      return true;
+    }
+    // Recherche la compétence existante dans la base de données à partir de l'ID
+    const existingSkill = await prisma.skill.findUnique({
+      where: { id: data.ID },
+    });
+
+    // Si aucune compétence n'est trouvée, une erreur est levée
+    if (!existingSkill) throw new ActionError("Compétence introuvable.");
+
+    if (data.actionType === "supprimer") return true;
+
+    /*       if (existingSkill?.title.toLowerCase() === data.title.toLowerCase())
+        throw new ActionError("Aucun changement de titre n'a été effectué."); */
+    // Vérifie que le nouveau titre n'existe pas déjà pour une autre compétence
+    return true;
+  });
+
+export const SkillIdSchema = z
+  .object({
+    // Champ "ID" : optionnel, utilisé pour les mises à jour
+    ID: z.string().optional(),
+    imageUrl: z.string().optional(),
+    imageId: z.string().optional(),
+  })
+  .refine(async (data) => {
+    const existingSkill = await prisma.skill.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingSkill) throw new ActionError("Compétence introuvable.");
+
+    return true;
+  });
