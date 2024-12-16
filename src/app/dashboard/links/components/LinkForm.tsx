@@ -147,9 +147,8 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
             <Switch
               id="inNav"
               name="inNav"
-              checked={inNavToggle}
+              checked={inNavToggle === true}
               onCheckedChange={toggleInNav}
-              //value={inNavToggle}
             />
           </CardSwitch>
           <CardSwitch
@@ -159,9 +158,8 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
             <Switch
               id="isAdmin"
               name="isAdmin"
-              checked={isAdminToggle}
+              checked={isAdminToggle === true}
               onCheckedChange={toggleIsAdmin}
-              //value={isAdminToggle}
             />
           </CardSwitch>
           <div className="w-full flex justify-center p-0">
