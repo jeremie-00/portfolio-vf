@@ -25,12 +25,12 @@ export const MultiImageUpload = forwardRef<
 
   useImperativeHandle(ref, () => ({
     resetFiles() {
-      /*    setUrlsMedias([]);
+      setUrlsMedias([]);
       setMediaFiles([]);
       //onFileChange([]);
       if (mediasInputRef.current) {
         mediasInputRef.current.value = "";
-      } */
+      }
     },
   }));
 

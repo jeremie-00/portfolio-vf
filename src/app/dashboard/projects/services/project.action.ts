@@ -209,11 +209,10 @@ export const updateProjectAction = authentificationAction
 export const deleteProjectAction = authentificationAction
   .schema(ProjectDeleteSchema)
   .action(async ({ parsedInput: { ...project } }) => {
-    console.log(project);
-    if (project?.cover) {
+    if (project?.cover && project.cover.url) {
       await handleImageDelete(project.cover);
     }
-    if (project?.medias) {
+    if (project?.medias && project.medias.length > 0) {
       await Promise.all(
         project.medias.map(async (media) => {
           await handleImageDelete(media);

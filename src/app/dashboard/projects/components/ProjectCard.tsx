@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { deleteProjectAction } from "../services/project.action";
+import { ToastProjectAction } from "./ToastProject";
 
 interface ProjectCardProps {
   project: FullProject;
@@ -30,18 +31,18 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
     });
 
     setIsLoading(false);
-    console.log(result);
-    /*    const actionType = "supprimer";
+
+    const actionType = "supprimer";
     if (result?.serverError || result?.validationErrors) {
-      ToastSkillAction({
+      ToastProjectAction({
         actionType,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
       });
     }
     if (result?.data) {
-      ToastSkillAction({ data: result.data, actionType });
-    } */
+      ToastProjectAction({ data: result.data, actionType });
+    }
   };
   return (
     <div

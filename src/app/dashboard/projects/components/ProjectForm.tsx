@@ -24,6 +24,7 @@ import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { upsertProject } from "../services/upsertProject";
 import { LinksFormProject } from "./LinksFormProjet";
+import { ToastProjectAction } from "./ToastProject";
 
 interface ProjectFormProps {
   project: FullProject | null;
@@ -40,27 +41,9 @@ export default function ProjectForm({
   isCreate,
   icons,
 }: ProjectFormProps) {
-  //const searchParams = useSearchParams();
   const singleImageUploadRef = useRef<{ resetFile: () => void } | null>(null);
   const multiImageUploadRef = useRef<{ resetFiles: () => void } | null>(null);
   const linksFormProjectRef = useRef<{ resetLink: () => void } | null>(null);
-
-  /* const [coverFile, setCoverFile] = useState<File | null>(null);
-  const handleCoverFileChange = (file: File | null) => {
-    setCoverFile(file);
-  }; */
-
-  /*  const [mediaFiles, setMediaFiles] = useState<File[]>([]);
-  const handleMediaFilesChange = (files: File[]) => {
-    setMediaFiles(files);
-  };
-  const handleFileRemove = (files: File[]) => {
-    setMediaFiles(files);
-  }; */
-
-  /* const [projectCount, setProjectCount] = useState(
-    isCreate ? Number(searchParams.get("count")) + 1 : project?.order || 1
-  ); */
 
   const OPTIONS: Option[] = allSkills.map((skill) => ({
     label: skill.title,
@@ -123,17 +106,23 @@ export default function ProjectForm({
     };
     const result = await upsertProject(projectData);
 
-    console.log(result);
-    /* Toast(res); */
+    const actionType = isCreate ? "creer" : "modifier";
+    if (result?.serverError || result?.validationErrors) {
+      ToastProjectAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+      return;
+    }
 
-    /* if (res.success) {
+    // Affichage du message de succès
+    if (result?.data) {
+      ToastProjectAction({ data: result.data, actionType });
       if (isCreate) {
         //setProjectCount((prevCount) => prevCount + 1);
         setSelectedSkills([]);
         setSelectedType("Professionnel");
-
-         setCoverFile(null);
-        setMediaFiles([]); 
       }
 
       // REMISE A ZERO DES LIENS ET DES IMAGES
@@ -146,7 +135,7 @@ export default function ProjectForm({
       if (linksFormProjectRef.current) {
         linksFormProjectRef.current.resetLink();
       }
-    } */
+    }
   };
 
   return (
@@ -238,15 +227,12 @@ export default function ProjectForm({
                 label="Image de couverture"
                 image={project ? project.cover : null}
                 isCreate={isCreate}
-                //onFileChange={handleCoverFileChange}
               />
               <MultiImageUpload
                 ref={multiImageUploadRef}
                 label="Médias"
                 images={project ? project.medias : []}
                 isCreate={isCreate}
-                /* onFileChange={handleMediaFilesChange}
-                onFileRemove={handleFileRemove} */
               />
             </div>
           </div>

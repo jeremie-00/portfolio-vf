@@ -25,12 +25,12 @@ export const SingleImageUpload = forwardRef<
 
   useImperativeHandle(ref, () => ({
     resetFile() {
-      /*     setCoverFile(null);
+      setCoverFile(null);
       setUrlCover("");
       onFileChange?.(null);
       if (coverInputRef.current) {
         coverInputRef.current.value = "";
-      } */
+      }
     },
   }));
 
