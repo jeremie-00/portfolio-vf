@@ -41,11 +41,14 @@ export async function handleFileUpload(
   return blob.url;
 }
 
-export async function handleImageDelete(image: { id: string; url: string }) {
+export async function handleImageDelete(image: {
+  id?: string | undefined;
+  url?: string | undefined;
+}) {
   try {
     const { url, id } = image;
     // Supprimer l'image du stockage Vercel
-    await del(url);
+    if (url) await del(url);
     await prisma.imageFile.delete({
       where: { id },
     });

@@ -13,12 +13,25 @@ export const authentificationAction = createSafeActionClient({
     }
 
     // Gérer les erreurs Prisma ou autres erreurs spécifiques
+    // Gérer les erreurs Prisma ou autres erreurs spécifiques
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      // Vérification du code d'erreur spécifique pour les violations de contrainte unique
       if (error.code === "P2002") {
-        return `Le champs ${error?.meta?.target} existe déjà.`;
+        return `Le champ ${error?.meta?.target} existe déjà.`;
+      }
+
+      // Gérer d'autres erreurs Prisma
+      switch (error.code) {
+        case "P2000":
+          return `Erreur de validation de la base de données : ${error.message}`;
+        case "P2025":
+          return `Enregistrement non trouvé : ${error.message}`;
+        case "P2023":
+          return `Erreur de relation entre les tables : ${error.message}`;
+        default:
+          return `Erreur Prisma : ${error.message}`;
       }
     }
-
     return "Oh no, generic error";
   },
   // Middleware pour vérifier l'authentification

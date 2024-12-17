@@ -37,7 +37,7 @@ const items = [
   },
   {
     title: "Projets",
-    url: "/dashboard/projets",
+    url: "/dashboard/projects",
     inNav: false,
     isAdmin: true,
   },

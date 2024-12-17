@@ -20,7 +20,7 @@ interface SkillCardProps {
 
 export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const deletedSkill = async () => {
+  const handleDeletedSkill = async () => {
     setIsLoading(true);
     const result = await deleteSkillAction({
       ID: skill?.id,
@@ -60,7 +60,7 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
                 </Button>
               </Link>
               <DeleteAlerteButton
-                actionButtonDelete={deletedSkill}
+                actionButtonDelete={handleDeletedSkill}
                 pendingDelete={isLoading}
               />
             </div>

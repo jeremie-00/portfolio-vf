@@ -164,3 +164,61 @@ export const SkillIdSchema = z
 
     return true;
   });
+
+export const ProjectSchema = z.object({
+  ID: z.string().optional(),
+  status: z.string().optional(),
+  actionType: z.string().optional(),
+  title: z.string().min(1, { message: "Le titre est obligatoire." }),
+  shortDesc: z.string().min(1, { message: "Un court résumé est obligatoire." }),
+  longDesc: z.string().min(1, { message: "Une description est obligatoire." }),
+  order: z.string().default("1"),
+  type: z.string().optional(),
+  cover: z.instanceof(File).optional(),
+  medias: z.array(z.instanceof(File)).optional(),
+  skills: z.array(z.string()).optional(),
+  links: z
+    .array(
+      // Modifié ici pour accepter un tableau d'objets
+      z.object({
+        id: z.string().optional(),
+        url: z.string().min(1, { message: "L'URL est obligatoire." }),
+        title: z.string().min(1, { message: "Le titre est obligatoire." }),
+        inNav: z.string().optional(),
+        iconId: z.string().optional(),
+        isAdmin: z.string().optional(),
+        type: z.string().optional(),
+        target: z.string().optional(),
+        projectId: z.string().optional(),
+        order: z.number().optional(),
+      })
+    )
+    .optional(),
+});
+
+export const ProjectDeleteSchema = z
+  .object({
+    ID: z.string().optional(),
+    cover: z.object({
+      url: z.string().optional(),
+      id: z.string().optional(),
+    }),
+    medias: z.array(z.object({ url: z.string().optional(), id: z.string() })),
+  })
+  .refine(async (data) => {
+    const existingProject = await prisma.project.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingProject) throw new ActionError("Projet introuvable.");
+
+    return true;
+  });
+
+/*    const validationResult = ProjectSchema.safeParse(projectData);
+
+    if (!validationResult.success) {
+      console.error("Erreurs de validation :", validationResult.error.format());
+    } else {
+      console.log("Données valides :", validationResult.data);
+    }  */

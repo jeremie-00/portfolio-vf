@@ -66,7 +66,7 @@ export const createLinkAction = authentificationAction
         url: link.url,
         type: link.type || undefined,
         title: link.title,
-        order: link.order || undefined,
+        order: parseInt(link?.order || "1"),
         inNav,
         isAdmin,
         iconId: link.iconId || undefined,
@@ -82,14 +82,14 @@ export const updateLinkActionAction = authentificationAction
   .action(async ({ parsedInput: { ...link } }) => {
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
-    console.log(inNav, isAdmin, link.inNav, link.isAdmin);
+
     const updatedLink = await prisma.link.update({
       where: { id: link.ID },
       data: {
         url: link.url,
         type: link.type || undefined,
         title: link.title,
-        order: link.order || undefined,
+        order: parseInt(link?.order || "1"),
         inNav: inNav,
         isAdmin: isAdmin,
         iconId: link.iconId || undefined,
