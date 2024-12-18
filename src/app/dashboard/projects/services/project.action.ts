@@ -39,18 +39,34 @@ export const createProjectAction = authentificationAction
       skills,
       links,
     } = project;
-    console.log(links);
+
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
         if (media.size > 0) {
-          return await handleFileUpload(media, "medias");
+          await handleFileUpload({ file: media, folder: "medias" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          );
         }
         return null; // Retourne `null` si le média est vide
       }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
     );
 
     const coverUrl =
-      cover && cover.size > 0 ? await handleFileUpload(cover, "cover") : null;
+      cover && cover.size > 0
+        ? await handleFileUpload({ file: cover, folder: "cover" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          )
+        : null;
 
     const createdProject = await prisma.project.create({
       data: {
@@ -73,7 +89,7 @@ export const createProjectAction = authentificationAction
             ? mediasUrls
                 .filter((url) => url !== null)
                 .map((url) => ({
-                  url: url as string,
+                  url: url,
                   alt: `Projet ${project.title} capture d'écran`,
                 }))
             : undefined,
@@ -120,7 +136,16 @@ export const updateProjectAction = authentificationAction
     }
 
     const coverUrl =
-      cover && cover.size > 0 ? await handleFileUpload(cover, "cover") : null;
+      cover && cover.size > 0
+        ? await handleFileUpload({ file: cover, folder: "cover" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          )
+        : null;
 
     if (cover && cover.size > 0 && existingProject.cover)
       await del(existingProject.cover.url);
@@ -128,7 +153,14 @@ export const updateProjectAction = authentificationAction
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
         if (media.size > 0) {
-          return await handleFileUpload(media, "medias");
+          await handleFileUpload({ file: media, folder: "medias" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          );
         }
         return null; // Retourne `null` si le média est vide
       }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
@@ -167,7 +199,7 @@ export const updateProjectAction = authentificationAction
             ? mediasUrls
                 .filter((url) => url !== null)
                 .map((url) => ({
-                  url: url as string,
+                  url: url,
                   alt: `Projet ${project.title} capture d'écran`,
                 }))
             : undefined,

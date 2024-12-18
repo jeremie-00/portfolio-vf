@@ -32,10 +32,16 @@ export const createSkillAction = authentificationAction
   .action(async ({ parsedInput: { ...skill } }) => {
     const imageUrl =
       skill.file && skill.file.size > 0
-        ? await handleFileUpload(skill.file, "skills")
+        ? await handleFileUpload({ file: skill.file, folder: "skills" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          )
         : null;
 
-    console.log(skill, imageUrl);
     const display = skill.display === "on";
     const createdSkill = await prisma.skill.create({
       data: {
@@ -59,7 +65,14 @@ export const updateSkillAction = authentificationAction
 
     const imageUrl =
       skill.file && skill.file.size > 0
-        ? await handleFileUpload(skill.file, "skills")
+        ? await handleFileUpload({ file: skill.file, folder: "skills" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          )
         : null;
 
     if (exitingSkill?.image && imageUrl)
@@ -90,9 +103,8 @@ export const updateSkillAction = authentificationAction
 export const deleteSkillAction = authentificationAction
   .schema(SkillIdSchema)
   .action(async ({ parsedInput: { ...skill } }) => {
-    console.log(skill);
     if (skill.imageId && skill.imageUrl) {
-      await handleImageDelete({ id: skill.imageId, url: skill.imageUrl });
+      await handleImageDelete({ ID: skill.imageId, url: skill.imageUrl });
     }
     const deletedSkill = await prisma.skill.delete({
       where: { id: skill.ID },

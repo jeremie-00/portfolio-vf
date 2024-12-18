@@ -10,6 +10,7 @@ import { CirclePlus, Trash2 } from "lucide-react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { IconPicker } from "../../icons/components/IconPicker";
 import { deleteLinkByIdAction } from "../../links/services/links.action";
+import { ToastDeleteFormLinkProjectAction } from "./ToastProject";
 
 interface LinksProps {
   initialLinks?: Link[];
@@ -64,8 +65,27 @@ export const LinksFormProject = forwardRef<
     const newLinks = links.filter((_, i) => i !== index);
     setLinks(newLinks);
     setIsAddButtonDisabled(newLinks.length >= 2);
+    const removeLink = async (id: string) => {
+      const result = await deleteLinkByIdAction({
+        ID: id,
+      });
+
+      if (result?.serverError || result?.validationErrors) {
+        ToastDeleteFormLinkProjectAction({
+          serverError: result?.serverError,
+          validationErrors: result?.validationErrors,
+        });
+        return;
+      }
+
+      // Affichage du message de succès
+      if (result?.data) {
+        ToastDeleteFormLinkProjectAction({ data: result.data });
+      }
+    };
+
     if (linkId) {
-      deleteLinkByIdAction({ ID: links[index].id });
+      removeLink(links[index].id);
     }
   };
 

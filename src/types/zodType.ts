@@ -260,6 +260,26 @@ export const TextSectionDeleteSchema = z
     return true;
   });
 
+export const ImageUploadSchema = z.object({
+  file: z.instanceof(File),
+  folder: z.string().optional(),
+});
+
+export const ImageDeleteSchema = z
+  .object({
+    ID: z.string().optional(),
+    url: z.string().optional(),
+  })
+  .refine(async (data) => {
+    const existingImage = await prisma.imageFile.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingImage) throw new ActionError("Image introuvable.");
+
+    return true;
+  });
+
 /*    const validationResult = ProjectSchema.safeParse(projectData);
 
     if (!validationResult.success) {

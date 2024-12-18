@@ -7,6 +7,7 @@ import { ImageFile } from "@prisma/client";
 import Image from "next/image";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { ImageDeleteButton, PreviewDeleteButton } from "./ImageDeleteButton";
+import { ToastDeleteImagesAction } from "./ToastImage";
 
 interface MultiImageUploadProps {
   label: string;
@@ -82,7 +83,21 @@ export const MultiImageUpload = forwardRef<
     setIsLoading(true);
     const imageDelete = !isCreate && images?.find((img) => img.url === url);
 
-    if (!isCreate && imageDelete) await handleImageDelete(imageDelete);
+    if (!isCreate && imageDelete) {
+      const result = await handleImageDelete({ ID: imageDelete.id, url: url });
+      if (result?.serverError || result?.validationErrors) {
+        ToastDeleteImagesAction({
+          serverError: result?.serverError,
+          validationErrors: result?.validationErrors,
+        });
+        return;
+      }
+
+      // Affichage du message de succès
+      if (result?.data) {
+        ToastDeleteImagesAction({ data: result.data });
+      }
+    }
     // Supprimer l'élément du tableau des fichiers et des URLs
     setUrlsMedias((prevUrls) => prevUrls.filter((image) => image !== url));
     setMediaFiles((prevFiles) => {

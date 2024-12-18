@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { deleteSectionAction } from "../dashboard/sections/services/section.action";
 import { DeleteAlerteButton } from "./Buttons";
+import { ToastSectionAction } from "../dashboard/sections/components/ToastSection";
 
 interface CardsProps {
   title: string;
@@ -61,20 +62,19 @@ export function CardsSectionDashboard({
       ID: section.id,
       medias: section.images,
     });
-    console.log(result);
     setIsLoading(false);
 
-    /*    const actionType = "supprimer";
+    const actionType = "supprimer";
     if (result?.serverError || result?.validationErrors) {
-      ToastProjectAction({
+      ToastSectionAction({
         actionType,
         serverError: result?.serverError,
         validationErrors: result?.validationErrors,
       });
     }
     if (result?.data) {
-      ToastProjectAction({ data: result.data, actionType });
-    } */
+      ToastSectionAction({ data: result.data, actionType });
+    }
   };
 
   return (

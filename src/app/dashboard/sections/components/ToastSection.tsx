@@ -1,42 +1,15 @@
 import { toast } from "@/hooks/use-toast";
-import { Link, Project } from "@prisma/client";
+import { SectionPage } from "@prisma/client";
 
-export function ToastProjectAction(res: {
+export function ToastSectionAction(res: {
   actionType?: "creer" | "modifier" | "supprimer";
-  data?: Project;
+  data?: SectionPage;
   serverError?: string;
-  validationErrors?:
-    | {
-        url?: { _errors?: string[] };
-        title?: { _errors?: string[] };
-        _errors?: string[] | undefined;
-        cover?:
-          | {
-              _errors?: string[] | undefined;
-              id?:
-                | {
-                    _errors?: string[] | undefined;
-                  }
-                | undefined;
-              url?:
-                | {
-                    _errors?: string[] | undefined;
-                  }
-                | undefined;
-            }
-          | undefined;
-        medias?:
-          | {
-              _errors?: string[] | undefined;
-            }
-          | undefined;
-        ID?:
-          | {
-              _errors?: string[] | undefined;
-            }
-          | undefined;
-      }
-    | undefined;
+  validationErrors?: {
+    _errors?: string[] | undefined;
+    medias?: { _errors?: string[] | undefined } | undefined;
+    ID?: { _errors?: string[] | undefined } | undefined;
+  };
 }) {
   // Déclaration du message à afficher
   let message: string | string[] | undefined;
@@ -48,8 +21,9 @@ export function ToastProjectAction(res: {
   // Gestion des erreurs de validation
   else if (res.validationErrors) {
     const errors = [
-      ...(res.validationErrors.url?._errors || []),
-      ...(res.validationErrors.title?._errors || []),
+      ...(res.validationErrors.medias?._errors || []),
+      ...(res.validationErrors.ID?._errors || []),
+      ...(res.validationErrors._errors || []),
     ];
 
     message =
@@ -59,7 +33,7 @@ export function ToastProjectAction(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `Projet ${res.data.title} ${res.actionType} avec succès.`;
+    message = `Section ${res.data.type} ${res.actionType} avec succès.`;
   }
 
   // Affichage du toast
@@ -69,8 +43,12 @@ export function ToastProjectAction(res: {
   });
 }
 
-export function ToastDeleteFormLinkProjectAction(res: {
-  data?: Link;
+export function ToastDeleteFormSectionAction(res: {
+  data?: {
+    id: string;
+    text: string;
+    sectionPageId: string | null;
+  };
   serverError?: string;
   validationErrors?: {
     _errors?: string[] | undefined;
@@ -98,7 +76,7 @@ export function ToastDeleteFormLinkProjectAction(res: {
   }
   // Message de succès
   else if (res.data) {
-    message = `Suppression ${res.data.title} avec succès.`;
+    message = `Suppression ${res.data.text} avec succès.`;
   }
 
   // Affichage du toast

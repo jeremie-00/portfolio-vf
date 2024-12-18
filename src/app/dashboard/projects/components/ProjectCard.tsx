@@ -20,7 +20,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const handleDeletedProject = async () => {
     setIsLoading(true);
-    console.log(project);
+
     const result = await deleteProjectAction({
       ID: project?.id,
       cover: { url: project?.cover?.url, id: project?.cover?.id },

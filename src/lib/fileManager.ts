@@ -1,8 +1,10 @@
 "use server";
+import { ImageDeleteSchema, ImageUploadSchema } from "@/types/zodType";
 import { del, put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { extname } from "path";
 import prisma from "./prisma";
+import { ActionError, authentificationAction } from "./safe-action";
 
 // Fonction pour générer un nom de fichier unique
 const generateUniqueFileName = (originalName: string) => {
@@ -24,7 +26,7 @@ const isValidFile = (file: File) => {
 };
 
 // Fonction de gestion du téléchargement
-export async function handleFileUpload(
+export async function handleFileUpload2(
   file: File,
   folder: string
 ): Promise<string | null> {
@@ -41,20 +43,29 @@ export async function handleFileUpload(
   return blob.url;
 }
 
-export async function handleImageDelete(image: {
-  id?: string | undefined;
-  url?: string | undefined;
-}) {
-  try {
-    const { url, id } = image;
-    // Supprimer l'image du stockage Vercel
-    if (url) await del(url);
-    await prisma.imageFile.delete({
-      where: { id },
+export const handleFileUpload = authentificationAction
+  .schema(ImageUploadSchema)
+  .action(async ({ parsedInput: { ...fileUpload } }): Promise<string> => {
+    const { file, folder } = fileUpload;
+    const filename = generateUniqueFileName(file.name);
+    const blob = await put(`${folder}/${filename}`, file, {
+      access: "public",
     });
-    console.log("Image supprimée avec succès");
+    if (!blob.url) {
+      throw new ActionError(
+        "Erreur lors de la création de l'image avec Vercel."
+      );
+    }
+    return blob.url;
+  });
+
+export const handleImageDelete = authentificationAction
+  .schema(ImageDeleteSchema)
+  .action(async ({ parsedInput: { ...image } }) => {
+    if (image.url) await del(image.url);
+    const deletedImage = await prisma.imageFile.delete({
+      where: { id: image.ID },
+    });
     revalidatePath("/");
-  } catch (error) {
-    console.error("Erreur lors de la suppression de l'image:", error);
-  }
-}
+    return deletedImage;
+  });

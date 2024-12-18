@@ -18,12 +18,15 @@ import {
 import { MultiImageUpload } from "@/app/components/UploadImage/MultiImageUpload";
 import { Button } from "@/components/ui/button";
 import { FullSectionPage } from "@/types/prismaTypes";
-import { SectionSchema } from "@/types/zodType";
 import {
   deleteContentSectionAction,
   deleteTitleSectionAction,
 } from "../services/section.action";
 import { upsertSection } from "../services/upsertSection";
+import {
+  ToastDeleteFormSectionAction,
+  ToastSectionAction,
+} from "./ToastSection";
 
 export default function SectionForm({
   section,
@@ -45,7 +48,19 @@ export default function SectionForm({
       const result = await deleteTitleSectionAction({
         ID: id,
       });
-      console.log(result);
+
+      if (result?.serverError || result?.validationErrors) {
+        ToastDeleteFormSectionAction({
+          serverError: result?.serverError,
+          validationErrors: result?.validationErrors,
+        });
+        return;
+      }
+
+      // Affichage du message de succès
+      if (result?.data) {
+        ToastDeleteFormSectionAction({ data: result.data });
+      }
     };
     if (section) {
       removeTitle(id);
@@ -74,7 +89,19 @@ export default function SectionForm({
       const result = await deleteContentSectionAction({
         ID: id,
       });
-      console.log(result);
+
+      if (result?.serverError || result?.validationErrors) {
+        ToastDeleteFormSectionAction({
+          serverError: result?.serverError,
+          validationErrors: result?.validationErrors,
+        });
+        return;
+      }
+
+      // Affichage du message de succès
+      if (result?.data) {
+        ToastDeleteFormSectionAction({ data: result.data });
+      }
     };
     if (section) {
       removeContent(id);
@@ -107,6 +134,11 @@ export default function SectionForm({
     }
   }, [section]);
 
+  const handleFieldReset = () => {
+    setFieldsTitle([{ title: "", id: "" }]);
+    setFieldsContent([{ content: "", id: "" }]);
+  };
+
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
     return !section ? (
@@ -127,23 +159,29 @@ export default function SectionForm({
       actionType: String(formData.get("actionType")),
     };
 
-    // Validation avec Zod
-    const validationResult = SectionSchema.safeParse(sectionData);
-    if (!validationResult.success) {
-      console.error("Erreurs de validation :", validationResult.error.format());
-    } else {
-      console.log("Données valides :", validationResult.data);
-    }
     const result = await upsertSection(sectionData);
-    console.log(result);
-    /* Toast(res);
-    if (res.success) {
-      setFieldsTitle([{ title: "" }]);
-      setFieldsContent([{ content: "" }]);
-      if (singleImageUploadRef.current) {
-        singleImageUploadRef.current.resetFile();
+
+    const actionType = !section ? "creer" : "modifier";
+    if (result?.serverError || result?.validationErrors) {
+      ToastSectionAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+      return;
+    }
+
+    // Affichage du message de succès
+    if (result?.data) {
+      ToastSectionAction({ data: result.data, actionType });
+      if (!section) {
+        handleFieldReset();
+        // REMISE A ZERO DES LIENS ET DES IMAGES
       }
-    } */
+      if (multiImageUploadRef.current) {
+        multiImageUploadRef.current.resetFiles();
+      }
+    }
   };
 
   return (

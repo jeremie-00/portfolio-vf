@@ -40,7 +40,14 @@ export const createSectionPageAction = authentificationAction
     const mediasUrls = await Promise.all(
       section.medias?.map(async (media) => {
         if (media.size > 0) {
-          return await handleFileUpload(media, "medias");
+          await handleFileUpload({ file: media, folder: "medias" }).then(
+            (res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            }
+          );
         }
         return null; // Retourne `null` si le média est vide
       }) ?? []
@@ -65,7 +72,7 @@ export const createSectionPageAction = authentificationAction
             ? mediasUrls
                 .filter((url) => url !== null)
                 .map((url) => ({
-                  url: url as string,
+                  url: url,
                   alt: `Image section`,
                 }))
             : undefined,
@@ -90,7 +97,15 @@ export const updateSectionPageAction = authentificationAction
       (await Promise.all(
         section.medias.map(async (media) => {
           if (media.size > 0) {
-            return await handleFileUpload(media, `section/${section.type}`);
+            await handleFileUpload({
+              file: media,
+              folder: `section/${section.type}`,
+            }).then((res) => {
+              if (!res) {
+                throw new Error("Erreur lors du téléchargement de l'image");
+              }
+              return res.data;
+            });
           }
           return null; // Retourne `null` si le média est vide
         }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
@@ -126,7 +141,7 @@ export const updateSectionPageAction = authentificationAction
             ? mediasUrls
                 .filter((url) => url !== null)
                 .map((url) => ({
-                  url: url as string,
+                  url: url,
                   alt: `Image ${section.type}`,
                 }))
             : undefined,

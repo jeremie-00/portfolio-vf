@@ -6,6 +6,7 @@ import { ImageFile } from "@prisma/client";
 import Image from "next/image";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { ImageDeleteButton, PreviewDeleteButton } from "./ImageDeleteButton";
+import { ToastDeleteImagesAction } from "./ToastImage";
 
 interface SingleImageUploadProps {
   label: string;
@@ -54,6 +55,21 @@ export const SingleImageUpload = forwardRef<
   const handleFileRemove = async () => {
     setIsLoading(true);
     if (!isCreate && image) await handleImageDelete(image);
+    if (!isCreate && image) {
+      const result = await handleImageDelete({ ID: image.id, url: image.url });
+      if (result?.serverError || result?.validationErrors) {
+        ToastDeleteImagesAction({
+          serverError: result?.serverError,
+          validationErrors: result?.validationErrors,
+        });
+        return;
+      }
+
+      // Affichage du message de succès
+      if (result?.data) {
+        ToastDeleteImagesAction({ data: result.data });
+      }
+    }
     setIsLoading(false);
   };
 
