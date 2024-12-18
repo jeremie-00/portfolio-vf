@@ -38,7 +38,7 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="fr" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"

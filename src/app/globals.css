@@ -8,6 +8,8 @@ body {
 
 @layer base {
   :root {
+    --font-color: 123 43% 2%;
+
     --background: 123 11% 96%;
     --foreground: 123 79% 4%;
     --muted: 123 6% 87%;
@@ -40,6 +42,8 @@ body {
   }
 
   .dark {
+    --font-color: 123 11% 96%;
+
     --background: 123 43% 2%;
     --foreground: 123 21% 100%;
     --muted: 123 6% 13%;

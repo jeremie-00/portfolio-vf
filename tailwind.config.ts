@@ -17,6 +17,7 @@ export default {
           "radial-gradient(at 50% 50%, var(--tw-gradient-from), var(--tw-gradient-to) )",
       },
       colors: {
+        textColor: "hsl(var(--font-color))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
