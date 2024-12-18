@@ -1,4 +1,4 @@
-import { getProject } from "@/app/dashboard/project/services/project.action";
+import { getProjectByIdAction } from "@/app/dashboard/projects/services/project.action";
 
 export default async function page({
   params,
@@ -6,7 +6,7 @@ export default async function page({
   params: Promise<{ id: string }>;
 }) {
   const paramsId = (await params).id;
-  const project = await getProject(paramsId);
+  const project = await getProjectByIdAction(paramsId);
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
       <div>

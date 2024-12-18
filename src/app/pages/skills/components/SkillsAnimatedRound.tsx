@@ -3,8 +3,9 @@ import { MotionBox } from "@/app/components/framer-motion/MotionBox";
 import { MotionCard } from "@/app/components/framer-motion/MotionCard";
 import { MotionCircleBox } from "@/app/components/framer-motion/MotionCircleBox";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { FullSkill } from "@/types/prismaTypes";
 //import { useIsMobile } from "@/hooks/use-mobile";
-import { FullSkill } from "@/app/types/prismaTypes";
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -19,10 +20,6 @@ export default function SkillsAnimatedRound({
   //const [circleSize, setCircleSize] = useState(0);
   const [containerSize, setContainerSize] = useState(0);
 
-  const skillsCentral = skills.filter((skill) => skill.order === -1); // Filtre pour l'élément central "Skills"
-  const skillsOthers = skills.filter((skill) => skill.order !== -1); // Filtre pour les autres compétences
-  console.log(skillsCentral);
-
   useEffect(() => {
     const updateSize = () => {
       if (circleRef.current) {
@@ -30,7 +27,7 @@ export default function SkillsAnimatedRound({
         //setCircleSize(rect.width); // Ou `rect.height` si nécessaire
         //console.log("Taille réelle du cercle :", rect.width);
         const maxSize = Math.min(rect.width, rect.height); // Récupère la dimension la plus petite entre largeur et hauteur
-        setContainerSize(maxSize * sizeMultiplier + skillsOthers.length * 10);
+        setContainerSize(maxSize * sizeMultiplier + skills.length * 10);
         //console.log("maxSize du cercle :", maxSize);
       }
     };
@@ -39,9 +36,9 @@ export default function SkillsAnimatedRound({
     window.addEventListener("resize", updateSize);
 
     return () => window.removeEventListener("resize", updateSize);
-  }, [skillsOthers.length, sizeMultiplier]);
+  }, [skills.length, sizeMultiplier]);
 
-  const radius = containerSize / 2 + skillsOthers.length; // Calcule le rayon du cercle : moitié du conteneur + marge basée sur le nombre de compétences
+  const radius = containerSize / 2 + skills.length; // Calcule le rayon du cercle : moitié du conteneur + marge basée sur le nombre de compétences
 
   if (!skills) {
     return <div>not skills</div>;
@@ -60,12 +57,10 @@ export default function SkillsAnimatedRound({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          {skillsCentral[0] &&
-          skillsCentral[0].image &&
-          skillsCentral[0].image.url ? (
+          {skills[0] && skills[0].image && skills[0].image.url ? (
             <Image
-              src={skillsCentral[0].image.url}
-              alt={skillsCentral[0].image.alt}
+              src={skills[0].image.url}
+              alt={skills[0].image.alt}
               width={100}
               height={100}
               className="object-cover w-full h-full"
@@ -76,9 +71,9 @@ export default function SkillsAnimatedRound({
           )}
         </MotionBox>
 
-        {skillsOthers.map((item, index) => {
+        {skills.map((item, index) => {
           // Calcule la position sur le cercle
-          const totalElements = skillsOthers.length; // Nombre total d'éléments
+          const totalElements = skills.length; // Nombre total d'éléments
           const angle = (index / totalElements) * 360; // Angle en degrés
           const radians = (angle * Math.PI) / 180; // Conversion en radians
           const x = Math.cos(radians) * radius; // Position horizontale
@@ -148,7 +143,7 @@ const MotionGrid = motion(Grid); */
           initial={{ opacity: 1, scale: 1.75 }}
           animate={{ opacity: 0, scale: 0 }}
           exit={{ opacity: 0, scale: 0 }}
-          transition={{ delay: skillsOthers.length * 0.12 }}
+          transition={{ delay: skills.length * 0.12 }}
           style={{
             position: "absolute",
             //width: "150px",
