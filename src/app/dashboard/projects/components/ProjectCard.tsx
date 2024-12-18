@@ -72,7 +72,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
               />
             </div>
           ) : (
-            <Link href={`/pages/project/${project.id}`}> Voir le projet </Link>
+            <Link href={`/pages/projects/${project.id}`}> Voir le projet </Link>
           )}
         </div>
         <CardHeader className="w-full flex-col flex items-center justify-between p-2">

@@ -5,7 +5,6 @@ import ProjectPage from "./components/ProjectPage";
 
 export default async function ProjectClientPage() {
   const projects = (await getAllProjectsAction()) as FullProject[];
-  const section = await getSectionByTypeAction("test");
-
+  const section = await getSectionByTypeAction("projects");
   return <ProjectPage projects={projects} section={section} />;
 }

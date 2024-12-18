@@ -4,6 +4,6 @@ import SkillPageClient from "./components/SkillPageClient";
 
 export default async function SkillsClientPage() {
   const skills = await getAllSkillsAction();
-  const section = await getSectionByTypeAction("test");
+  const section = await getSectionByTypeAction("skills");
   return <SkillPageClient skills={skills} section={section} />;
 }

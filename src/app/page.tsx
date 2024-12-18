@@ -2,6 +2,6 @@ import { getSectionByTypeAction } from "./dashboard/sections/services/section.ac
 import HomeSvgPage from "./pages/home/HomePage";
 
 export default async function HomePage() {
-  const section = await getSectionByTypeAction("test");
+  const section = await getSectionByTypeAction("home");
   return <HomeSvgPage section={section} />;
 }
