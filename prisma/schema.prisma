@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -41,7 +35,7 @@ model ImageFile {
   skillId         String?      @unique
   coverProjectId  String?      @unique
   mediasProjectId String?
-  SectionPageId   String?      @unique
+  SectionPageId   String?
   SectionPage     SectionPage? @relation("SectionPageImage", fields: [SectionPageId], references: [id], onDelete: Cascade)
   coverProject    Project?     @relation("CoverProject", fields: [coverProjectId], references: [id], onDelete: Cascade)
   mediasProject   Project?     @relation("MediasProject", fields: [mediasProjectId], references: [id], onDelete: Cascade)
@@ -54,7 +48,7 @@ model Link {
   title     String
   order     Int      @default(1)
   target    String?  @default("__blank")
-  type      String? //navigation, github principal, github page ou github repo
+  type      String?
   inNav     Boolean? @default(true)
   isAdmin   Boolean? @default(false)
   projectId String?
@@ -70,11 +64,11 @@ model Icon {
 }
 
 model SectionPage {
-  id       String     @id @default(cuid())
+  id       String      @id @default(cuid())
   type     String
-  order    String     @default("1")
+  order    Int         @default(1)
   contents Content[]
-  image    ImageFile? @relation("SectionPageImage")
+  images   ImageFile[] @relation("SectionPageImage")
   titles   Title[]
 }
 

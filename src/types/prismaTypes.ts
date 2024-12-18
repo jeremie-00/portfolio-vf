@@ -31,7 +31,7 @@ export type FullIcon = Prisma.IconGetPayload<{
 
 export type FullSectionPage = Prisma.SectionPageGetPayload<{
   include: {
-    image: true;
+    images: true;
     titles: true;
     contents: true;
   };

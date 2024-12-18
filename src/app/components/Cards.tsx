@@ -1,16 +1,27 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FullSectionPage } from "@/types/prismaTypes";
+import { Pencil } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { deleteSectionAction } from "../dashboard/sections/services/section.action";
+import { DeleteAlerteButton } from "./Buttons";
 
 interface CardsProps {
   title: string;
   href?: string;
   desc?: string;
   children: React.ReactNode;
+  type?: string;
+  order?: string;
 }
 
 export function CardForm({ title, children }: CardsProps) {
@@ -32,6 +43,79 @@ export function CardSwitch({ title, desc, children }: CardsProps) {
         <CardDescription>{desc || "default description"}</CardDescription>
       </CardHeader>
       <CardContent className="flex items-center p-4">{children}</CardContent>
+    </Card>
+  );
+}
+
+export function CardsSectionDashboard({
+  section,
+}: {
+  section: FullSectionPage;
+}) {
+  const { id, type, order, titles, contents } = section;
+  const [isLoading, setIsLoading] = useState(false);
+  const handleDeletedProject = async () => {
+    setIsLoading(true);
+    console.log(section.id);
+    const result = await deleteSectionAction({
+      ID: section.id,
+      medias: section.images,
+    });
+    console.log(result);
+    setIsLoading(false);
+
+    /*    const actionType = "supprimer";
+    if (result?.serverError || result?.validationErrors) {
+      ToastProjectAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+    }
+    if (result?.data) {
+      ToastProjectAction({ data: result.data, actionType });
+    } */
+  };
+
+  return (
+    <Card className="flex items-center justify-center">
+      <CardHeader className="flex flex-col gap-4">
+        <h3>Type de la section : {type}</h3>
+        <h3>Ordre d&apos;affichage : {order}</h3>
+      </CardHeader>
+      <CardContent className="flex flex-1 p-4">
+        <div className="flex flex-col flex-1 justify-center items-start gap-4">
+          {" "}
+          {titles.map((title, index) => (
+            <CardTitle key={title.id}>
+              Titre {index + 1} : {title.text}
+            </CardTitle>
+          ))}
+        </div>
+        <div className="flex flex-col flex-1 justify-center items-start gap-4">
+          {contents.map((content, index) => (
+            <CardDescription key={content.id}>
+              Contenu {index + 1} : {content.text || "default description"}
+            </CardDescription>
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter className="flex flex-col place-content-center gap-2 p-5">
+        <Link href={`/dashboard/sections/${id}`}>
+          <Button type="button" size="icon" variant="secondary">
+            <Pencil
+              style={{ width: "26px", height: "26px" }}
+              color="#ffffff"
+              strokeWidth={1.5}
+              absoluteStrokeWidth
+            />
+          </Button>
+        </Link>
+        <DeleteAlerteButton
+          actionButtonDelete={handleDeletedProject}
+          pendingDelete={isLoading}
+        />
+      </CardFooter>
     </Card>
   );
 }

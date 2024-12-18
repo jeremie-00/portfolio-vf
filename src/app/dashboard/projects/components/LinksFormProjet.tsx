@@ -1,5 +1,6 @@
 "use client";
 
+import { DeleteAlerteButton } from "@/app/components/Buttons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,18 +149,26 @@ export const LinksFormProject = forwardRef<
               />
             </div>
 
-            <Button
-              type="button"
-              onClick={() => removeLinkField(index, link.id)}
-              variant="destructive"
-              size="icon"
-            >
-              <Trash2
-                style={{ width: "26px", height: "26px" }}
-                color="#ffffff"
-                strokeWidth={1}
+            {link.id ? (
+              <DeleteAlerteButton
+                actionButtonDelete={() => removeLinkField(index, link.id)}
+                pendingDelete={false}
+                variant="unstyled"
               />
-            </Button>
+            ) : (
+              <Button
+                variant="unstyled"
+                size="icon"
+                //type="button"
+                onClick={() => removeLinkField(index, link.id)}
+              >
+                <Trash2
+                  style={{ width: "26px", height: "26px" }}
+                  strokeWidth={1}
+                  color={"red"}
+                />
+              </Button>
+            )}
           </div>
         </div>
       ))}

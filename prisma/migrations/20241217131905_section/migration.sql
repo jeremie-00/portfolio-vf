@@ -13,7 +13,7 @@ CREATE TABLE "Project" (
     "title" TEXT NOT NULL,
     "shortDesc" TEXT NOT NULL,
     "longDesc" TEXT NOT NULL,
-    "order" TEXT NOT NULL DEFAULT '1',
+    "order" INTEGER NOT NULL DEFAULT 1,
     "type" TEXT,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
@@ -37,7 +37,7 @@ CREATE TABLE "Link" (
     "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "order" TEXT NOT NULL DEFAULT '1',
+    "order" INTEGER NOT NULL DEFAULT 1,
     "target" TEXT DEFAULT '__blank',
     "type" TEXT,
     "inNav" BOOLEAN DEFAULT true,
@@ -60,7 +60,7 @@ CREATE TABLE "Icon" (
 CREATE TABLE "SectionPage" (
     "id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    "order" TEXT NOT NULL DEFAULT '1',
+    "order" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "SectionPage_pkey" PRIMARY KEY ("id")
 );

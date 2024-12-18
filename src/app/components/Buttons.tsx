@@ -71,9 +71,17 @@ export function UpdateButton({ pending }: ButtonProps) {
 export function DeleteAlerteButton({
   actionButtonDelete,
   pendingDelete,
+  variant = "destructive",
 }: {
   actionButtonDelete: () => void;
   pendingDelete: boolean;
+  variant?:
+    | "destructive"
+    | "default"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "unstyled";
 }) {
   const handleDelete = async () => {
     actionButtonDelete();
@@ -82,7 +90,12 @@ export function DeleteAlerteButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="icon" disabled={pendingDelete}>
+        <Button
+          variant={variant}
+          size="icon"
+          //className="text-red-500 text-sm"
+          disabled={pendingDelete}
+        >
           {pendingDelete ? (
             <LoaderCircle
               className="animate-spin"
@@ -91,7 +104,7 @@ export function DeleteAlerteButton({
           ) : (
             <Trash2
               style={{ width: "26px", height: "26px" }}
-              color="#ffffff"
+              color={variant === "unstyled" ? "red" : "#ffffff"}
               strokeWidth={1}
             />
           )}

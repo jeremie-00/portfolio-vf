@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { SubmitButton } from "@/app/components/Buttons";
+import { SubmitButton, UpdateButton } from "@/app/components/Buttons";
 import { CardForm } from "@/app/components/Cards";
 import { MultiImageUpload } from "@/app/components/UploadImage/MultiImageUpload";
 import { SingleImageUpload } from "@/app/components/UploadImage/SingleImageUpload";
@@ -69,7 +69,11 @@ export default function ProjectForm({
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
-    return <SubmitButton pending={pending} />;
+    return isCreate ? (
+      <SubmitButton pending={pending} />
+    ) : (
+      <UpdateButton pending={pending} />
+    );
   };
 
   // Mettez à jour la fonction pour gérer le tableau d'options

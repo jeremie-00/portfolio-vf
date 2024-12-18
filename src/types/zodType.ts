@@ -215,6 +215,51 @@ export const ProjectDeleteSchema = z
     return true;
   });
 
+export const SectionSchema = z.object({
+  id: z.string().optional(),
+  type: z.string(),
+  order: z.string().default("1"),
+  titles: z.array(z.string()),
+  contents: z.array(z.string()),
+  medias: z.array(z.instanceof(File)).optional(),
+});
+
+export const SectionDeleteSchema = z
+  .object({
+    ID: z.string().optional(),
+    medias: z.array(z.object({ url: z.string().optional(), id: z.string() })),
+  })
+  .refine(async (data) => {
+    const existingSection = await prisma.sectionPage.findUnique({
+      where: { id: data.ID },
+    });
+
+    if (!existingSection) throw new ActionError("Section introuvable.");
+
+    return true;
+  });
+
+export const TextSectionDeleteSchema = z
+  .object({
+    ID: z.string().optional(),
+  })
+  .refine(async (data) => {
+    const existingTitle = await prisma.title.findUnique({
+      where: { id: data.ID },
+    });
+    if (existingTitle) return true;
+
+    const existingContent = await prisma.content.findUnique({
+      where: { id: data.ID },
+    });
+    if (existingContent) return true;
+
+    if (!existingTitle) throw new ActionError("Titre introuvable.");
+    if (!existingContent) throw new ActionError("Contenu introuvable.");
+
+    return true;
+  });
+
 /*    const validationResult = ProjectSchema.safeParse(projectData);
 
     if (!validationResult.success) {
