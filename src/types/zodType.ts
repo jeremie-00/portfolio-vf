@@ -261,7 +261,36 @@ export const TextSectionDeleteSchema = z
   });
 
 export const ImageUploadSchema = z.object({
-  file: z.instanceof(File),
+  file: z.instanceof(File).superRefine((file, ctx) => {
+    // Définir les types autorisés
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/svg+xml",
+      "image/webp",
+    ];
+    // Taille maximale en octets (5 Mo)
+    const maxSize = 5 * 1024 * 1024;
+
+    // Validation du type
+    if (!allowedTypes.includes(file.type)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Le type de fichier "${file.type}" n'est pas autorisé.`,
+      });
+    }
+
+    // Validation de la taille
+    if (file.size > maxSize) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `La taille du fichier (${(file.size / 1024 / 1024).toFixed(
+          2
+        )} Mo) dépasse la limite de 5 Mo.`,
+      });
+    }
+  }),
   folder: z.string().optional(),
 });
 
