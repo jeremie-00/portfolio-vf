@@ -11,6 +11,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import SessionWrapper from "./components/SessionWrapper";
 import { AppSidebar } from "./components/sidebar/AppSidebar";
 import "./globals.css";
+import { ThemeProvider } from "./providers/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,14 +39,21 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset className="flex-1 overflow-x-auto">
-              <SidebarTrigger />
-              <AnimatePresence mode="wait">{children}</AnimatePresence>
-              <Toaster />
-            </SidebarInset>
-          </SidebarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset className="flex-1 overflow-x-auto">
+                <SidebarTrigger />
+                <AnimatePresence mode="wait">{children}</AnimatePresence>
+                <Toaster />
+              </SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
         </body>
       </html>
     </SessionWrapper>

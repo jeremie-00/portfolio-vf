@@ -33,6 +33,14 @@ export const getSectionByIdAction = async (id: string) => {
   return sectionPage;
 };
 
+export const getSectionByTypeAction = async (type: string) => {
+  const sectionPage = await prisma.sectionPage.findFirst({
+    where: { type },
+    include: { images: true, titles: true, contents: true },
+  });
+  return sectionPage;
+};
+
 export const createSectionPageAction = authentificationAction
   .schema(SectionSchema)
   .action(async ({ parsedInput: { ...section } }) => {

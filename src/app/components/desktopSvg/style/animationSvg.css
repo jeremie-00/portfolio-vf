@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.smoke-1 {
+  animation: shift 5s linear 0.5s infinite;
+  opacity: 0;
+}
+
+.smoke-2 {
+  animation: shift-2 4s linear 0.6s infinite;
+  opacity: 0;
+}
+
+.smoke-3 {
+  animation: shift-3 5s linear 1.2s infinite;
+  opacity: 0;
+}
+
+@keyframes shift {
+  0% {
+    transform: translate(0px, 5%);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0px, -2%);
+    opacity: 0;
+  }
+}
+
+@keyframes shift-2 {
+  0% {
+    transform: translate(0, 5%);
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0, -2%);
+    opacity: 0;
+  }
+}
+
+@keyframes shift-3 {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 5%);
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0px, -2%);
+    opacity: 0;
+  }
+}
+
+.dark .Illustration {
+  filter: brightness(90%) saturate(90%);
+}
+.dark .beam {
+  animation: flicker 0.8s 0.2s forwards;
+}
+.dark .beam-bulb {
+  animation: flicker-bulb 0.8s 0.2s forwards;
+}
+@keyframes flicker {
+  20% {
+    opacity: 0.1;
+  }
+
+  23% {
+    opacity: 0;
+  }
+
+  26% {
+    opacity: 0.15;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 0.2;
+  }
+
+  38% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+@keyframes flicker-bulb {
+  20% {
+    opacity: 0.7;
+  }
+
+  23% {
+    opacity: 0.5;
+  }
+
+  26% {
+    opacity: 0.75;
+  }
+
+  30% {
+    opacity: 0.5;
+  }
+
+  35% {
+    opacity: 0.85;
+  }
+
+  38% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
