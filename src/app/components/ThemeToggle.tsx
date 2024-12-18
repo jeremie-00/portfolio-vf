@@ -11,7 +11,6 @@ export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Assure-toi que le rendu est prêt avant d'afficher les icônes dynamiques
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -21,7 +20,6 @@ export function ThemeToggle() {
   };
 
   if (!mounted) {
-    // Empêche le rendu des icônes avant que le thème ne soit défini
     return <Skeleton className="h-8 w-8 rounded" />;
   }
 

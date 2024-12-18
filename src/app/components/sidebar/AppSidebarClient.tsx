@@ -14,6 +14,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
@@ -26,6 +27,8 @@ import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { SlLogout } from "react-icons/sl";
+import { GithubButton } from "../GithubButton";
+import { ThemeToggle } from "../ThemeToggle";
 
 export function AppSidebarClient({
   clientLinks,
@@ -37,18 +40,25 @@ export function AppSidebarClient({
   session: Session | null;
 }) {
   const isAuthenticated = session?.user?.id;
-
   const { status } = useSession();
   const isLoading = status === "loading";
+  const githubBtn = clientLinks.find((link) => link.title === "Github");
+  const clientLinksFiltered = clientLinks.filter(
+    (link) => link.type !== "github"
+  );
 
   return (
     <Sidebar variant="inset" collapsible="icon">
+      <SidebarHeader>
+        <ThemeToggle />
+        <GithubButton link={githubBtn} />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {clientLinks.map((link) => (
+              {clientLinksFiltered.map((link) => (
                 <SidebarMenuItem key={link.id}>
                   <SidebarMenuButton asChild>
                     {isLoading ? (
