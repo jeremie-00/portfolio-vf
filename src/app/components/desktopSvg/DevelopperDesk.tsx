@@ -1,7 +1,6 @@
 "use client";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
-import "./style/animationSvg.css";
 
 const DevelopperDesk: React.FC = () => {
   const { resolvedTheme } = useTheme();

@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .smoke-1 {
   animation: shift 5s linear 0.5s infinite;
   opacity: 0;
