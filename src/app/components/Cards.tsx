@@ -12,9 +12,9 @@ import { FullSectionPage } from "@/types/prismaTypes";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { ToastSectionAction } from "../dashboard/sections/components/ToastSection";
 import { deleteSectionAction } from "../dashboard/sections/services/section.action";
 import { DeleteAlerteButton } from "./Buttons";
-import { ToastSectionAction } from "../dashboard/sections/components/ToastSection";
 
 interface CardsProps {
   title: string;
@@ -57,7 +57,6 @@ export function CardsSectionDashboard({
   const [isLoading, setIsLoading] = useState(false);
   const handleDeletedProject = async () => {
     setIsLoading(true);
-    console.log(section.id);
     const result = await deleteSectionAction({
       ID: section.id,
       medias: section.images,
@@ -78,12 +77,12 @@ export function CardsSectionDashboard({
   };
 
   return (
-    <Card className="flex items-center justify-center">
-      <CardHeader className="flex flex-col gap-4">
+    <Card className="flex flex-col ">
+      <CardHeader className="flex gap-4 p-4">
         <h3>Type de la section : {type}</h3>
         <h3>Ordre d&apos;affichage : {order}</h3>
       </CardHeader>
-      <CardContent className="flex flex-1 p-4">
+      <CardContent className="flex flex-col p-4 gap-6">
         <div className="flex flex-col flex-1 justify-center items-start gap-4">
           {" "}
           {titles.map((title, index) => (
@@ -100,7 +99,7 @@ export function CardsSectionDashboard({
           ))}
         </div>
       </CardContent>
-      <CardFooter className="flex flex-col place-content-center gap-2 p-5">
+      <CardFooter className="flex place-content-center gap-12 p-6">
         <Link href={`/dashboard/sections/${id}`}>
           <Button type="button" size="icon" variant="secondary">
             <Pencil
