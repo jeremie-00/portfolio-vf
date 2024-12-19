@@ -25,7 +25,7 @@ export default function HomeSvgPage({ section }: HomeProps) {
       </div>
 
       <div className="w-full h-full flex flex-col gap-3">
-        <h1 className="font-black dark:text-white xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
+        <h1 className="font-extrabold text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
             index === 1 ? (
               <span key={title.id} className="text-primary">
