@@ -1,4 +1,9 @@
+import Collaps from "@/app/components/collaps/collaps";
+import SlideShow from "@/app/components/slider/SlideShow";
+
 import { getProjectByIdAction } from "@/app/dashboard/projects/services/project.action";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function page({
   params,
@@ -7,24 +12,49 @@ export default async function page({
 }) {
   const paramsId = (await params).id;
   const project = await getProjectByIdAction(paramsId);
+
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-      <div>
-        {`Nom du projet : ${project?.title} -- ID : ${paramsId} -- nombre de liens associer : ${project?.links.length}`}
+    <div className="w-full h-full flex flex-col items-center gap-8 p-4">
+      <h1 className="text-4xl flex flex-col items-center gap-4">
+        Bienvenue sur le projet
+        <span className="text-primary text-5xl font-semibold">
+          {project?.title}
+        </span>
+      </h1>
+      <div className="flex gap-4 items-center justify-center flex-col sm:flex-row">
+        {project?.links.map((link) => (
+          <Link
+            key={link.id}
+            href={link.url}
+            target={link.target || "_blank"}
+            className={buttonVariants({
+              variant: "default",
+              size: "full",
+            })}
+          >
+            {link.title}
+          </Link>
+        ))}
       </div>
-      {project?.links.map((link, index) => (
-        <div
-          key={link.id}
-          className="w-full flex flex-col items-center justify-center gap-4"
-        >
-          <span>
-            Nom du lien {index + 1} : {link.title}
-          </span>
-          <span>
-            URL {index + 1} : {link.url}
-          </span>
-        </div>
-      ))}
+      {project && project.medias && project.medias.length > 0 ? (
+        <SlideShow pictures={project?.medias.map((media) => media.url)} />
+      ) : (
+        <p className="text-3xl">Aucune image</p>
+      )}
+      <div className="w-full flex flex-col sm:flex-row gap-4">
+        <Collaps title={"Description"}>
+          <p className="p bg-sidebar/40 rounded-b-lg"> {project?.longDesc} </p>
+        </Collaps>
+        <Collaps title={"Skills"}>
+          <ul className="ul bg-sidebar/40 rounded-b-lg p-4">
+            {project?.skills.map((skill) => (
+              <li className="li" key={skill.title}>
+                {skill.title}
+              </li>
+            ))}
+          </ul>
+        </Collaps>
+      </div>
     </div>
   );
 }
