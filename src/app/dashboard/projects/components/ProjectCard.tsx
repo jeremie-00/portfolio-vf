@@ -95,7 +95,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
         ) : null}
 
         {project.cover ? (
-          <div className="shadow-md w-full h-80 m-auto flex items-center justify-center border border-border rounded-xl overflow-hidden object-cover">
+          <div className="shadow-md w-full h-80 m-auto flex items-center justify-center border border-border dark:border-secondary rounded-xl overflow-hidden object-cover">
             <Image
               src={project.cover.url}
               alt={project.cover.alt}

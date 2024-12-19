@@ -15,7 +15,7 @@ export default async function page({
 
   return (
     <div className="w-full h-full flex flex-col items-center gap-8 p-4">
-      <h1 className="text-4xl flex flex-col items-center gap-4">
+      <h1 className="text-4xl flex flex-col items-center gap-4 text-center">
         Bienvenue sur le projet
         <span className="text-primary text-5xl font-semibold">
           {project?.title}
