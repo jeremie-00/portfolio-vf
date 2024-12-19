@@ -60,10 +60,7 @@ export const updateSkillAction = authentificationAction
 
     const imageUrl =
       skill.file &&
-      ((await handleFileUpload({
-        file: skill.file,
-        folder: "cover",
-      })) as string);
+      (await handleFileUpload({ file: skill.file, folder: "cover" }));
 
     if (exitingSkill?.image && imageUrl)
       await handleImageDelete(exitingSkill.image);
@@ -78,8 +75,14 @@ export const updateSkillAction = authentificationAction
         image: imageUrl
           ? {
               upsert: {
-                update: { url: imageUrl, alt: `Logo ${skill.title}` },
-                create: { url: imageUrl, alt: `Logo ${skill.title}` },
+                update: {
+                  url: imageUrl.data as string,
+                  alt: `Logo ${skill.title}`,
+                },
+                create: {
+                  url: imageUrl.data as string,
+                  alt: `Logo ${skill.title}`,
+                },
               },
             }
           : undefined,

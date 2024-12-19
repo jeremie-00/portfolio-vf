@@ -41,8 +41,7 @@ export const createProjectAction = authentificationAction
     } = project;
 
     const coverUrl =
-      cover &&
-      ((await handleFileUpload({ file: cover, folder: "cover" })) as string);
+      cover && (await handleFileUpload({ file: cover, folder: "cover" }));
 
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
@@ -65,7 +64,7 @@ export const createProjectAction = authentificationAction
         cover: coverUrl
           ? {
               create: {
-                url: coverUrl,
+                url: coverUrl.data as string,
                 alt: `Projet ${project.title} capture d'écran`,
               },
             }
@@ -121,14 +120,17 @@ export const updateProjectAction = authentificationAction
       throw new ActionError("Projet non trouvé.");
     }
 
-    const coverUrl =
-      cover &&
-      ((await handleFileUpload({ file: cover, folder: "cover" })) as string);
+    const coverUrl = cover
+      ? await handleFileUpload({ file: cover, folder: "cover" })
+      : null;
 
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
         if (media.size > 0) {
-          const res = await handleFileUpload({ file: media, folder: "medias" });
+          const res = await handleFileUpload({
+            file: media,
+            folder: "medias",
+          });
           return res?.data as string;
         }
         return null;
@@ -155,11 +157,11 @@ export const updateProjectAction = authentificationAction
           ? {
               upsert: {
                 update: {
-                  url: coverUrl,
+                  url: coverUrl.data as string,
                   alt: `Projet ${title} capture d'écran`,
                 },
                 create: {
-                  url: coverUrl,
+                  url: coverUrl.data as string,
                   alt: `Projet ${title} capture d'écran`,
                 },
               },
