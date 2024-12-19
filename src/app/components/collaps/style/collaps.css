@@ -1,0 +1,45 @@
+.container-collaps {
+  width: 100%;
+}
+
+.container-collaps .collaps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-collaps .collaps .arrow-collaps {
+  cursor: pointer;
+  transition: transform 0.4s linear;
+}
+
+.container-collaps .collaps .arrow-collaps.rotate {
+  transform: rotate(-180deg);
+  transition: transform 0.4s linear;
+}
+
+.container-collaps .content-collaps {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.4s linear;
+}
+
+.container-collaps .content-collaps.visible {
+  visibility: visible;
+  grid-template-rows: 1fr;
+}
+
+.container-collaps .content-collaps .content {
+  align-self: end;
+  min-height: 0;
+}
+
+.container-collaps .content-collaps .content .ul,
+.container-collaps .content-collaps .content .p {
+  padding: 20px;
+}
+
+.container-collaps .content-collaps .content .li {
+  margin-bottom: 5px;
+}
