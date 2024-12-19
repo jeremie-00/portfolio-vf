@@ -42,7 +42,8 @@ export function AppSidebarClient({
 }) {
   const pathnameComplete = usePathname() || "";
   const segments = pathnameComplete.split("/").filter(Boolean);
-  const pathname = "/" + segments[0] + "/" + segments[1];
+  const pathname =
+    pathnameComplete === "/" ? "/" : "/" + segments[0] + "/" + segments[1];
   const isAuthenticated = session?.user?.id;
   const { status } = useSession();
   const isLoading = status === "loading";
