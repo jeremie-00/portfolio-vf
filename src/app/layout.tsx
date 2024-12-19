@@ -8,8 +8,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { AnimatePresence } from "motion/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "./components/collaps/style/collaps.css";
+import "./components/desktopSvg/style/animationSvg.css";
 import SessionWrapper from "./components/SessionWrapper";
 import { AppSidebar } from "./components/sidebar/AppSidebar";
+import "./components/slider/style/slider.css";
 import "./globals.css";
 import { ThemeProvider } from "./providers/theme-provider";
 
@@ -38,7 +41,7 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="fr" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-mono)] antialiased`}
         >
           <ThemeProvider
             attribute="class"
