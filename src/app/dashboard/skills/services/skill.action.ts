@@ -31,16 +31,11 @@ export const createSkillAction = authentificationAction
   .schema(SkillSchema)
   .action(async ({ parsedInput: { ...skill } }) => {
     const imageUrl =
-      skill.file && skill.file.size > 0
-        ? await handleFileUpload({ file: skill.file, folder: "skills" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          )
-        : null;
+      skill.file &&
+      ((await handleFileUpload({
+        file: skill.file,
+        folder: "cover",
+      })) as string);
 
     const display = skill.display === "on";
     const createdSkill = await prisma.skill.create({
@@ -64,16 +59,11 @@ export const updateSkillAction = authentificationAction
       skill && skill.ID ? await getSkillByIdAction(skill.ID) : null;
 
     const imageUrl =
-      skill.file && skill.file.size > 0
-        ? await handleFileUpload({ file: skill.file, folder: "skills" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          )
-        : null;
+      skill.file &&
+      ((await handleFileUpload({
+        file: skill.file,
+        folder: "cover",
+      })) as string);
 
     if (exitingSkill?.image && imageUrl)
       await handleImageDelete(exitingSkill.image);

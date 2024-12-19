@@ -44,20 +44,13 @@ export const getSectionByTypeAction = async (type: string) => {
 export const createSectionPageAction = authentificationAction
   .schema(SectionSchema)
   .action(async ({ parsedInput: { ...section } }) => {
-    //const image = formData.get("cover") as File;
     const mediasUrls = await Promise.all(
       section.medias?.map(async (media) => {
         if (media.size > 0) {
-          await handleFileUpload({ file: media, folder: "medias" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          );
+          const res = await handleFileUpload({ file: media, folder: "medias" });
+          return res?.data as string;
         }
-        return null; // Retourne `null` si le média est vide
+        return null;
       }) ?? []
     );
 
@@ -100,24 +93,16 @@ export const updateSectionPageAction = authentificationAction
     if (!existingdataSectionPage) {
       throw new Error("Section non trouvé.");
     }
-    const mediasUrls =
-      section.medias &&
-      (await Promise.all(
-        section.medias.map(async (media) => {
-          if (media.size > 0) {
-            await handleFileUpload({
-              file: media,
-              folder: `section/${section.type}`,
-            }).then((res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            });
-          }
-          return null; // Retourne `null` si le média est vide
-        }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
-      ));
+
+    const mediasUrls = await Promise.all(
+      section.medias?.map(async (media) => {
+        if (media.size > 0) {
+          const res = await handleFileUpload({ file: media, folder: "medias" });
+          return res?.data as string;
+        }
+        return null;
+      }) ?? []
+    );
 
     const updatedSection = await prisma.sectionPage.update({
       where: { id: section.id },

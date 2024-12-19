@@ -40,33 +40,19 @@ export const createProjectAction = authentificationAction
       links,
     } = project;
 
+    const coverUrl =
+      cover &&
+      ((await handleFileUpload({ file: cover, folder: "cover" })) as string);
+
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
         if (media.size > 0) {
-          await handleFileUpload({ file: media, folder: "medias" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          );
+          const res = await handleFileUpload({ file: media, folder: "medias" });
+          return res?.data as string;
         }
-        return null; // Retourne `null` si le média est vide
-      }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
+        return null;
+      }) ?? []
     );
-
-    const coverUrl =
-      cover && cover.size > 0
-        ? await handleFileUpload({ file: cover, folder: "cover" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          )
-        : null;
 
     const createdProject = await prisma.project.create({
       data: {
@@ -128,7 +114,7 @@ export const updateProjectAction = authentificationAction
       skills,
       links,
     } = project;
-    console.log(ID);
+
     const existingProject = ID ? await getProjectByIdAction(ID) : null;
 
     if (!existingProject) {
@@ -136,37 +122,22 @@ export const updateProjectAction = authentificationAction
     }
 
     const coverUrl =
-      cover && cover.size > 0
-        ? await handleFileUpload({ file: cover, folder: "cover" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          )
-        : null;
-
-    if (cover && cover.size > 0 && existingProject.cover)
-      await del(existingProject.cover.url);
+      cover &&
+      ((await handleFileUpload({ file: cover, folder: "cover" })) as string);
 
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
         if (media.size > 0) {
-          await handleFileUpload({ file: media, folder: "medias" }).then(
-            (res) => {
-              if (!res) {
-                throw new Error("Erreur lors du téléchargement de l'image");
-              }
-              return res.data;
-            }
-          );
+          const res = await handleFileUpload({ file: media, folder: "medias" });
+          return res?.data as string;
         }
-        return null; // Retourne `null` si le média est vide
-      }) ?? [] // Si `medias` est undefined, renvoie un tableau vide
+        return null;
+      }) ?? []
     );
 
-    // Identifiez les compétences actuellement associées au projet
+    if (cover && cover.size > 0 && existingProject.cover)
+      await del(existingProject.cover.url);
+
     const existingSkills = existingProject?.skills.map((skill) => skill.id);
     const skillDisconnect = existingSkills?.filter(
       (skillId) => !skills?.includes(skillId)
