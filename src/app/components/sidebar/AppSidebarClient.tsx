@@ -26,6 +26,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SlLogout } from "react-icons/sl";
 import { GithubButton } from "../GithubButton";
 import { ThemeToggle } from "../ThemeToggle";
@@ -39,6 +40,9 @@ export function AppSidebarClient({
   adminLinks: FullLink[] | null;
   session: Session | null;
 }) {
+  const pathnameComplete = usePathname() || "";
+  const segments = pathnameComplete.split("/").filter(Boolean);
+  const pathname = "/" + segments[0] + "/" + segments[1];
   const isAuthenticated = session?.user?.id;
   const { status } = useSession();
   const isLoading = status === "loading";
@@ -60,7 +64,7 @@ export function AppSidebarClient({
             <SidebarMenu>
               {clientLinksFiltered.map((link) => (
                 <SidebarMenuItem key={link.id}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={pathname === link.url}>
                     {isLoading ? (
                       <Skeleton className="h-8 w-full" />
                     ) : (
@@ -89,7 +93,13 @@ export function AppSidebarClient({
                 {adminLinks &&
                   adminLinks.map((link) => (
                     <SidebarMenuItem key={link.id}>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={
+                          pathname === link.url ||
+                          pathname === `${link.url}/create`
+                        }
+                      >
                         {isLoading ? (
                           <Skeleton className="h-8 w-full" />
                         ) : (
@@ -109,7 +119,11 @@ export function AppSidebarClient({
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <SidebarMenuAction>
-                              <MoreHorizontal />
+                              {isLoading ? (
+                                <Skeleton className="h-2 w-full" />
+                              ) : (
+                                <MoreHorizontal />
+                              )}
                             </SidebarMenuAction>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent side="right" align="start">
