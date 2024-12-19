@@ -20,7 +20,7 @@ export function ThemeToggle() {
   };
 
   if (!mounted) {
-    return <Skeleton className="h-8 w-8 rounded" />;
+    return <Skeleton className="h-10 w-10 rounded" />;
   }
 
   return (

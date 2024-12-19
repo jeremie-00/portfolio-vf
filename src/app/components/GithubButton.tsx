@@ -14,7 +14,7 @@ export function GithubButton({ link }: { link: FullLink | null | undefined }) {
   }, []);
 
   if (!mounted) {
-    return <Skeleton className="h-8 w-8 rounded" />;
+    return <Skeleton className="h-10 w-10 rounded" />;
   }
 
   return (
@@ -26,7 +26,7 @@ export function GithubButton({ link }: { link: FullLink | null | undefined }) {
       href={link?.url || "/"}
       target={link?.target || "__blank"}
     >
-      <DynamicIcon name={link?.icon?.name || "Github"} size={12} />
+      <DynamicIcon name={link?.icon?.name || "Github"} size={24} />
     </Link>
   );
 }

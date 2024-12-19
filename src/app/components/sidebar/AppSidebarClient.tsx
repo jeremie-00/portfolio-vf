@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FullLink } from "@/types/prismaTypes";
-import { MoreHorizontal } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -69,16 +69,15 @@ export function AppSidebarClient({
                     {isLoading ? (
                       <Skeleton className="h-8 w-full" />
                     ) : (
-                      <div key={link.id}>
+                      <Link href={link.url}>
                         <DynamicIcon
                           name={link.icon ? link.icon.name : "CircleOff"}
                           size={40}
                           className="text-primary"
                         />
-                        <Link href={link.url}>
-                          <span>{link.title}</span>
-                        </Link>
-                      </div>
+
+                        <span>{link.title}</span>
+                      </Link>
                     )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -104,16 +103,15 @@ export function AppSidebarClient({
                         {isLoading ? (
                           <Skeleton className="h-8 w-full" />
                         ) : (
-                          <div key={link.id}>
+                          <Link href={link.url}>
                             <DynamicIcon
                               name={link.icon ? link.icon.name : "CircleOff"}
                               size={40}
                               className="text-primary"
                             />
-                            <Link href={link.url}>
-                              <span>{link.title}</span>
-                            </Link>
-                          </div>
+
+                            <span>{link.title}</span>
+                          </Link>
                         )}
                       </SidebarMenuButton>
                       {link.title !== "Icones" ? (
@@ -123,7 +121,7 @@ export function AppSidebarClient({
                               {isLoading ? (
                                 <Skeleton className="h-2 w-full" />
                               ) : (
-                                <MoreHorizontal />
+                                <Plus />
                               )}
                             </SidebarMenuAction>
                           </DropdownMenuTrigger>
@@ -153,7 +151,7 @@ export function AppSidebarClient({
                 buttonVariants({
                   variant: "default",
                   size: "sm",
-                }) + "w-full"
+                }) + "w-full [&_svg]:size-5"
               }
               onClick={async () => {
                 await signOut({
