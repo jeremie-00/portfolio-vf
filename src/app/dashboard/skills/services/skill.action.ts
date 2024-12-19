@@ -32,18 +32,20 @@ export const createSkillAction = authentificationAction
   .action(async ({ parsedInput: { ...skill } }) => {
     const imageUrl =
       skill.file &&
-      ((await handleFileUpload({
-        file: skill.file,
-        folder: "cover",
-      })) as string);
+      (await handleFileUpload({ file: skill.file, folder: "cover" }));
 
     const display = skill.display === "on";
     const createdSkill = await prisma.skill.create({
       data: {
         title: skill.title,
         display: display,
-        image: imageUrl
-          ? { create: { url: imageUrl, alt: `Logo ${skill.title}` } }
+        image: imageUrl?.data
+          ? {
+              create: {
+                url: imageUrl.data as string,
+                alt: `Logo ${skill.title}`,
+              },
+            }
           : undefined,
       },
     });
@@ -72,7 +74,7 @@ export const updateSkillAction = authentificationAction
       data: {
         title: skill.title,
         display: display,
-        image: imageUrl
+        image: imageUrl?.data
           ? {
               upsert: {
                 update: {
