@@ -10,11 +10,24 @@ export default {
   theme: {
     extend: {
       aspectRatio: {
-        card: "0.71",
+        roundedCard: "0.71",
+        slider: "1.9",
+        imgCard: "1.25",
+        card: "0.68",
       },
       backgroundImage: {
         "radial-custom":
           "radial-gradient(at 50% 50%, var(--tw-gradient-from), var(--tw-gradient-to) )",
+      },
+      container: {
+        center: true,
+        padding: "1rem",
+        screens: {
+          sm: "100%",
+          md: "100%",
+          lg: "1040px",
+          xl: "1040px",
+        },
       },
       colors: {
         textColor: "hsl(var(--font-color))",
