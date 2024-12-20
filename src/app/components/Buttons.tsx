@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
-import { Check, LoaderCircle, Pencil, Trash2 } from "lucide-react";
+import DynamicIcon from "../dashboard/icons/components/DynamicIcon";
 interface ButtonProps {
   pending: boolean;
 }
@@ -25,17 +25,9 @@ export function SubmitButton({ pending }: ButtonProps) {
       value="creer"
     >
       {pending ? (
-        <LoaderCircle
-          className="animate-spin"
-          style={{ width: "26px", height: "26px" }}
-        />
+        <DynamicIcon name="LoaderCircle" className="animate-spin" />
       ) : (
-        <Check
-          style={{ width: "26px", height: "26px" }}
-          color="#ffffff"
-          strokeWidth={1.5}
-          absoluteStrokeWidth
-        />
+        <DynamicIcon name="Check" />
       )}
     </Button>
   );
@@ -52,17 +44,9 @@ export function UpdateButton({ pending }: ButtonProps) {
       value="modifier"
     >
       {pending ? (
-        <LoaderCircle
-          className="animate-spin"
-          style={{ width: "26px", height: "26px" }}
-        />
+        <DynamicIcon name="LoaderCircle" className="animate-spin" />
       ) : (
-        <Pencil
-          style={{ width: "26px", height: "26px" }}
-          color="#ffffff"
-          strokeWidth={1.5}
-          absoluteStrokeWidth
-        />
+        <DynamicIcon name="Pencil" />
       )}
     </Button>
   );
@@ -90,23 +74,11 @@ export function DeleteAlerteButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant={variant}
-          size="icon"
-          //className="text-red-500 text-sm"
-          disabled={pendingDelete}
-        >
+        <Button variant={variant} size="icon" disabled={pendingDelete}>
           {pendingDelete ? (
-            <LoaderCircle
-              className="animate-spin"
-              style={{ width: "26px", height: "26px" }}
-            />
+            <DynamicIcon name="LoaderCircle" className="animate-spin" />
           ) : (
-            <Trash2
-              style={{ width: "26px", height: "26px" }}
-              color={variant === "unstyled" ? "red" : "#ffffff"}
-              strokeWidth={1}
-            />
+            <DynamicIcon name="Trash2" />
           )}
         </Button>
       </AlertDialogTrigger>
@@ -128,10 +100,7 @@ export function DeleteAlerteButton({
               size="default"
             >
               {pendingDelete ? (
-                <LoaderCircle
-                  className="animate-spin"
-                  style={{ width: "26px", height: "26px" }}
-                />
+                <DynamicIcon name="LoaderCircle" className="animate-spin" />
               ) : (
                 "Supprimer"
               )}
