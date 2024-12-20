@@ -20,23 +20,24 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
   };
 
   return (
-    <div className="w-full lg:h-[38rem] md:h-[28rem] h-[22rem] flex flex-col gap-6 max-w-[1200px]">
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="relative shadow-lg w-full h-full m-auto flex items-center justify-center border border-border rounded-xl overflow-hidden">
-          {pictures.map((picture, index) => (
-            <Image
-              key={index}
-              className={`slide-img ${index === activeIndex ? `active` : ``}`}
-              src={picture}
-              alt={`image ${index}`}
-              width={800}
-              height={420}
-              priority={true}
-            />
-          ))}
-        </div>
+    <div className="w-full h-full flex flex-col gap-6">
+      <div className="relative aspect-slider shadow-lg w-full h-full m-auto flex items-center justify-center border border-border rounded-xl overflow-hidden">
+        {pictures.map((picture, index) => (
+          <Image
+            key={index}
+            className={`absolute w-full h-full bg-cover bg-center object-cover transition-opacity duration-700 ${
+              index === activeIndex ? "opacity-100" : "opacity-0"
+            }`}
+            src={picture}
+            alt={`image ${index}`}
+            width={400}
+            height={200}
+            priority={true}
+          />
+        ))}
       </div>
-      <div className="flex items-center justify-center gap-8">
+
+      <div className="flex items-center justify-center gap-12">
         <div className="cursor-pointer" onClick={handlePrev}>
           <DynamicIcon name="ChevronLeft" size={50} className="text-primary" />
         </div>
