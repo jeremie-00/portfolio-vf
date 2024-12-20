@@ -1,5 +1,7 @@
 import Collaps from "@/app/components/collaps/collaps";
 import SlideShow from "@/app/components/slider/SlideShow";
+import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
+import { getAllIconsAction } from "@/app/dashboard/icons/services/icons.action";
 
 import { getProjectByIdAction } from "@/app/dashboard/projects/services/project.action";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,6 +14,11 @@ export default async function page({
 }) {
   const paramsId = (await params).id;
   const project = await getProjectByIdAction(paramsId);
+  const allIcons = await getAllIconsAction();
+  const iconRepo = allIcons.find((icon) =>
+    project?.links?.some((link) => link.iconId === icon.id)
+  );
+  console.log(iconRepo);
 
   return (
     <div className="container flex flex-col items-center justify-center gap-8">
@@ -32,6 +39,11 @@ export default async function page({
               size: "full",
             })}
           >
+            <DynamicIcon
+              name={
+                allIcons.find((icon) => icon.id === link.iconId)?.name || "Link"
+              }
+            />
             {link.title}
           </Link>
         ))}
