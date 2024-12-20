@@ -2,7 +2,7 @@ import * as Icons from "lucide-react";
 
 type DynamicIconProps = {
   name: string; // Le nom de l'icône doit correspondre à une clé de `icons`
-  size: number;
+  size?: number;
   className?: string | null | undefined;
 };
 
@@ -18,7 +18,7 @@ const DynamicIcon = ({ name, size, className }: DynamicIconProps) => {
   }
 
   return IconElement ? (
-    <IconElement size={size} className={className || ""} />
+    <IconElement size={size || 16} className={className || ""} />
   ) : null;
 };
 
