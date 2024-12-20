@@ -1,3 +1,4 @@
+"use client";
 import { DeleteAlerteButton } from "@/app/components/Buttons";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -8,12 +9,12 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { FullProject } from "@/types/prismaTypes";
-import { Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { deleteProjectAction } from "../services/project.action";
-import { ToastProjectAction } from "./ToastProject";
+import DynamicIcon from "../../dashboard/icons/components/DynamicIcon";
+import { ToastProjectAction } from "../../dashboard/projects/components/ToastProject";
+import { deleteProjectAction } from "../../dashboard/projects/services/project.action";
 
 interface ProjectCardProps {
   project: FullProject;
@@ -51,7 +52,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
   };
 
   return (
-    <Card className="relative w-full h-full flex flex-col items-center justify-between bg-sidebar p-2 gap-2 hover:border-primary duration-300">
+    <Card className="max-w-[440px] justify-self-center relative w-full h-full flex flex-col items-center justify-between bg-sidebar p-2 gap-2 hover:border-primary duration-300">
       <div className="absolute flex flex-col top-0 left-0 w-full h-full items-center justify-center rounded-xl p-4 bg-black bg-opacity-40 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
         {isAdmin ? (
           <div className="flex items-center justify-center w-full gap-8 p-3 md:flex-row h-16">
@@ -62,12 +63,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
               })}
               href={`/dashboard/projects/${project.id}`}
             >
-              <Pencil
-                style={{ width: "26px", height: "26px" }}
-                color="#ffffff"
-                strokeWidth={1.5}
-                absoluteStrokeWidth
-              />
+              <DynamicIcon name="Pencil" />
             </Link>
             <DeleteAlerteButton
               actionButtonDelete={handleDeletedProject}
@@ -95,12 +91,12 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
         ) : null}
 
         {project.cover ? (
-          <div className="shadow-md w-full h-80 m-auto flex items-center justify-center border border-border dark:border-secondary rounded-xl overflow-hidden object-cover">
+          <div className="aspect-imgCard shadow-md w-full  m-auto flex items-center justify-center border border-border dark:border-secondary rounded-xl overflow-hidden object-cover">
             <Image
               src={project.cover.url}
               alt={project.cover.alt}
-              width={800}
-              height={420}
+              width={400}
+              height={200}
               className="object-cover flex items-center justify-center rounded-lg"
               priority={true}
             />
@@ -114,7 +110,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
           <p>{project.shortDesc}</p>
         </div>
       </CardContent>
-      <CardFooter className="w-full flex content-start gap-2 p-3">
+      <CardFooter className="w-full flex flex-wrap content-start gap-2 p-3">
         {project.skills.map((skill) => (
           <Badge key={skill.id} variant="default" className="w-fit">
             {skill.title}

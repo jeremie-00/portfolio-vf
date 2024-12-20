@@ -1,6 +1,4 @@
-"use client";
-
-import ProjectTab from "@/app/dashboard/projects/components/ProjectTab";
+import ProjectTab from "@/app/components/project/ProjectTab";
 import { FullProject, FullSectionPage } from "@/types/prismaTypes";
 
 interface projectProps {
@@ -37,9 +35,7 @@ export default function ProjectPage({ projects, section }: projectProps) {
           ))}
         </div>
       </div>
-      {/*  <div className="w-full h-full flex flex-col items-center justify-center gap-8 "> */}
       <ProjectTab isAdmin={false} projects={projects} />
-      {/* </div> */}
     </section>
   );
 }

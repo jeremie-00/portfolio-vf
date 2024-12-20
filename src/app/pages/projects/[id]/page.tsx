@@ -14,7 +14,7 @@ export default async function page({
   const project = await getProjectByIdAction(paramsId);
 
   return (
-    <div className="w-full h-full flex flex-col items-center gap-8 p-4">
+    <div className="container flex flex-col items-center justify-center gap-8">
       <h1 className="text-4xl flex flex-col items-center gap-4 text-center">
         Bienvenue sur le projet
         <span className="text-primary text-5xl font-semibold">
