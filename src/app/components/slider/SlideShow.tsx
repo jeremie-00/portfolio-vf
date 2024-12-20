@@ -38,7 +38,10 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
       </div>
 
       <div className="flex items-center justify-center gap-12">
-        <div className="cursor-pointer" onClick={handlePrev}>
+        <div
+          className={pictures.length <= 1 ? "hidden" : "cursor-pointer"}
+          onClick={handlePrev}
+        >
           <DynamicIcon name="ChevronLeft" size={50} className="text-primary" />
         </div>
         <span
@@ -50,7 +53,10 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
         >
           {activeIndex + 1} / {pictures.length}
         </span>
-        <div className="cursor-pointer" onClick={handleNext}>
+        <div
+          className={pictures.length <= 1 ? "hidden" : "cursor-pointer"}
+          onClick={handleNext}
+        >
           <DynamicIcon name="ChevronRight" size={50} className="text-primary" />
         </div>
       </div>
