@@ -1,17 +1,12 @@
 "use client";
-import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
+import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupAction,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
@@ -19,10 +14,11 @@ import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { FullLink } from "@/types/prismaTypes";
-import { Plus } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -51,6 +47,8 @@ export function AppSidebarClient({
   const clientLinksFiltered = clientLinks.filter(
     (link) => link.type !== "github"
   );
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
 
   return (
     <Sidebar variant="inset" collapsible="icon">
@@ -69,7 +67,10 @@ export function AppSidebarClient({
                     {isLoading ? (
                       <Skeleton className="h-8 w-full" />
                     ) : (
-                      <Link href={link.url}>
+                      <Link
+                        href={link.url}
+                        onClick={isMobile ? toggleSidebar : undefined}
+                      >
                         <DynamicIcon
                           name={link.icon ? link.icon.name : "CircleOff"}
                           size={40}
@@ -115,24 +116,20 @@ export function AppSidebarClient({
                         )}
                       </SidebarMenuButton>
                       {link.title !== "Icones" ? (
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <SidebarMenuAction>
-                              {isLoading ? (
-                                <Skeleton className="h-2 w-full" />
-                              ) : (
-                                <Plus />
-                              )}
-                            </SidebarMenuAction>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent side="right" align="start">
-                            <DropdownMenuItem>
+                        <SidebarMenuAction asChild>
+                          {isLoading ? (
+                            <Skeleton className="h-5 w-5" />
+                          ) : (
+                            <SidebarGroupAction title={`Créer ${link.title}`}>
                               <Link href={`${link.url}/create`}>
-                                <span>Création {link.title}</span>
+                                <DynamicIcon name="Plus" />
+                                <span className="sr-only">
+                                  Créer {link.title}
+                                </span>
                               </Link>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                            </SidebarGroupAction>
+                          )}
+                        </SidebarMenuAction>
                       ) : null}
                     </SidebarMenuItem>
                   ))}
