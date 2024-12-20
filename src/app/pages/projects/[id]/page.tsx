@@ -16,7 +16,7 @@ export default async function ProjectPage({
   const project = await getProjectByIdAction(paramsId);
   const allIcons = await getAllIconsAction();
   return (
-    <section className="container flex flex-col items-center justify-center gap-8">
+    <section className="container flex flex-col items-center justify-center gap-8 py-4">
       <h1 className="text-4xl flex flex-col items-center gap-4 text-center">
         Bienvenue sur le projet
         <span className="text-primary text-5xl font-semibold">
