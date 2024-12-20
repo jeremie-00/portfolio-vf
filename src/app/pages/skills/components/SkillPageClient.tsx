@@ -4,16 +4,11 @@ import { FullSectionPage, FullSkill } from "@/types/prismaTypes";
 import SkillsAnimatedRound from "./SkillsAnimatedRound";
 
 interface skillProps {
-  isEdit?: boolean;
   skills: FullSkill[];
   section: FullSectionPage | null;
 }
 
-export default function SkillPageClient({
-  skills,
-  section,
-  isEdit = false,
-}: skillProps) {
+export default function SkillPageClient({ skills, section }: skillProps) {
   if (!section) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center text-center p-6">
@@ -22,32 +17,30 @@ export default function SkillPageClient({
     );
   }
 
-  if (!isEdit && section) {
-    return (
-      <div className="flex flex-col gap-8 flex-1 p-6">
-        <h1 className="text-center font-extrabold text-textColor xl:text-[60px] lg:text-[50px] md:text-[44px] sm:text-[40px] text-[28px]">
-          {section.titles.map((title, index) =>
-            index === 1 ? (
-              <span key={title.id} className="text-primary">
-                {" " + title.text}
-              </span>
-            ) : (
-              <span key={title.id}>{title.text}</span>
-            )
-          )}
-        </h1>
+  return (
+    <div className="flex flex-col gap-8 flex-1 p-4">
+      <h1 className="text-center font-extrabold text-textColor xl:text-[60px] lg:text-[50px] md:text-[44px] sm:text-[40px] text-[28px]">
+        {section.titles.map((title, index) =>
+          index === 1 ? (
+            <span key={title.id} className="text-primary">
+              {" " + title.text}
+            </span>
+          ) : (
+            <span key={title.id}>{title.text}</span>
+          )
+        )}
+      </h1>
 
-        {section.contents.map((content) => (
-          <p
-            key={content.id}
-            className="text-center text-textColor font-medium xl:text-[34px] lg:text-[30px] md:text-[24px] sm:text-[24px] text-[20px] md:pb-12"
-          >
-            {content.text}
-          </p>
-        ))}
+      {section.contents.map((content) => (
+        <p
+          key={content.id}
+          className="text-center text-textColor font-medium xl:text-[34px] lg:text-[30px] md:text-[24px] sm:text-[24px] text-[20px] mb-12 "
+        >
+          {content.text}
+        </p>
+      ))}
 
-        <SkillsAnimatedRound skills={skills} />
-      </div>
-    );
-  }
+      <SkillsAnimatedRound skills={skills} />
+    </div>
+  );
 }
