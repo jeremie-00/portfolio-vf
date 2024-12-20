@@ -30,8 +30,8 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
             }`}
             src={picture}
             alt={`image ${index}`}
-            width={400}
-            height={200}
+            width={1200}
+            height={540}
             priority={true}
           />
         ))}
