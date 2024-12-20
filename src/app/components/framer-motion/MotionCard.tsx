@@ -8,16 +8,13 @@ export const MotionCard = ({
   isRotate = false,
   position = "relative",
   size = { width: 100, height: 100 },
-}: //
-{
+}: {
   children: React.ReactNode;
   isRotate?: boolean;
   isRounded?: boolean;
   position?: "absolute" | "relative";
   size?: { width: number; height: number };
 }) => {
-  //inset
-
   const cardRef = useRef<HTMLDivElement | null>(null);
   const glareRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,7 +58,7 @@ export const MotionCard = ({
     <motion.div
       layout
       ref={cardRef}
-      className={`aspect-card w-full h-full flex items-center justify-center overflow-hidden`}
+      className={`aspect-roundedCard w-full h-full flex items-center justify-center overflow-hidden`}
       style={{
         rotateY: isRotate ? rotateSpringY : 0,
         rotateX: isRotate ? rotateSpringX : 0,

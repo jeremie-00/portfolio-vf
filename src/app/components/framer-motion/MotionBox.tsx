@@ -13,7 +13,6 @@ const Box = forwardRef<
         width: `${size}px`,
         height: `${size}px`,
         zIndex: zIndex,
-        perspective: "1000px",
       }}
       ref={ref}
     >
