@@ -184,6 +184,7 @@ export default function ProjectForm({
               />
               <Label htmlFor="longDesc">Description complete du projet</Label>
               <Textarea
+                required
                 name="longDesc"
                 id="longDesc"
                 className="w-full"
