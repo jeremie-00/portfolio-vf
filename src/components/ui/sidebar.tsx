@@ -5,6 +5,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
+import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -19,6 +20,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import { DialogDescription } from "./dialog";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -209,6 +211,7 @@ const Sidebar = React.forwardRef<
           >
             <DialogContent>
               <DialogTitle className="sr-only">Sheet</DialogTitle>
+              <DialogDescription className="sr-only">Hello.</DialogDescription>
             </DialogContent>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
@@ -269,25 +272,37 @@ const SidebarTrigger = React.forwardRef<
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar();
   const isMobile = useIsMobile();
+  if (isMobile) {
+    return (
+      <Button
+        ref={ref}
+        data-sidebar="trigger"
+        variant="default"
+        className={cn(`h-11 w-11 self-end mt-4 mr-4`, className)}
+        onClick={(event) => {
+          onClick?.(event);
+          toggleSidebar();
+        }}
+        {...props}
+      >
+        <DynamicIcon name="Menu" />
+        <span className="sr-only">Toggle Sidebar</span>
+      </Button>
+    );
+  }
   return (
     <Button
       ref={ref}
       data-sidebar="trigger"
       variant="ghost"
-      //size="icon"
-      className={cn(isMobile ? "h-14 w-14 ml-2 mt-2" : "h-10 w-10", className)}
+      className={cn(`h-10 w-10`, className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <PanelLeft
-        style={{
-          width: isMobile ? "2rem" : "1.5rem",
-          height: isMobile ? "2rem" : "1.5rem",
-        }}
-      />
+      <PanelLeft />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
