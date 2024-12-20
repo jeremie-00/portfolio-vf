@@ -1,13 +1,13 @@
 import Collaps from "@/app/components/collaps/collaps";
 import SlideShow from "@/app/components/slider/SlideShow";
-import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
+import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import { getAllIconsAction } from "@/app/dashboard/icons/services/icons.action";
 
 import { getProjectByIdAction } from "@/app/dashboard/projects/services/project.action";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
-export default async function page({
+export default async function ProjectPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -15,13 +15,8 @@ export default async function page({
   const paramsId = (await params).id;
   const project = await getProjectByIdAction(paramsId);
   const allIcons = await getAllIconsAction();
-  const iconRepo = allIcons.find((icon) =>
-    project?.links?.some((link) => link.iconId === icon.id)
-  );
-  console.log(iconRepo);
-
   return (
-    <div className="container flex flex-col items-center justify-center gap-8">
+    <section className="container flex flex-col items-center justify-center gap-8">
       <h1 className="text-4xl flex flex-col items-center gap-4 text-center">
         Bienvenue sur le projet
         <span className="text-primary text-5xl font-semibold">
@@ -51,7 +46,9 @@ export default async function page({
       {project && project.medias && project.medias.length > 0 ? (
         <SlideShow pictures={project?.medias.map((media) => media.url)} />
       ) : (
-        <p className="text-3xl">Aucune image</p>
+        <p className="text-3xl">
+          Oups, pas la moindre image à l&apos;horizon !
+        </p>
       )}
       <div className="w-full flex flex-col sm:flex-row gap-4">
         <Collaps title={"Description"}>
@@ -67,6 +64,6 @@ export default async function page({
           </ul>
         </Collaps>
       </div>
-    </div>
+    </section>
   );
 }

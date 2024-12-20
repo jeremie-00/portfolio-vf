@@ -9,8 +9,8 @@ interface projectProps {
 export default function ProjectPage({ projects, section }: projectProps) {
   if (!section) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        SectionPage introuvable
+      <div className="w-full h-full flex flex-col items-center justify-center text-center p-6">
+        Oups, pas le moindre contenu à l&apos;horizon ! 🤦‍♂️
       </div>
     );
   }

@@ -12,13 +12,13 @@ interface HomeProps {
 export default function HomeSvgPage({ section }: HomeProps) {
   if (!section) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        SectionPage introuvable
+      <div className="w-full h-full flex flex-col items-center justify-center text-center p-6">
+        Oups, pas le moindre contenu à l&apos;horizon ! 🤦‍♂️
       </div>
     );
   }
   return (
-    <section className="w-full h-full flex md:px-12 p-4 md:gap-4">
+    <section className="w-full h-full flex md:px-12 py-4 px-10 md:gap-4">
       <div className="flex flex-col justify-start items-center mt-2 sm:mt-3 md:mt-4 xl:mt-5 max-md:hidden">
         <div className="w-5 h-5 rounded-full bg-primary" />
         <div className="w-1 min-[900px]:h-80 h-48 bg-gradient-to-b from-primary" />
