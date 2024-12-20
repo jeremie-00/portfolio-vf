@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setMounted(true);
@@ -24,7 +26,11 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="outline" size="iconSideBar" onClick={toggleTheme}>
+    <Button
+      variant="outline"
+      size={isMobile ? "iconSideBar" : "icon"}
+      onClick={toggleTheme}
+    >
       {resolvedTheme === "light" ? (
         <Sun className="absolute size-[1.2rem] rotate-90 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       ) : (

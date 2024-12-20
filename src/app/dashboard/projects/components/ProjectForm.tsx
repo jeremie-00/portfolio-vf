@@ -146,13 +146,9 @@ export default function ProjectForm({
     <div className="flex flex w-full justify-center max-w-[700px]">
       <CardForm
         title={isCreate ? "Création d'un projet" : "Modification du projet"}
+        name={project?.title}
       >
         <Form action={handleSubmit}>
-          {!isCreate && (
-            <span className="text-primary text-2xl font-bold">
-              {project?.title}
-            </span>
-          )}
           <input type="hidden" name="ID" value={project?.id} />
           <input
             type="hidden"

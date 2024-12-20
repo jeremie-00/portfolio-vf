@@ -1,5 +1,5 @@
 "use client";
-import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
+import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import { ReactNode, useState } from "react";
 
 export default function Collaps({

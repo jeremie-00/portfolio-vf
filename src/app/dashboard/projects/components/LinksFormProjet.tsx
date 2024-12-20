@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FullIcon } from "@/types/prismaTypes";
 import { Link } from "@prisma/client";
-import { CirclePlus, Trash2 } from "lucide-react";
 import { forwardRef, useImperativeHandle, useState } from "react";
+import { IconCirclePlus, IconTrash2 } from "../../icons/components/DynamicIcon";
 import { IconPicker } from "../../icons/components/IconPicker";
 import { deleteLinkByIdAction } from "../../links/services/links.action";
 import { ToastDeleteFormLinkProjectAction } from "./ToastProject";
@@ -124,12 +124,7 @@ export const LinksFormProject = forwardRef<
           onClick={addLinkField}
           disabled={isAddButtonDisabled}
         >
-          <CirclePlus
-            style={{ width: "26px", height: "26px" }}
-            color="#ffffff"
-            strokeWidth={1}
-            absoluteStrokeWidth
-          />
+          <IconCirclePlus />
           Ajouter un lien
         </Button>
       </div>
@@ -179,14 +174,9 @@ export const LinksFormProject = forwardRef<
               <Button
                 variant="unstyled"
                 size="icon"
-                //type="button"
                 onClick={() => removeLinkField(index, link.id)}
               >
-                <Trash2
-                  style={{ width: "26px", height: "26px" }}
-                  strokeWidth={1}
-                  color={"red"}
-                />
+                <IconTrash2 pending={false} color="text-red-500" />
               </Button>
             )}
           </div>

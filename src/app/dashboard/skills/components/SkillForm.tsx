@@ -26,7 +26,6 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
-
     return isCreate ? (
       <SubmitButton pending={pending} />
     ) : (
@@ -75,13 +74,14 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
             : "Modification de la compétence"
         }
         href="/dashboard/skill"
+        name={skill?.title}
       >
         <Form
           action={handleSubmit}
-          className="flex flex-col w-full items-left gap-4 relative"
+          className="flex flex-col w-full items-left gap-6 relative"
         >
           <div
-            className={`w-[100px] h-[100px] flex border-2 ${
+            className={`w-[150px] h-[150px] flex border-2 ${
               url ? "border-primary" : "border-input"
             } rounded-lg p-1 `}
           >
@@ -95,11 +95,6 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
               />
             ) : null}
           </div>
-          {!isCreate && (
-            <span className="text-primary text-2xl font-bold">
-              {skill?.title}
-            </span>
-          )}
           <input type="hidden" name="ID" defaultValue={id} />
           <input
             type="hidden"

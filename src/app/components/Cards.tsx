@@ -18,6 +18,7 @@ import { DeleteAlerteButton } from "./Buttons";
 
 interface CardsProps {
   title: string;
+  name?: string;
   href?: string;
   desc?: string;
   children: React.ReactNode;
@@ -25,11 +26,14 @@ interface CardsProps {
   order?: string;
 }
 
-export function CardForm({ title, children }: CardsProps) {
+export function CardForm({ title, name, children }: CardsProps) {
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-col">
-        <CardTitle className="text-left pt-4">{title}</CardTitle>
+        <CardTitle className="text-left px-4 py-8 text-center">
+          {title}
+          <span className="text-primary text-2xl ml-2 block p-4">{name}</span>
+        </CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
@@ -38,7 +42,7 @@ export function CardForm({ title, children }: CardsProps) {
 
 export function CardSwitch({ title, desc, children }: CardsProps) {
   return (
-    <Card className="flex items-center justify-center">
+    <Card className="flex items-center justify-center px-2 py-4">
       <CardHeader className="flex flex-col">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{desc || "default description"}</CardDescription>

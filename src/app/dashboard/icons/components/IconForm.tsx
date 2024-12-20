@@ -18,7 +18,7 @@ import {
   deleteIconByIdAction,
   updateIconAction,
 } from "../services/icons.action";
-import DynamicIcon from "./DynamicIcon";
+import { DynamicIcon } from "./DynamicIcon";
 import { IconPicker } from "./IconPicker";
 
 interface IconSettingsProps {

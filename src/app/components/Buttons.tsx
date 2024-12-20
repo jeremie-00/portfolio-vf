@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
-import DynamicIcon from "../dashboard/icons/components/DynamicIcon";
+import {
+  IconCheck,
+  IconLoaderCircle,
+  IconPencil,
+  IconTrash2,
+} from "../dashboard/icons/components/DynamicIcon";
 interface ButtonProps {
   pending: boolean;
 }
@@ -24,11 +29,7 @@ export function SubmitButton({ pending }: ButtonProps) {
       name="actionType"
       value="creer"
     >
-      {pending ? (
-        <DynamicIcon name="LoaderCircle" className="animate-spin" />
-      ) : (
-        <DynamicIcon name="Check" />
-      )}
+      <IconCheck pending={pending} />
     </Button>
   );
 }
@@ -43,11 +44,7 @@ export function UpdateButton({ pending }: ButtonProps) {
       name="actionType"
       value="modifier"
     >
-      {pending ? (
-        <DynamicIcon name="LoaderCircle" className="animate-spin" />
-      ) : (
-        <DynamicIcon name="Pencil" />
-      )}
+      <IconPencil pending={pending} />
     </Button>
   );
 }
@@ -75,11 +72,10 @@ export function DeleteAlerteButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant={variant} size="icon" disabled={pendingDelete}>
-          {pendingDelete ? (
-            <DynamicIcon name="LoaderCircle" className="animate-spin" />
-          ) : (
-            <DynamicIcon name="Trash2" />
-          )}
+          <IconTrash2
+            pending={pendingDelete}
+            color={variant === "unstyled" ? "text-red-500" : ""}
+          />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="AlertDialogContent">
@@ -99,11 +95,7 @@ export function DeleteAlerteButton({
               variant="destructive"
               size="default"
             >
-              {pendingDelete ? (
-                <DynamicIcon name="LoaderCircle" className="animate-spin" />
-              ) : (
-                "Supprimer"
-              )}
+              {pendingDelete ? <IconLoaderCircle /> : "Supprimer"}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

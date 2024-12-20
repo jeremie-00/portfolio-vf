@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import DynamicIcon from "@/app/dashboard/icons/components/DynamicIcon";
+import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import Image from "next/image";
 
 export default function SlideShow({ pictures }: { pictures: string[] }) {

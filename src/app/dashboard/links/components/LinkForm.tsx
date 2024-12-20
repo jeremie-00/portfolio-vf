@@ -25,6 +25,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   const [iconId, setIconId] = useState<string>(
     isCreate ? "" : link?.icon?.id || ""
   );
+
   const [iconName, setIconName] = useState<string>(
     isCreate ? "" : link?.icon?.name || ""
   );
@@ -32,14 +33,17 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   const [inNavToggle, setInNavToggle] = useState<boolean | undefined | null>(
     true
   );
+
   const [isAdminToggle, setIsAdminToggle] = useState<
     boolean | undefined | null
   >(false);
 
   useEffect(() => {
-    setInNavToggle(link?.inNav);
-    setIsAdminToggle(link?.isAdmin);
-  }, [link?.inNav, link?.isAdmin]);
+    if (link) {
+      setInNavToggle(link?.inNav);
+      setIsAdminToggle(link?.isAdmin);
+    }
+  }, [link?.inNav, link?.isAdmin, link]);
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
@@ -96,11 +100,9 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
     <div className="flex items-center justify-center p-6 gap-2">
       <CardForm
         title={isCreate ? "Création d'un lien" : "Modification du lien"}
+        name={link?.title}
       >
         <Form action={handleSubmit} className="grid w-full items-center gap-4">
-          {!isCreate && (
-            <span className="text-primary text-xl font-bold">{link?.url}</span>
-          )}
           {!isCreate && <input type="hidden" name="ID" value={link?.id} />}
 
           <input

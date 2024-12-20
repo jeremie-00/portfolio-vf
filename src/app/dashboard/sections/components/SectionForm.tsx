@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { Textarea } from "@/components/ui/textarea";
-import { CirclePlus, Trash2 } from "lucide-react";
 import Form from "next/form";
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
@@ -18,6 +17,7 @@ import {
 import { MultiImageUpload } from "@/app/components/UploadImage/MultiImageUpload";
 import { Button } from "@/components/ui/button";
 import { FullSectionPage } from "@/types/prismaTypes";
+import { IconCirclePlus, IconTrash2 } from "../../icons/components/DynamicIcon";
 import {
   deleteContentSectionAction,
   deleteTitleSectionAction,
@@ -57,7 +57,6 @@ export default function SectionForm({
         return;
       }
 
-      // Affichage du message de succès
       if (result?.data) {
         ToastDeleteFormSectionAction({ data: result.data });
       }
@@ -98,7 +97,6 @@ export default function SectionForm({
         return;
       }
 
-      // Affichage du message de succès
       if (result?.data) {
         ToastDeleteFormSectionAction({ data: result.data });
       }
@@ -171,12 +169,10 @@ export default function SectionForm({
       return;
     }
 
-    // Affichage du message de succès
     if (result?.data) {
       ToastSectionAction({ data: result.data, actionType });
       if (!section) {
         handleFieldReset();
-        // REMISE A ZERO DES LIENS ET DES IMAGES
       }
       if (multiImageUploadRef.current) {
         multiImageUploadRef.current.resetFiles();
@@ -189,9 +185,10 @@ export default function SectionForm({
       <CardForm
         title={
           section
-            ? `Modifier la section ${section.type} de page`
+            ? "Modifier la section de page"
             : "Création d'une section de page"
         }
+        name={section?.type}
       >
         <Form action={handleSubmit}>
           <input type="hidden" name="ID" value={section?.id} />
@@ -206,14 +203,14 @@ export default function SectionForm({
               className="w-full"
               defaultValue={section?.type || ""}
             />
-            <div className="flex items-center justify-start gap-2">
+            <div className="flex items-center justify-between gap-2">
               <Label htmlFor="titles">Titre page</Label>
               <button
                 type="button"
                 onClick={handleAddFieldTitle}
-                className="text-primary text-sm"
+                className="py-2 px-[0.35rem]"
               >
-                <CirclePlus className="w-6 h-6" />
+                <IconCirclePlus />
               </button>
             </div>
 
@@ -244,27 +241,22 @@ export default function SectionForm({
                   <Button
                     variant="unstyled"
                     size="icon"
-                    //type="button"
                     onClick={() => handleRemoveFieldTitle(index, field.id)}
                   >
-                    <Trash2
-                      style={{ width: "26px", height: "26px" }}
-                      strokeWidth={1}
-                      color={"red"}
-                    />
+                    <IconTrash2 pending={false} color="text-red-500" />
                   </Button>
                 )}
               </div>
             ))}
 
-            <div className="flex items-center justify-start gap-2">
+            <div className="flex items-center justify-between gap-2 pt-6">
               <Label htmlFor="contents">Contenu page</Label>
               <button
                 type="button"
                 onClick={handleAddFieldContent}
-                className="text-primary text-sm"
+                className="py-2 px-[0.35rem]"
               >
-                <CirclePlus className="w-6 h-6" />
+                <IconCirclePlus />
               </button>
             </div>
 
@@ -292,14 +284,9 @@ export default function SectionForm({
                   <Button
                     variant="unstyled"
                     size="icon"
-                    //type="button"
                     onClick={() => handleRemoveFieldContent(index, field.id)}
                   >
-                    <Trash2
-                      style={{ width: "26px", height: "26px" }}
-                      strokeWidth={1}
-                      color={"red"}
-                    />
+                    <IconTrash2 pending={false} color="text-red-500" />
                   </Button>
                 )}
               </div>

@@ -309,10 +309,13 @@ export const ImageDeleteSchema = z
     return true;
   });
 
-/*    const validationResult = ProjectSchema.safeParse(projectData);
+/* 
+//debug 
+const validationResult = ProjectSchema.safeParse(projectData);
 
-    if (!validationResult.success) {
-      console.error("Erreurs de validation :", validationResult.error.format());
-    } else {
-      console.log("Données valides :", validationResult.data);
-    }  */
+if (!validationResult.success) {
+  console.error("Erreurs de validation :", validationResult.error.format());
+} else {
+  console.log("Données valides :", validationResult.data);
+}
+ */

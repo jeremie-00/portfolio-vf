@@ -12,7 +12,7 @@ import { FullProject } from "@/types/prismaTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import DynamicIcon from "../../dashboard/icons/components/DynamicIcon";
+import { IconPencil } from "../../dashboard/icons/components/DynamicIcon";
 import { ToastProjectAction } from "../../dashboard/projects/components/ToastProject";
 import { deleteProjectAction } from "../../dashboard/projects/services/project.action";
 
@@ -63,7 +63,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
               })}
               href={`/dashboard/projects/${project.id}`}
             >
-              <DynamicIcon name="Pencil" />
+              <IconPencil pending={false} />
             </Link>
             <DeleteAlerteButton
               actionButtonDelete={handleDeletedProject}

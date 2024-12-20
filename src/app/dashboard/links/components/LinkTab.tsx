@@ -44,7 +44,7 @@ import {
 } from "@/components/ui/table";
 import { FullLink } from "@/types/prismaTypes";
 import { redirect } from "next/navigation";
-import DynamicIcon from "../../icons/components/DynamicIcon";
+import { DynamicIcon } from "../../icons/components/DynamicIcon";
 import { deleteLinkByIdAction } from "../services/links.action";
 
 import { ToastLinkAction } from "./ToastLink";

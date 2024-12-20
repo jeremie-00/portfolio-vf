@@ -4,10 +4,11 @@ import { MotionCard } from "@/app/components/framer-motion/MotionCard";
 import { FullSkill } from "@/types/prismaTypes";
 
 import { Button } from "@/components/ui/button";
-import { Eye, EyeClosed, Pencil } from "lucide-react";
+import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { IconPencil } from "../../icons/components/DynamicIcon";
 import { deleteSkillAction } from "../services/skill.action";
 import { ToastSkillAction } from "./ToastSkill";
 
@@ -51,12 +52,7 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
             <div className="flex items-center justify-center w-full gap-8 p-3 md:flex-row h-16">
               <Link href={`/dashboard/skills/${skill.id}`}>
                 <Button type="button" size="icon" variant="secondary">
-                  <Pencil
-                    style={{ width: "26px", height: "26px" }}
-                    color="#ffffff"
-                    strokeWidth={1.5}
-                    absoluteStrokeWidth
-                  />
+                  <IconPencil pending={false} />
                 </Button>
               </Link>
               <DeleteAlerteButton

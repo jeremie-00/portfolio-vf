@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import { FullIcon } from "@/types/prismaTypes";
 import React from "react";
-import DynamicIcon from "./DynamicIcon";
+import { DynamicIcon } from "./DynamicIcon";
 
 interface IconPickerProps {
   icons: FullIcon[];
