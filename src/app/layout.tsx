@@ -12,7 +12,6 @@ import "./components/collaps/style/collaps.css";
 import "./components/desktopSvg/style/animationSvg.css";
 import SessionWrapper from "./components/SessionWrapper";
 import { AppSidebar } from "./components/sidebar/AppSidebar";
-import "./components/slider/style/slider.css";
 import "./globals.css";
 import { ThemeProvider } from "./providers/theme-provider";
 
