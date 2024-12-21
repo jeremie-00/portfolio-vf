@@ -1,15 +1,16 @@
 import { CardsSectionDashboard } from "@/app/components/Cards";
+import { WrapperForm } from "@/app/components/WrapperForm";
 import { getAllSectionsAction } from "./services/section.action";
 
 export default async function SectionPage() {
   const sections = await getAllSectionsAction();
   return (
-    <section className="container w-full flex flex-col gap-4 py-8">
+    <WrapperForm className={"flex-col"}>
       {sections.map((section) => (
-        <div key={section.id}>
+        <div key={section.id} className="w-full">
           <CardsSectionDashboard section={section} />
         </div>
       ))}
-    </section>
+    </WrapperForm>
   );
 }

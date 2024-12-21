@@ -181,141 +181,137 @@ export default function SectionForm({
   };
 
   return (
-    <div className="flex w-full justify-center max-w-[700px]">
-      <CardForm
-        title={
-          section
-            ? "Modifier la section de page"
-            : "Création d'une section de page"
-        }
-        name={section?.type}
-      >
-        <Form action={handleSubmit}>
-          <input type="hidden" name="ID" value={section?.id} />
-          <div className="flex flex-col items-left gap-4">
-            <Label htmlFor="type">Type page</Label>
-            <Input
-              required
-              type="text"
-              name="type"
-              id="type"
-              placeholder="type"
-              className="w-full"
-              defaultValue={section?.type || ""}
-            />
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="titles">Titre page</Label>
-              <button
-                type="button"
-                onClick={handleAddFieldTitle}
-                className="py-2 px-[0.35rem]"
-              >
-                <IconCirclePlus />
-              </button>
-            </div>
-
-            {fieldsTitle.map((field, index) => (
-              <div key={index} className="flex gap-2">
-                <Input
-                  required
-                  type="text"
-                  name="titles"
-                  id={`title-${index}`}
-                  placeholder={`Titre ${index + 1}`}
-                  value={field.title}
-                  onChange={(e) =>
-                    handleFieldChangeTitle(index, e.target.value)
-                  }
-                  className="w-full"
-                />
-
-                {field.id ? (
-                  <DeleteAlerteButton
-                    actionButtonDelete={() =>
-                      handleRemoveFieldTitle(index, field.id)
-                    }
-                    pendingDelete={pendingDelete}
-                    variant="unstyled"
-                  />
-                ) : (
-                  <Button
-                    variant="unstyled"
-                    size="icon"
-                    onClick={() => handleRemoveFieldTitle(index, field.id)}
-                  >
-                    <IconTrash2 pending={false} color="text-red-500" />
-                  </Button>
-                )}
-              </div>
-            ))}
-
-            <div className="flex items-center justify-between gap-2 pt-6">
-              <Label htmlFor="contents">Contenu page</Label>
-              <button
-                type="button"
-                onClick={handleAddFieldContent}
-                className="py-2 px-[0.35rem]"
-              >
-                <IconCirclePlus />
-              </button>
-            </div>
-
-            {fieldsContent.map((field, index) => (
-              <div key={index} className="flex gap-2">
-                <Textarea
-                  name="contents"
-                  className="w-full"
-                  id={`content-${index}`}
-                  placeholder={`Contenu ${index + 1}`}
-                  value={field.content}
-                  onChange={(e) =>
-                    handleFieldChangeContent(index, e.target.value)
-                  }
-                />
-                {field.id ? (
-                  <DeleteAlerteButton
-                    actionButtonDelete={() =>
-                      handleRemoveFieldContent(index, field.id)
-                    }
-                    pendingDelete={pendingDelete}
-                    variant="unstyled"
-                  />
-                ) : (
-                  <Button
-                    variant="unstyled"
-                    size="icon"
-                    onClick={() => handleRemoveFieldContent(index, field.id)}
-                  >
-                    <IconTrash2 pending={false} color="text-red-500" />
-                  </Button>
-                )}
-              </div>
-            ))}
-
-            <Label htmlFor="order">Ordre d&apos;affichage</Label>
-            <Input
-              type="number"
-              name="order"
-              id="order"
-              className="w-full"
-              defaultValue={section?.order || 1}
-            />
-
-            <div className="flex flex-col col-span-2 gap-4">
-              <MultiImageUpload
-                ref={multiImageUploadRef}
-                label="Images de la section"
-                images={section ? section.images : []}
-                isCreate={section ? false : true}
-              />
-            </div>
-
-            <div className="w-full flex justify-center items-center p-0">
-              <BtnSubmit />
-            </div>
+    <CardForm
+      title={
+        section
+          ? "Modifier la section de page"
+          : "Création d'une section de page"
+      }
+      name={section?.type}
+    >
+      <Form action={handleSubmit}>
+        <input type="hidden" name="ID" value={section?.id} />
+        <div className="flex flex-col items-left gap-4">
+          <Label htmlFor="type">Type page</Label>
+          <Input
+            required
+            type="text"
+            name="type"
+            id="type"
+            placeholder="type"
+            className="w-full"
+            defaultValue={section?.type || ""}
+          />
+          <div className="flex items-center justify-between gap-2">
+            <Label htmlFor="titles">Titre page</Label>
+            <button
+              type="button"
+              onClick={handleAddFieldTitle}
+              className="py-2 px-[0.30rem]"
+            >
+              <IconCirclePlus />
+            </button>
           </div>
-        </Form>
-      </CardForm>
-    </div>
+
+          {fieldsTitle.map((field, index) => (
+            <div key={index} className="flex gap-2">
+              <Input
+                required
+                type="text"
+                name="titles"
+                id={`title-${index}`}
+                placeholder={`Titre ${index + 1}`}
+                value={field.title}
+                onChange={(e) => handleFieldChangeTitle(index, e.target.value)}
+                className="w-full"
+              />
+
+              {field.id ? (
+                <DeleteAlerteButton
+                  actionButtonDelete={() =>
+                    handleRemoveFieldTitle(index, field.id)
+                  }
+                  pendingDelete={pendingDelete}
+                  variant="unstyled"
+                />
+              ) : (
+                <Button
+                  variant="unstyled"
+                  size="icon"
+                  onClick={() => handleRemoveFieldTitle(index, field.id)}
+                >
+                  <IconTrash2 pending={false} color="text-red-500" />
+                </Button>
+              )}
+            </div>
+          ))}
+
+          <div className="flex items-center justify-between gap-2 pt-6">
+            <Label htmlFor="contents">Contenu page</Label>
+            <button
+              type="button"
+              onClick={handleAddFieldContent}
+              className="py-2 px-[0.35rem]"
+            >
+              <IconCirclePlus />
+            </button>
+          </div>
+
+          {fieldsContent.map((field, index) => (
+            <div key={index} className="flex gap-2">
+              <Textarea
+                name="contents"
+                className="w-full"
+                id={`content-${index}`}
+                placeholder={`Contenu ${index + 1}`}
+                value={field.content}
+                onChange={(e) =>
+                  handleFieldChangeContent(index, e.target.value)
+                }
+              />
+              {field.id ? (
+                <DeleteAlerteButton
+                  actionButtonDelete={() =>
+                    handleRemoveFieldContent(index, field.id)
+                  }
+                  pendingDelete={pendingDelete}
+                  variant="unstyled"
+                />
+              ) : (
+                <Button
+                  variant="unstyled"
+                  size="icon"
+                  onClick={() => handleRemoveFieldContent(index, field.id)}
+                >
+                  <IconTrash2 pending={false} color="text-red-500" />
+                </Button>
+              )}
+            </div>
+          ))}
+
+          <Label htmlFor="order">Ordre d&apos;affichage</Label>
+          <Input
+            type="number"
+            name="order"
+            id="order"
+            className="w-full"
+            defaultValue={section?.order || 1}
+          />
+
+          <div className="flex flex-col col-span-2 gap-4">
+            <MultiImageUpload
+              ref={multiImageUploadRef}
+              label="Images de la section"
+              images={section ? section.images : []}
+              isCreate={section ? false : true}
+            />
+          </div>
+
+          <div className="w-full flex justify-center items-center p-0">
+            <BtnSubmit />
+          </div>
+        </div>
+      </Form>
+    </CardForm>
   );
 }
