@@ -85,12 +85,6 @@ export default function SkillsAnimatedRound({
 
         {containerSize ? (
           skillsOthers.map((item, index) => {
-            // Calcule la position sur le cercle
-            /*             const totalElements = skillsOthers.length; // Nombre total d'éléments
-            const angle = (index / totalElements) * 360; // Angle en degrés
-            const radians = (angle * Math.PI) / 180; // Conversion en radians */
-            //const x = Math.cos(radians) * radius; // Position horizontale
-            //const y = Math.sin(radians) * radius; // Position verticale
             const { x, y } = positions[index];
             const roundedX = parseFloat(x.toFixed(2)); // Arrondi à 2 décimales
             const roundedY = parseFloat(y.toFixed(2)); // Arrondi à 2 décimales
