@@ -66,77 +66,68 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
   };
 
   return (
-    <div className="flex">
-      <CardForm
-        title={
-          isCreate
-            ? "Création d'une compétence"
-            : "Modification de la compétence"
-        }
-        href="/dashboard/skill"
-        name={skill?.title}
+    <CardForm
+      title={
+        isCreate ? "Création d'une compétence" : "Modification de la compétence"
+      }
+      href="/dashboard/skill"
+      name={skill?.title}
+    >
+      <Form
+        action={handleSubmit}
+        className="flex flex-col w-full items-left gap-6 relative"
       >
-        <Form
-          action={handleSubmit}
-          className="flex flex-col w-full items-left gap-6 relative"
+        <div
+          className={`w-[150px] h-[150px] flex border-2 ${
+            url ? "border-primary" : "border-input"
+          } rounded-lg p-1 `}
         >
-          <div
-            className={`w-[150px] h-[150px] flex border-2 ${
-              url ? "border-primary" : "border-input"
-            } rounded-lg p-1 `}
-          >
-            {url ? (
-              <Image
-                src={url}
-                alt="Aperçu de l'image"
-                width={80}
-                height={80}
-                className="rounded-sm object-cover w-full h-full"
-              />
-            ) : null}
-          </div>
-          <input type="hidden" name="ID" defaultValue={id} />
-          <input
-            type="hidden"
-            name="status"
-            defaultValue={isCreate ? "create" : "edit"}
-          />
-
-          <Label htmlFor="title">Nom de la compétence</Label>
-          <Input
-            required
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Nom"
-            className="w-full"
-            defaultValue={title}
-          />
-
-          <Label htmlFor="file">Image</Label>
-          <Input
-            type="file"
-            name="file"
-            id="file"
-            onChange={handleImageChange}
-          />
-
-          <CardSwitch
-            title="Afficher"
-            desc="Contrôle de l'affichage de la compétence sur la page."
-          >
-            <Switch
-              id="display"
-              name="display"
-              defaultChecked={display ?? true}
+          {url ? (
+            <Image
+              src={url}
+              alt="Aperçu de l'image"
+              width={80}
+              height={80}
+              className="rounded-sm object-cover w-full h-full"
             />
-          </CardSwitch>
+          ) : null}
+        </div>
+        <input type="hidden" name="ID" defaultValue={id} />
+        <input
+          type="hidden"
+          name="status"
+          defaultValue={isCreate ? "create" : "edit"}
+        />
 
-          <div className="w-full flex flex-col justify-center items-center p-0 mt-2">
-            <BtnSubmit />
-          </div>
-        </Form>
-      </CardForm>
-    </div>
+        <Label htmlFor="title">Nom de la compétence</Label>
+        <Input
+          required
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Nom"
+          className="w-full"
+          defaultValue={title}
+        />
+
+        <Label htmlFor="file">Image</Label>
+        <Input type="file" name="file" id="file" onChange={handleImageChange} />
+
+        <CardSwitch
+          title="Afficher"
+          desc="Contrôle de l'affichage de la compétence sur la page."
+        >
+          <Switch
+            id="display"
+            name="display"
+            defaultChecked={display ?? true}
+          />
+        </CardSwitch>
+
+        <div className="w-full flex flex-col justify-center items-center p-0 mt-2">
+          <BtnSubmit />
+        </div>
+      </Form>
+    </CardForm>
   );
 }

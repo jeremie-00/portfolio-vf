@@ -139,67 +139,63 @@ export default function IconForm({ icons }: IconSettingsProps) {
   };
 
   return (
-    <div className="flex w-full h-full max-w-[400px]">
-      <CardForm title="Gestion des icones">
-        <Form
-          action={handleSubmit}
-          className="flex flex-col w-full items-left gap-12"
+    <CardForm title="Gestion des icones">
+      <Form
+        action={handleSubmit}
+        className="flex flex-col w-full items-left gap-12"
+      >
+        <div
+          className={`w-[100px] h-[100px] flex items-center justify-center border-2 ${
+            iconName ? "border-primary" : "border-input"
+          } rounded-lg p-1`}
         >
-          <div
-            className={`w-[100px] h-[100px] flex items-center justify-center border-2 ${
-              iconName ? "border-primary" : "border-input"
-            } rounded-lg p-1`}
-          >
-            {iconName && isValidIcon && (
-              <DynamicIcon name={iconName} size={40} className="text-primary" />
-            )}
-          </div>
+          {iconName && isValidIcon && (
+            <DynamicIcon name={iconName} size={40} className="text-primary" />
+          )}
+        </div>
 
+        <Input
+          type="hidden"
+          name="ID"
+          value={iconId}
+          onChange={(e) => setIconId(e.target.value)}
+          readOnly
+        />
+
+        <div className="flex items-center justify-center">
           <Input
-            type="hidden"
-            name="ID"
-            value={iconId}
-            onChange={(e) => setIconId(e.target.value)}
-            readOnly
+            className={"border-r-1 rounded-r-none flex flex-1"}
+            type="text"
+            name="name"
+            placeholder="Nom de l'icône"
+            value={iconName}
+            onChange={(e) => handleInputChange(e.currentTarget.value)}
+            required
           />
+          <Button
+            type={"button"}
+            variant={"outline"}
+            className={"border-l-0 rounded-l-none hover:ring-1 hover:ring-ring"}
+            onClick={handleReset}
+          >
+            <Icons.RotateCcw />
+          </Button>
+        </div>
 
-          <div className="flex items-center justify-center">
-            <Input
-              className={"border-r-1 rounded-r-none flex flex-1"}
-              type="text"
-              name="name"
-              placeholder="Nom de l'icône"
-              value={iconName}
-              onChange={(e) => handleInputChange(e.currentTarget.value)}
-              required
-            />
-            <Button
-              type={"button"}
-              variant={"outline"}
-              className={
-                "border-l-0 rounded-l-none hover:ring-1 hover:ring-ring"
-              }
-              onClick={handleReset}
-            >
-              <Icons.RotateCcw />
-            </Button>
-          </div>
+        <IconPicker
+          icons={icons}
+          selectedIcon={isValidIcon ? iconName : ""}
+          onChange={handleSelectChange}
+        />
 
-          <IconPicker
-            icons={icons}
-            selectedIcon={isValidIcon ? iconName : ""}
-            onChange={handleSelectChange}
+        <div className="w-full flex justify-center gap-24">
+          <ActionButtons
+            iconId={iconId}
+            actionFn={handleDelete}
+            pendingDelete={pendingDelete}
           />
-
-          <div className="w-full flex justify-center gap-24">
-            <ActionButtons
-              iconId={iconId}
-              actionFn={handleDelete}
-              pendingDelete={pendingDelete}
-            />
-          </div>
-        </Form>
-      </CardForm>
-    </div>
+        </div>
+      </Form>
+    </CardForm>
   );
 }

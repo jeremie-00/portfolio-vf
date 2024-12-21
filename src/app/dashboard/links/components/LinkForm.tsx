@@ -97,78 +97,76 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   };
 
   return (
-    <div className="flex items-center justify-center p-6 gap-2">
-      <CardForm
-        title={isCreate ? "Création d'un lien" : "Modification du lien"}
-        name={link?.title}
-      >
-        <Form action={handleSubmit} className="grid w-full items-center gap-4">
-          {!isCreate && <input type="hidden" name="ID" value={link?.id} />}
+    <CardForm
+      title={isCreate ? "Création d'un lien" : "Modification du lien"}
+      name={link?.title}
+    >
+      <Form action={handleSubmit} className="grid w-full items-center gap-4">
+        {!isCreate && <input type="hidden" name="ID" value={link?.id} />}
 
-          <input
-            type="hidden"
-            name="projectId"
-            value={link?.projectId || undefined}
+        <input
+          type="hidden"
+          name="projectId"
+          value={link?.projectId || undefined}
+        />
+        <input type="hidden" name="iconId" value={iconId} />
+        <IconPicker
+          icons={icons}
+          selectedIcon={iconName}
+          onChange={handleIconChange}
+        />
+        <Input
+          type="text"
+          name="url"
+          placeholder="URL du lien"
+          defaultValue={link?.url}
+        />
+        <Input
+          type="text"
+          name="type"
+          placeholder="Type du lien"
+          defaultValue={link?.type || ""}
+        />
+        <Input
+          type="text"
+          name="title"
+          placeholder="Title du lien"
+          defaultValue={link?.title}
+        />
+        <Label htmlFor="order">Ordre</Label>
+        <Input
+          type="text"
+          id="order"
+          name="order"
+          placeholder="Ordre"
+          defaultValue={link?.order || linkCount}
+        />
+        <CardSwitch
+          title="Afficher"
+          desc="Contrôle de l'affichage du lien dans la navigation."
+        >
+          <Switch
+            id="inNav"
+            name="inNav"
+            checked={inNavToggle === true}
+            onCheckedChange={toggleInNav}
           />
-          <input type="hidden" name="iconId" value={iconId} />
-          <IconPicker
-            icons={icons}
-            selectedIcon={iconName}
-            onChange={handleIconChange}
+        </CardSwitch>
+        <CardSwitch
+          title="Afficher (Admin)"
+          desc="Contrôle de l'affichage du lien dans le dashboard."
+        >
+          <Switch
+            id="isAdmin"
+            name="isAdmin"
+            checked={isAdminToggle === true}
+            onCheckedChange={toggleIsAdmin}
           />
-          <Input
-            type="text"
-            name="url"
-            placeholder="URL du lien"
-            defaultValue={link?.url}
-          />
-          <Input
-            type="text"
-            name="type"
-            placeholder="Type du lien"
-            defaultValue={link?.type || ""}
-          />
-          <Input
-            type="text"
-            name="title"
-            placeholder="Title du lien"
-            defaultValue={link?.title}
-          />
-          <Label htmlFor="order">Ordre</Label>
-          <Input
-            type="text"
-            id="order"
-            name="order"
-            placeholder="Ordre"
-            defaultValue={link?.order || linkCount}
-          />
-          <CardSwitch
-            title="Afficher"
-            desc="Contrôle de l'affichage du lien dans la navigation."
-          >
-            <Switch
-              id="inNav"
-              name="inNav"
-              checked={inNavToggle === true}
-              onCheckedChange={toggleInNav}
-            />
-          </CardSwitch>
-          <CardSwitch
-            title="Afficher (Admin)"
-            desc="Contrôle de l'affichage du lien dans le dashboard."
-          >
-            <Switch
-              id="isAdmin"
-              name="isAdmin"
-              checked={isAdminToggle === true}
-              onCheckedChange={toggleIsAdmin}
-            />
-          </CardSwitch>
-          <div className="w-full flex justify-center p-0">
-            <BtnSubmit />
-          </div>
-        </Form>
-      </CardForm>
-    </div>
+        </CardSwitch>
+        <div className="w-full flex justify-center p-0">
+          <BtnSubmit />
+        </div>
+      </Form>
+    </CardForm>
   );
 }

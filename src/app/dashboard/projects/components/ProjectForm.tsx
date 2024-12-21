@@ -143,206 +143,108 @@ export default function ProjectForm({
   };
 
   return (
-    <div className="flex flex w-full justify-center max-w-[700px]">
-      <CardForm
-        title={isCreate ? "Création d'un projet" : "Modification du projet"}
-        name={project?.title}
-      >
-        <Form action={handleSubmit}>
-          <input type="hidden" name="ID" value={project?.id} />
-          <input
-            type="hidden"
-            name="status"
-            value={isCreate ? "create" : "edit"}
-          />
+    <CardForm
+      title={isCreate ? "Création d'un projet" : "Modification du projet"}
+      name={project?.title}
+    >
+      <Form action={handleSubmit}>
+        <input type="hidden" name="ID" value={project?.id} />
+        <input
+          type="hidden"
+          name="status"
+          value={isCreate ? "create" : "edit"}
+        />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-left gap-4">
+            <Label htmlFor="title">Titre du projet</Label>
+            <Input
+              required
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Titre"
+              className="w-full"
+              defaultValue={project?.title}
+            />
+
+            <Label htmlFor="shortDesc">Description court pour la carte</Label>
+            <Input
+              required
+              type="text"
+              name="shortDesc"
+              id="shortDesc"
+              placeholder="description court"
+              className="w-full"
+              defaultValue={project?.shortDesc}
+            />
+            <Label htmlFor="longDesc">Description complete du projet</Label>
+            <Textarea
+              required
+              name="longDesc"
+              id="longDesc"
+              className="w-full"
+              placeholder="Description complete du projet"
+              defaultValue={project?.longDesc}
+            />
+            <Label htmlFor="type">Type</Label>
+            <Select
+              name="type"
+              value={selectedType}
+              onValueChange={(value) => setSelectedType(value)}
+            >
+              <SelectTrigger className="w-full" id="type">
+                <SelectValue placeholder="Type de projet" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Personnel">Personnel</SelectItem>
+                <SelectItem value="Professionnel">Professionnel</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Label htmlFor="order">Ordre</Label>
+            <Input
+              type="number"
+              name="order"
+              id="order"
+              className="w-full"
+              defaultValue={project?.order || 1}
+            />
+            <MultipleSelector
+              defaultOptions={OPTIONS}
+              placeholder="Selection des compétences ..."
+              value={selectedSkills}
+              onChange={handleSkillChange}
+              emptyIndicator={
+                <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                  Aucune compétences trouver.
+                </p>
+              }
+            />
+          </div>
           <div className="flex flex-col gap-4">
-            <div className="flex flex-col items-left gap-4">
-              <Label htmlFor="title">Titre du projet</Label>
-              <Input
-                required
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Titre"
-                className="w-full"
-                defaultValue={project?.title}
-              />
-
-              <Label htmlFor="shortDesc">Description court pour la carte</Label>
-              <Input
-                required
-                type="text"
-                name="shortDesc"
-                id="shortDesc"
-                placeholder="description court"
-                className="w-full"
-                defaultValue={project?.shortDesc}
-              />
-              <Label htmlFor="longDesc">Description complete du projet</Label>
-              <Textarea
-                required
-                name="longDesc"
-                id="longDesc"
-                className="w-full"
-                placeholder="Description complete du projet"
-                defaultValue={project?.longDesc}
-              />
-              <Label htmlFor="type">Type</Label>
-              <Select
-                name="type"
-                value={selectedType}
-                onValueChange={(value) => setSelectedType(value)}
-              >
-                <SelectTrigger className="w-full" id="type">
-                  <SelectValue placeholder="Type de projet" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Personnel">Personnel</SelectItem>
-                  <SelectItem value="Professionnel">Professionnel</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Label htmlFor="order">Ordre</Label>
-              <Input
-                type="number"
-                name="order"
-                id="order"
-                className="w-full"
-                defaultValue={project?.order || 1}
-              />
-              <MultipleSelector
-                defaultOptions={OPTIONS}
-                placeholder="Selection des compétences ..."
-                value={selectedSkills}
-                onChange={handleSkillChange}
-                emptyIndicator={
-                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                    Aucune compétences trouver.
-                  </p>
-                }
-              />
-            </div>
-            <div className="flex flex-col gap-4">
-              <SingleImageUpload
-                ref={singleImageUploadRef}
-                label="Image de couverture"
-                image={project ? project.cover : null}
-                isCreate={isCreate}
-              />
-              <MultiImageUpload
-                ref={multiImageUploadRef}
-                label="Médias"
-                images={project ? project.medias : []}
-                isCreate={isCreate}
-              />
-            </div>
+            <SingleImageUpload
+              ref={singleImageUploadRef}
+              label="Image de couverture"
+              image={project ? project.cover : null}
+              isCreate={isCreate}
+            />
+            <MultiImageUpload
+              ref={multiImageUploadRef}
+              label="Médias"
+              images={project ? project.medias : []}
+              isCreate={isCreate}
+            />
           </div>
-          <LinksFormProject
-            initialLinks={links}
-            icons={icons}
-            ref={linksFormProjectRef}
-          />
-          <div className="w-full flex justify-center items-center p-12 ">
-            <BtnSubmit />
-          </div>
-        </Form>
-      </CardForm>
-    </div>
+        </div>
+        <LinksFormProject
+          initialLinks={links}
+          icons={icons}
+          ref={linksFormProjectRef}
+        />
+        <div className="w-full flex justify-center items-center p-12 ">
+          <BtnSubmit />
+        </div>
+      </Form>
+    </CardForm>
   );
 }
-
-/*       <div className="w-[400px]">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <ReturnButton href="/dashboard/project" />
-            <CardTitle className="text-left pt-4">
-              {isCreate
-                ? "Création d'un projet"
-                : `Modification du projet ${title}`}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Form
-              action={handleSubmit}
-              className="grid w-full items-center gap-4"
-            >
-              <input type="hidden" name="id" value={id} />
-              <input
-                type="hidden"
-                name="status"
-                value={isCreate ? "create" : "edit"}
-              />
-
-              <Label htmlFor="title">Titre du projet</Label>
-              <Input
-                required
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Titre"
-                className="w-full"
-                defaultValue={title}
-              />
-
-              <Label htmlFor="shortDesc">Description court pour la carte</Label>
-              <Input
-                required
-                type="text"
-                name="shortDesc"
-                id="shortDesc"
-                placeholder="description court"
-                className="w-full"
-                defaultValue={shortDesc}
-              />
-              <Label htmlFor="longDesc">Description complete du projet</Label>
-              <Textarea
-                name="longDesc"
-                id="longDesc"
-                className="w-full"
-                placeholder="Description complete du projet"
-                defaultValue={longDesc}
-              />
-              <Label htmlFor="type">Type</Label>
-              <Select
-                name="type"
-                value={selectedType}
-                onValueChange={(value) => setSelectedType(value)}
-              >
-                <SelectTrigger className="w-full" id="type">
-                  <SelectValue placeholder="Type de projet" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Personnel">Personnel</SelectItem>
-                  <SelectItem value="Professionnel">Professionnel</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Label htmlFor="order">Ordre</Label>
-              <Input
-                type="number"
-                name="order"
-                id="order"
-                className="w-full"
-                defaultValue={order || projectCount}
-              />
-              <MultipleSelector
-                defaultOptions={OPTIONS}
-                placeholder="Selection des compétences ..."
-                value={selectedSkills}
-                onChange={handleSkillChange}
-                emptyIndicator={
-                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                    Aucune compétences trouver.
-                  </p>
-                }
-              />
-
-              <LinksFormProject initialLinks={links} icons={icons} />
-
-              <CardFooter className="w-full flex flex-col justify-center items-center p-0 mt-2">
-                <BtnSubmit />
-              </CardFooter>
-            </Form>
-          </CardContent>
-        </Card>
-      </div> */

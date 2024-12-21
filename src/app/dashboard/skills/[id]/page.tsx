@@ -1,3 +1,4 @@
+import { WrapperForm } from "@/app/components/WrapperForm";
 import Link from "next/link";
 import SkillForm from "../components/SkillForm";
 import { getSkillByIdAction } from "../services/skill.action";
@@ -21,12 +22,12 @@ export default async function SkillFormPage({
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <WrapperForm>
       <SkillForm
         skill={skill}
         image={skill ? skill?.image : null}
         isCreate={paramsId === "create"}
       />
-    </div>
+    </WrapperForm>
   );
 }

@@ -1,3 +1,4 @@
+import { WrapperForm } from "@/app/components/WrapperForm";
 import Link from "next/link";
 import { getAllIconsAction } from "../../icons/services/icons.action";
 import LinkForm from "../components/LinkForm";
@@ -22,8 +23,8 @@ export default async function LinksFormPage({
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <WrapperForm>
       <LinkForm isCreate={paramsId === "create"} link={link} icons={icons} />
-    </div>
+    </WrapperForm>
   );
 }

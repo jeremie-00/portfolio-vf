@@ -18,7 +18,7 @@ export default function SkillPageClient({ skills, section }: skillProps) {
   }
 
   return (
-    <div className="flex flex-col gap-8 flex-1 p-4">
+    <section className="flex flex-col gap-8 flex-1 p-4">
       <h1 className="text-center font-extrabold text-textColor xl:text-[60px] lg:text-[50px] md:text-[44px] sm:text-[40px] text-[28px]">
         {section.titles.map((title, index) =>
           index === 1 ? (
@@ -41,6 +41,6 @@ export default function SkillPageClient({ skills, section }: skillProps) {
       ))}
 
       <SkillsAnimatedRound skills={skills} />
-    </div>
+    </section>
   );
 }

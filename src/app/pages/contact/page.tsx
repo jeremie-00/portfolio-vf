@@ -1,7 +1,10 @@
-export default function page() {
+import { WrapperForm } from "@/app/components/WrapperForm";
+import FormContact from "./components/FormContact";
+
+export default function ContactPage() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
-      Cette page sera disponible très bientôt... ! 🚀
-    </div>
+    <WrapperForm>
+      <FormContact />
+    </WrapperForm>
   );
 }
