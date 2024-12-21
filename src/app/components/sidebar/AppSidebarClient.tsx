@@ -123,8 +123,14 @@ export function AppSidebarClient({
                           {isLoading ? (
                             <Skeleton className="h-5 w-5" />
                           ) : (
-                            <SidebarGroupAction title={`Créer ${link.title}`}>
-                              <Link href={`${link.url}/create`}>
+                            <SidebarGroupAction
+                              title={`Créer ${link.title}`}
+                              asChild
+                            >
+                              <Link
+                                href={`${link.url}/create`}
+                                onClick={isMobile ? toggleSidebar : undefined}
+                              >
                                 <DynamicIcon name="Plus" />
                                 <span className="sr-only">
                                   Créer {link.title}
