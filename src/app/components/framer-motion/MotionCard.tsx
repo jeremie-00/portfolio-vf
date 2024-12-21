@@ -7,7 +7,7 @@ export const MotionCard = ({
   isRounded = false,
   isRotate = false,
   position = "relative",
-  size = { width: 100, height: 100 },
+  size = { width: 500, height: 500 },
 }: {
   children: React.ReactNode;
   isRotate?: boolean;
@@ -54,6 +54,27 @@ export const MotionCard = ({
 
   const radius = isRounded ? "50%" : "1rem";
 
+  // Fonction pour calculer la position de la souris/tactile
+  const handleMove = (clientX: number, clientY: number) => {
+    if (!cardRef.current || !glareRef.current) return;
+    const glareRect = glareRef.current.getBoundingClientRect();
+    const cardRect = cardRef.current.getBoundingClientRect();
+
+    x.set(clientX - cardRect.left);
+    y.set(clientY - cardRect.top);
+    glareX.set(clientX - cardRect.left - glareRect.width / 2);
+    glareY.set(clientY - cardRect.top - glareRect.height / 2);
+  };
+
+  const handleLeave = () => {
+    if (!cardRef.current || !glareRef.current) return;
+    const cardRect = cardRef.current.getBoundingClientRect();
+    x.set(cardRect.width / 2);
+    y.set(cardRect.height / 2);
+    glareX.set(0);
+    glareY.set(0);
+  };
+
   return (
     <motion.div
       layout
@@ -66,23 +87,13 @@ export const MotionCard = ({
         borderRadius: radius,
       }}
       initial={{ rotateX: 0, rotateY: 0 }}
-      onMouseMove={(e) => {
-        if (!cardRef.current || !glareRef.current) return;
-        const glareRect = glareRef.current.getBoundingClientRect();
-        const cardRect = cardRef.current.getBoundingClientRect();
-        x.set(e.clientX - cardRect.left);
-        y.set(e.clientY - cardRect.top);
-        glareX.set(e.clientX - cardRect.left - glareRect.width / 2);
-        glareY.set(e.clientY - cardRect.top - glareRect.height / 2);
+      onMouseMove={(e) => handleMove(e.clientX, e.clientY)}
+      onMouseLeave={handleLeave}
+      onTouchMove={(e) => {
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
       }}
-      onMouseLeave={() => {
-        if (!cardRef.current || !glareRef.current) return;
-        const cardRect = cardRef.current.getBoundingClientRect();
-        x.set(cardRect.width / 2);
-        y.set(cardRect.height / 2);
-        glareX.set(0);
-        glareY.set(0);
-      }}
+      onTouchEnd={handleLeave}
     >
       <motion.div
         layout
@@ -96,7 +107,7 @@ export const MotionCard = ({
         }}
       />
       <div
-        className={`absolute bg-sidebar inset-0.5 content-center text-center text-xl font-bold md:p-3 p-2 cursor-pointer `}
+        className={`absolute bg-sidebar inset-0.5 content-center text-center text-xl font-bold cursor-pointer overflow-hidden md:p-2 p-1`}
         style={{
           borderRadius: radius,
         }}

@@ -7,7 +7,7 @@ const Box = forwardRef<
 >(({ children, size, zIndex = 0 }, ref) => {
   return (
     <div
-      className="absolute grid place-content-center"
+      className="absolute grid place-content-center rounded-full"
       style={{
         opacity: 0,
         width: `${size}px`,

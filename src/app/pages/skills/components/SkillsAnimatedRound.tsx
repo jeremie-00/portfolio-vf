@@ -8,7 +8,7 @@ import { FullSkill } from "@/types/prismaTypes";
 //import { useIsMobile } from "@/hooks/use-mobile";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function SkillsAnimatedRound({
   skills,
@@ -39,6 +39,17 @@ export default function SkillsAnimatedRound({
   }, [skillsOthers.length, sizeMultiplier, containerSize]);
 
   const radius = containerSize / 2 + skillsOthers.length;
+
+  const positions = useMemo(() => {
+    return skillsOthers.map((_, index) => {
+      const angle = (index / skillsOthers.length) * 360;
+      const radians = (angle * Math.PI) / 180;
+      return {
+        x: Math.cos(radians) * radius,
+        y: Math.sin(radians) * radius,
+      };
+    });
+  }, [skillsOthers, radius]);
 
   if (!skills) {
     return <div>not skills</div>;
@@ -75,11 +86,12 @@ export default function SkillsAnimatedRound({
         {containerSize ? (
           skillsOthers.map((item, index) => {
             // Calcule la position sur le cercle
-            const totalElements = skillsOthers.length; // Nombre total d'éléments
+            /*             const totalElements = skillsOthers.length; // Nombre total d'éléments
             const angle = (index / totalElements) * 360; // Angle en degrés
-            const radians = (angle * Math.PI) / 180; // Conversion en radians
-            const x = Math.cos(radians) * radius; // Position horizontale
-            const y = Math.sin(radians) * radius; // Position verticale
+            const radians = (angle * Math.PI) / 180; // Conversion en radians */
+            //const x = Math.cos(radians) * radius; // Position horizontale
+            //const y = Math.sin(radians) * radius; // Position verticale
+            const { x, y } = positions[index];
             const roundedX = parseFloat(x.toFixed(2)); // Arrondi à 2 décimales
             const roundedY = parseFloat(y.toFixed(2)); // Arrondi à 2 décimales
             const boxSize = containerSize / 4.2;
@@ -108,11 +120,13 @@ export default function SkillsAnimatedRound({
                   <Image
                     src={item.image?.url || "/globe.svg"}
                     alt={`${item.title} logo`}
+                    aria-label={`Logo de ${item.title}`}
                     width={100}
                     height={100}
                     className="object-cover w-full h-full"
                   />
                 </MotionCard>
+                test
               </MotionBox>
             );
           })
