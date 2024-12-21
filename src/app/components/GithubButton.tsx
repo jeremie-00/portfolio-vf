@@ -1,5 +1,6 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FullLink } from "@/types/prismaTypes";
@@ -10,7 +11,7 @@ import { DynamicIcon } from "../dashboard/icons/components/DynamicIcon";
 export function GithubButton({ link }: { link: FullLink | null | undefined }) {
   const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
-
+  const { toggleSidebar } = useSidebar();
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -27,6 +28,7 @@ export function GithubButton({ link }: { link: FullLink | null | undefined }) {
       })}
       href={link?.url || "/"}
       target={link?.target || "__blank"}
+      onClick={isMobile ? toggleSidebar : undefined}
     >
       <DynamicIcon name={link?.icon?.name || "Github"} size={24} />
     </Link>

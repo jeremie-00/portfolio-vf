@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -12,6 +13,7 @@ export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
+  const { toggleSidebar } = useSidebar();
 
   useEffect(() => {
     setMounted(true);
@@ -19,6 +21,7 @@ export function ThemeToggle() {
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
+    if (isMobile) toggleSidebar();
   };
 
   if (!mounted) {

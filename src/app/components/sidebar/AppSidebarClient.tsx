@@ -104,7 +104,10 @@ export function AppSidebarClient({
                         {isLoading ? (
                           <Skeleton className="h-8 w-full" />
                         ) : (
-                          <Link href={link.url}>
+                          <Link
+                            href={link.url}
+                            onClick={isMobile ? toggleSidebar : undefined}
+                          >
                             <DynamicIcon
                               name={link.icon ? link.icon.name : "CircleOff"}
                               size={40}
