@@ -28,11 +28,11 @@ interface CardsProps {
 
 export function CardForm({ title, name, children }: CardsProps) {
   return (
-    <Card className="w-full">
+    <Card className="w-full max-w-[700px]">
       <CardHeader className="flex flex-col">
-        <CardTitle className="text-left px-4 py-8 text-center">
+        <CardTitle className="px-4 py-8 text-center">
           {title}
-          <span className="text-primary text-2xl ml-2 block p-4">{name}</span>
+          <span className="text-primary text-2xl block p-4">{name}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
@@ -81,7 +81,7 @@ export function CardsSectionDashboard({
   };
 
   return (
-    <Card className="flex flex-col ">
+    <Card className="flex flex-col w-full">
       <CardHeader className="flex gap-4 p-4">
         <h3>Type de la section : {type}</h3>
         <h3>Ordre d&apos;affichage : {order}</h3>

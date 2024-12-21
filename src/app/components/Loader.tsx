@@ -6,8 +6,7 @@ const Loader = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
-        //backgroundColor: "#f9f9f9",
+        height: "100%",
       }}
     >
       <div

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { Label } from "@radix-ui/react-label";
 import Form from "next/form";
 import { useState } from "react";
@@ -29,6 +30,18 @@ export default function FormContact() {
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
+    if (
+      !formData.lastName ||
+      !formData.firstName ||
+      !formData.email ||
+      !formData.message
+    ) {
+      return (
+        <Button type="submit" disabled={true} size="default">
+          Envoyer
+        </Button>
+      );
+    }
     return (
       <Button type="submit" disabled={pending} size="default">
         {pending ? <IconLoaderCircle /> : "Envoyer"}
@@ -36,9 +49,14 @@ export default function FormContact() {
     );
   };
 
+  const { toast } = useToast();
+
   const handleSubmit = () => {
-    console.log("submit");
-    console.log(formData);
+    toast({
+      title: "📬 Bientôt dans votre boîte mail !",
+      description:
+        "Merci pour votre message ! L'envoi d'e-mails n'est pas encore disponible... mais ça arrive bientôt. 🚀",
+    });
   };
 
   return (
@@ -105,7 +123,7 @@ export default function FormContact() {
               name="message"
               id="message"
               placeholder="Votre message..."
-              className="w-full"
+              className="w-full h-40"
               value={formData.message}
               onChange={handleChange}
             />
