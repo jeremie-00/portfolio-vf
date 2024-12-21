@@ -4,8 +4,8 @@ import { getAllLinksAction } from "./services/links.action";
 export default async function page() {
   const links = await getAllLinksAction();
   return (
-    <div className="px-4">
+    <section className="px-4 py-8">
       <LinkTab links={links} />
-    </div>
+    </section>
   );
 }

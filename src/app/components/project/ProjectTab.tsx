@@ -18,10 +18,10 @@ export default function ProjectTab({ isAdmin, projects }: ProjectTabProps) {
     );
   }
   return (
-    <div className="w-full grid xl:grid-cols-3 lg:grid-cols-2 justify-center gap-4 p-4 ">
+    <section className="w-full grid xl:grid-cols-3 lg:grid-cols-2 justify-center gap-4 px-4 py-8">
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} isAdmin={isAdmin} />
       ))}
-    </div>
+    </section>
   );
 }
