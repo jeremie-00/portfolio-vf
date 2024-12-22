@@ -261,7 +261,7 @@ export default function SectionForm({
             <div key={index} className="flex gap-2">
               <Textarea
                 name="contents"
-                className="w-full"
+                className="w-full h-40"
                 id={`content-${index}`}
                 placeholder={`Contenu ${index + 1}`}
                 value={field.content}

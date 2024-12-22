@@ -182,7 +182,7 @@ export default function ProjectForm({
               required
               name="longDesc"
               id="longDesc"
-              className="w-full"
+              className="w-full h-40"
               placeholder="Description complete du projet"
               defaultValue={project?.longDesc}
             />

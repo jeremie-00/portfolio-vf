@@ -21,7 +21,7 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
 
   return (
     <div className="w-full h-full flex flex-col gap-6">
-      <div className="relative aspect-slider shadow-lg w-full h-full m-auto flex items-center justify-center border border-border rounded-xl  overflow-hidden">
+      <div className="relative aspect-slider shadow-lg w-full h-full m-auto flex items-center justify-center border border-border rounded-xl overflow-hidden">
         {pictures.map((picture, index) => (
           <Image
             key={index}
