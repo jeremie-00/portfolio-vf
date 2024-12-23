@@ -110,22 +110,28 @@ export const updateSectionPageAction = authentificationAction
         type: section.type,
         order: parseInt(section.order),
         titles: {
-          update: section.titles.map((text, index) => ({
+          upsert: section.titles.map((text, index) => ({
             where: {
-              id: existingdataSectionPage.titles[index].id, // Utiliser l'ID unique de chaque titre
+              id: existingdataSectionPage.titles[index]?.id || "0",
             },
-            data: {
-              text, // Mise à jour du texte du titre
+            update: {
+              text,
+            },
+            create: {
+              text,
             },
           })),
         },
         contents: {
-          update: section.contents.map((text, index) => ({
+          upsert: section.contents.map((text, index) => ({
             where: {
-              id: existingdataSectionPage.contents[index].id, // Utiliser l'ID unique de chaque contenu
+              id: existingdataSectionPage.contents[index]?.id || "0",
             },
-            data: {
-              text, // Mise à jour du texte du contenu
+            update: {
+              text,
+            },
+            create: {
+              text,
             },
           })),
         },

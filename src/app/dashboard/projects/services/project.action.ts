@@ -179,20 +179,20 @@ export const updateProjectAction = authentificationAction
             url: { notIn: links?.map((link) => link.url) },
           },
           upsert: links?.map((link, index) => ({
-            where: { url: link.url }, // Pas besoin d'utiliser l'index ici
+            where: { url: link.url },
             update: {
               url: link.url,
               title: link.title,
-              inNav: link.inNav === "on", // Convertit "on" en un booléen
+              inNav: link.inNav === "on",
               iconId: link.iconId || null,
-              order: index + 1, // Utilise l'index pour attribuer un ordre
+              order: index + 1,
             },
             create: {
               url: link.url,
               title: link.title,
-              inNav: link.inNav === "on", // Idem ici
+              inNav: link.inNav === "on",
               iconId: link.iconId || null,
-              order: index + 1, // Utilise l'index pour attribuer un ordre
+              order: index + 1,
             },
           })),
         },
