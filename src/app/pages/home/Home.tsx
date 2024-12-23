@@ -2,7 +2,6 @@ import { getSectionByTypeAction } from "@/app/dashboard/sections/services/sectio
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { RoughNotation } from "react-rough-notation";
 
 export default async function Home({ children }: { children: ReactNode }) {
   const section = await getSectionByTypeAction("home");
@@ -25,16 +24,9 @@ export default async function Home({ children }: { children: ReactNode }) {
         <h1 className="font-extrabold text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
             index === 1 ? (
-              <RoughNotation
-                key={title.id}
-                show={true}
-                type="underline"
-                order="1"
-              >
-                <span key={title.id} className="text-primary">
-                  {" " + title.text}
-                </span>
-              </RoughNotation>
+              <span key={title.id} className="text-primary">
+                {" " + title.text}
+              </span>
             ) : (
               <span key={title.id}>{title.text}</span>
             )
