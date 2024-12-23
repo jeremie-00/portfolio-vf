@@ -96,10 +96,7 @@ export function AppSidebarClient({
                     <SidebarMenuItem key={link.id}>
                       <SidebarMenuButton
                         asChild
-                        isActive={
-                          pathname === link.url ||
-                          pathname === `${link.url}/create`
-                        }
+                        isActive={pathname === link.url}
                       >
                         {isLoading ? (
                           <Skeleton className="h-8 w-full" />
