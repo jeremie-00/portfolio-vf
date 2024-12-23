@@ -29,6 +29,7 @@ export default {
           xl: "1040px",
         },
       },
+      rotate: { "negative-3": "-3deg" },
       colors: {
         textColor: "hsl(var(--font-color))",
         background: "hsl(var(--background))",
