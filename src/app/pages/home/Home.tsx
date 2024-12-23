@@ -1,15 +1,12 @@
-"use client";
-
-import DevelopperDesk from "@/app/components/desktopSvg/DevelopperDesk";
+import { getSectionByTypeAction } from "@/app/dashboard/sections/services/section.action";
 import { buttonVariants } from "@/components/ui/button";
-import { FullSectionPage } from "@/types/prismaTypes";
 import Link from "next/link";
+import { ReactNode } from "react";
+import { RoughNotation } from "react-rough-notation";
 
-interface HomeProps {
-  section: FullSectionPage | null;
-}
+export default async function Home({ children }: { children: ReactNode }) {
+  const section = await getSectionByTypeAction("home");
 
-export default function HomeSvgPage({ section }: HomeProps) {
   if (!section) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center text-center p-6">
@@ -28,9 +25,16 @@ export default function HomeSvgPage({ section }: HomeProps) {
         <h1 className="font-extrabold text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
             index === 1 ? (
-              <span key={title.id} className="text-primary">
-                {" " + title.text}
-              </span>
+              <RoughNotation
+                key={title.id}
+                show={true}
+                type="underline"
+                order="1"
+              >
+                <span key={title.id} className="text-primary">
+                  {" " + title.text}
+                </span>
+              </RoughNotation>
             ) : (
               <span key={title.id}>{title.text}</span>
             )
@@ -56,10 +60,7 @@ export default function HomeSvgPage({ section }: HomeProps) {
               Contactez-moi
             </Link>
           </div>
-
-          <div className="w-full h-full flex items-center justify-center">
-            <DevelopperDesk />
-          </div>
+          {children}
         </div>
       </div>
       <div className="flex flex-col justify-end items-center mt-2 sm:mt-3 md:mt-4 xl:mt-5 max-md:hidden">
