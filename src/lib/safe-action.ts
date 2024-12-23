@@ -5,6 +5,16 @@ import { authOptions } from "./authOptions";
 
 export class ActionError extends Error {}
 
+export const contactAction = createSafeActionClient({
+  handleContactError(error: ActionError) {
+    if (error instanceof ActionError) {
+      console.log("error gdfg", error.message);
+      return error.message;
+    }
+    return "Oh no, une erreur est survenue.";
+  },
+} as SafeActionClientOpts<string, undefined, undefined>);
+
 export const authentificationAction = createSafeActionClient({
   // Fonction de gestion des erreurs serveur
   handleServerError: (error) => {
@@ -13,15 +23,11 @@ export const authentificationAction = createSafeActionClient({
     }
 
     // Gérer les erreurs Prisma ou autres erreurs spécifiques
-    // Gérer les erreurs Prisma ou autres erreurs spécifiques
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // Vérification du code d'erreur spécifique pour les violations de contrainte unique
-      if (error.code === "P2002") {
-        return `Le champ ${error?.meta?.target} existe déjà.`;
-      }
-
       // Gérer d'autres erreurs Prisma
       switch (error.code) {
+        case "P2002":
+          return `Le champ ${error?.meta?.target} existe déjà.`;
         case "P2000":
           return `Erreur de validation de la base de données : ${error.message}`;
         case "P2025":
@@ -32,6 +38,7 @@ export const authentificationAction = createSafeActionClient({
           return `Erreur Prisma : ${error.message}`;
       }
     }
+
     return "Oh no, generic error";
   },
   // Middleware pour vérifier l'authentification

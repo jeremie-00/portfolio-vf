@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { Label } from "@radix-ui/react-label";
 import Form from "next/form";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
+import { sendEmail } from "../services/contact.action";
+import { ToastContactAction } from "./ToastContact";
 
 export default function FormContact() {
   const [formData, setFormData] = useState({
@@ -30,33 +32,42 @@ export default function FormContact() {
 
   const BtnSubmit = () => {
     const { pending } = useFormStatus();
-    if (
+
+    const isDisabled =
+      pending ||
       !formData.lastName ||
       !formData.firstName ||
       !formData.email ||
-      !formData.message
-    ) {
-      return (
-        <Button type="submit" disabled={true} size="default">
-          Envoyer
-        </Button>
-      );
-    }
+      !formData.message;
+
     return (
-      <Button type="submit" disabled={pending} size="default">
+      <Button type="submit" disabled={isDisabled} size="default">
         {pending ? <IconLoaderCircle /> : "Envoyer"}
       </Button>
     );
   };
 
-  const { toast } = useToast();
+  const handleSubmit = async (formData: FormData) => {
+    const response = await sendEmail(formData);
 
-  const handleSubmit = () => {
-    toast({
-      title: "📬 Bientôt dans votre boîte mail !",
-      description:
-        "Merci pour votre message ! L'envoi d'e-mails n'est pas encore disponible... mais ça arrive bientôt. 🚀",
-    });
+    if (response?.serverError || response?.validationErrors) {
+      ToastContactAction({
+        serverError: response.serverError,
+        validationErrors: response.validationErrors,
+      });
+      return;
+    }
+
+    if (response?.data) {
+      ToastContactAction({ data: response.data });
+      setFormData({
+        lastName: "",
+        firstName: "",
+        email: "",
+        message: "",
+      });
+      redirect("/");
+    }
   };
 
   return (
@@ -127,6 +138,9 @@ export default function FormContact() {
               value={formData.message}
               onChange={handleChange}
             />
+            <span className="text-sm text-muted-foreground text-right mt-2">
+              {formData.message.length}/500
+            </span>
           </div>
 
           <div className="flex justify-end gap-4">

@@ -309,6 +309,25 @@ export const ImageDeleteSchema = z
     return true;
   });
 
+export const contactFormSchema = zfd.formData({
+  lastName: z
+    .string()
+    .min(1, "Le nom est requis")
+    .max(50, "Le nom ne peut pas dépasser 50 caractères"),
+  firstName: z
+    .string()
+    .min(1, "Le prénom est requis")
+    .max(50, "Le prénom ne peut pas dépasser 50 caractères"),
+  email: z
+    .string()
+    .email("L'adresse e-mail est invalide")
+    .max(100, "L'email ne peut pas dépasser 100 caractères"),
+  message: z
+    .string()
+    .min(1, "Le message est requis")
+    .max(500, "Le message ne peut pas dépasser 500 caractères"),
+});
+
 /* 
 //debug 
 const validationResult = ProjectSchema.safeParse(projectData);
