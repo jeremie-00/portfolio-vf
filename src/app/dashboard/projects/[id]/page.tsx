@@ -1,7 +1,7 @@
 import ProjectForm from "@/app/dashboard/projects/components/ProjectForm";
 import { getProjectByIdAction } from "@/app/dashboard/projects/services/project.action";
 
-import { WrapperForm } from "@/app/components/WrapperForm";
+import { Wrapper } from "@/app/components/pages/Wrapper";
 import Link from "next/link";
 import { getAllIconsAction } from "../../icons/services/icons.action";
 import { getAllSkillsAction } from "../../skills/services/skill.action";
@@ -29,7 +29,7 @@ export default async function ProjectFormPage({
   }
 
   return (
-    <WrapperForm>
+    <Wrapper>
       <ProjectForm
         isCreate={paramsId === "create"}
         project={project}
@@ -37,6 +37,6 @@ export default async function ProjectFormPage({
         allSkills={skills}
         icons={icons}
       />
-    </WrapperForm>
+    </Wrapper>
   );
 }

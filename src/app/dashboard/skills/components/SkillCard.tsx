@@ -86,33 +86,3 @@ export default function SkillCard({ skill, isAdmin }: SkillCardProps) {
     </MotionCard>
   );
 }
-/*   return (
-    <Card className="flex items-center justify-center transition duration-200 hover:shadow-xl hover:-translate-y-1 md:flex-col">
-      {isAdmin && (
-        <CardHeader className="w-full flex-col flex items-center justify-center gap-4 hidden min-[420px]:flex lg:justify-between md:flex-row">
-          {skill.display ? <Eye /> : <EyeClosed />}
-          <span>{skill.order}</span>
-        </CardHeader>
-      )}
-
-      <CardContent className="w-full flex flex-col items-center justify-center pt-6 lg:flex-1">
-        {image && image.url ? (
-          <Image
-            src={image.url}
-            alt={image.alt}
-            width={200}
-            height={200}
-            className="w-full rounded-lg object-cover w-[200px] h-[200px]"
-            priority
-          />
-        ) : null}
-        <h3 className="lg:text-3xl">{skill.title}</h3>
-      </CardContent>
-      {isAdmin && (
-        <CardFooter className="w-full flex flex-col items-center justify-center gap-4 pt-6 md:flex-row lg:justify-between">
-          <UpdateButton href={`/dashboard/skill/${skill.id}`} />
-          <DeleteButton action={deleteSkill} id={skill.id} />
-        </CardFooter>
-      )}
-    </Card>
-  ); */

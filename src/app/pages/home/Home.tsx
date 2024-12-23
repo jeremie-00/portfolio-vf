@@ -35,7 +35,7 @@ export default async function Home({ children }: { children: ReactNode }) {
         {section.contents.map((content) => (
           <p
             key={content.id}
-            className="flex-1 w-full h-full flex flex-col text-textColor font-medium xl:text-[32px] lg:text-[30px] md:text-[24px] sm:text-[24px] text-[20px]"
+            className="flex-1 w-full h-full flex flex-col text-textColor font-medium xl:text-[24px] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px]"
           >
             {content.text}
           </p>

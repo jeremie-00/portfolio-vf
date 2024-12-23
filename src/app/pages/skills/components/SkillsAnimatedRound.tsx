@@ -5,8 +5,6 @@ import { MotionCircleBox } from "@/app/components/framer-motion/MotionCircleBox"
 import Loader from "@/app/components/Loader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FullSkill } from "@/types/prismaTypes";
-//import { useIsMobile } from "@/hooks/use-mobile";
-
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -56,7 +54,7 @@ export default function SkillsAnimatedRound({
   }
 
   return (
-    <div
+    <section
       ref={circleRef}
       className="relative w-full h-full flex flex-col items-center justify-center"
     >
@@ -130,6 +128,6 @@ export default function SkillsAnimatedRound({
           </div>
         )}
       </MotionCircleBox>
-    </div>
+    </section>
   );
 }

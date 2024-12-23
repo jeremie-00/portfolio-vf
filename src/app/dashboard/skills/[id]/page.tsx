@@ -1,4 +1,4 @@
-import { WrapperForm } from "@/app/components/WrapperForm";
+import { Wrapper } from "@/app/components/pages/Wrapper";
 import Link from "next/link";
 import SkillForm from "../components/SkillForm";
 import { getSkillByIdAction } from "../services/skill.action";
@@ -22,12 +22,12 @@ export default async function SkillFormPage({
   }
 
   return (
-    <WrapperForm>
+    <Wrapper>
       <SkillForm
         skill={skill}
         image={skill ? skill?.image : null}
         isCreate={paramsId === "create"}
       />
-    </WrapperForm>
+    </Wrapper>
   );
 }

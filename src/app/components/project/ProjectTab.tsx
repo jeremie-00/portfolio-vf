@@ -1,20 +1,17 @@
-import { FullProject } from "@/types/prismaTypes";
+import { getAllProjectsAction } from "@/app/dashboard/projects/services/project.action";
 import ProjectCard from "./ProjectCard";
 
-interface ProjectTabProps {
-  isAdmin: boolean;
-  projects: FullProject[];
-}
+export default async function ProjectTab({ isAdmin }: { isAdmin: boolean }) {
+  const projects = await getAllProjectsAction();
 
-export default function ProjectTab({ isAdmin, projects }: ProjectTabProps) {
   if (projects.length === 0) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
+      <section className="w-full h-full flex items-center justify-center">
         <h2 className="text-3xl text-center flex flex-col gap-4">
           Pas encore de projets dans la base de données...
           <span>L&apos;aventure ne fait que commencer ! 🚀</span>
         </h2>
-      </div>
+      </section>
     );
   }
   return (

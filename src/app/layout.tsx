@@ -10,6 +10,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./components/collaps/style/collaps.css";
 import "./components/desktopSvg/style/animationSvg.css";
+import Footer from "./components/pages/Footer";
 import SessionWrapper from "./components/SessionWrapper";
 import { AppSidebar } from "./components/sidebar/AppSidebar";
 import "./globals.css";
@@ -54,13 +55,7 @@ export default function RootLayout({
                 <SidebarTrigger />
                 <AnimatePresence mode="wait">{children}</AnimatePresence>
                 <Toaster />
-                <footer className="w-full gap-4 text-center text-sm text-muted-foreground p-4 mt-12">
-                  <p>
-                    © {new Date().getFullYear() + " "}
-                    Créé avec ❤️, du code et Next.js par Jérémie Hérault.
-                    Hébergé sur Vercel !
-                  </p>
-                </footer>
+                <Footer />
               </SidebarInset>
             </SidebarProvider>
           </ThemeProvider>

@@ -1,8 +1,8 @@
-import { WrapperForm } from "@/app/components/WrapperForm";
 import Link from "next/link";
 import { getAllIconsAction } from "../../icons/services/icons.action";
 import LinkForm from "../components/LinkForm";
 import { getLinkByIdAction } from "../services/links.action";
+import { Wrapper } from "@/app/components/pages/Wrapper";
 
 export default async function LinksFormPage({
   params,
@@ -23,8 +23,8 @@ export default async function LinksFormPage({
   }
 
   return (
-    <WrapperForm>
+    <Wrapper>
       <LinkForm isCreate={paramsId === "create"} link={link} icons={icons} />
-    </WrapperForm>
+    </Wrapper>
   );
 }

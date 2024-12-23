@@ -1,4 +1,4 @@
-import { WrapperForm } from "@/app/components/WrapperForm";
+import { Wrapper } from "@/app/components/pages/Wrapper";
 import SectionForm from "../components/SectionForm";
 import { getSectionByIdAction } from "../services/section.action";
 
@@ -13,8 +13,8 @@ export default async function SectionFormPage({
     paramsId !== "create" ? await getSectionByIdAction(paramsId) : null;
 
   return (
-    <WrapperForm>
+    <Wrapper>
       <SectionForm section={section} />
-    </WrapperForm>
+    </Wrapper>
   );
 }
