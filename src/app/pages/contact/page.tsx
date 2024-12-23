@@ -1,7 +1,7 @@
-import { Transition } from "@/app/components/framer-motion/Transition";
+import { Transition } from "@/app/components/Transition";
 
-import FormContact from "./components/FormContact";
 import { Wrapper } from "@/app/components/pages/Wrapper";
+import FormContact from "./components/FormContact";
 
 export default function ContactPage() {
   return (

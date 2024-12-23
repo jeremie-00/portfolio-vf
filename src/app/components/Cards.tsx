@@ -8,13 +8,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FullSectionPage } from "@/types/prismaTypes";
-import { Pencil } from "lucide-react";
+import { FullSectionPage, FullSkill } from "@/types/prismaTypes";
+import { Eye, EyeClosed, Pencil } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ToastSectionAction } from "../dashboard/sections/components/ToastSection";
 import { deleteSectionAction } from "../dashboard/sections/services/section.action";
+import { ToastSkillAction } from "../dashboard/skills/components/ToastSkill";
+import { deleteSkillAction } from "../dashboard/skills/services/skill.action";
 import { DeleteAlerteButton } from "./Buttons";
+import { IconPencil } from "../dashboard/icons/components/DynamicIcon";
 
 interface CardsProps {
   title: string;
@@ -24,6 +28,70 @@ interface CardsProps {
   children: React.ReactNode;
   type?: string;
   order?: string;
+}
+
+export function CardSkill({ skill }: { skill: FullSkill }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleDeletedSkill = async () => {
+    setIsLoading(true);
+    const result = await deleteSkillAction({
+      ID: skill?.id,
+      imageId: skill?.image?.id,
+      imageUrl: skill?.image?.url,
+    });
+    setIsLoading(false);
+    const actionType = "supprimer";
+    if (result?.serverError || result?.validationErrors) {
+      ToastSkillAction({
+        actionType,
+        serverError: result?.serverError,
+        validationErrors: result?.validationErrors,
+      });
+    }
+    if (result?.data) {
+      ToastSkillAction({ data: result.data, actionType });
+    }
+  };
+  return (
+    <Card className="relative flex flex-col  px-2 py-4 bg-sidebar">
+      <div className="absolute flex flex-col top-0 left-0 w-full h-full items-center justify-center rounded-xl p-4 bg-background/60 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+        <div className="flex items-center justify-center w-full gap-8 p-3 md:flex-row h-16">
+          <Link href={`/dashboard/skills/${skill.id}`}>
+            <Button type="button" size="icon" variant="secondary">
+              <IconPencil pending={false} />
+            </Button>
+          </Link>
+          <DeleteAlerteButton
+            actionButtonDelete={handleDeletedSkill}
+            pendingDelete={isLoading}
+          />
+        </div>
+      </div>
+      <CardHeader>
+        <CardTitle>{skill.display ? <Eye /> : <EyeClosed />}</CardTitle>
+        {/* <CardDescription>{skill.id || "0"}</CardDescription> */}
+      </CardHeader>
+      <CardContent className="flex items-center p-4">
+        {skill && skill.image && skill.image.url ? (
+          <Image
+            src={skill.image.url}
+            alt={skill.image.alt}
+            width={100}
+            height={100}
+            className="object-cover p-3 w-full h-full"
+            priority
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <h3 className="lg:text-xl">WEB</h3>
+          </div>
+        )}
+      </CardContent>
+      <CardFooter className="flex place-content-center gap-12 p-6">
+        {skill ? <h3 className="lg:text-xl">{skill.title}</h3> : null}
+      </CardFooter>
+    </Card>
+  );
 }
 
 export function CardForm({ title, name, children }: CardsProps) {

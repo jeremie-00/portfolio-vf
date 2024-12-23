@@ -1,4 +1,4 @@
-import { Transition } from "@/app/components/framer-motion/Transition";
+import { Transition } from "@/app/components/Transition";
 import ProjectTab from "@/app/components/project/ProjectTab";
 import { getSectionByTypeAction } from "@/app/dashboard/sections/services/section.action";
 import HeroSection from "../../components/pages/HeroSection";
