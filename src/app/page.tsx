@@ -1,7 +1,10 @@
-import { getSectionByTypeAction } from "./dashboard/sections/services/section.action";
-import HomeSvgPage from "./pages/home/HomePage";
+import DevelopperDesk from "./components/desktopSvg/DevelopperDesk";
+import Home from "./pages/home/Home";
 
 export default async function HomePage() {
-  const section = await getSectionByTypeAction("home");
-  return <HomeSvgPage section={section} />;
+  return (
+    <Home>
+      <DevelopperDesk />
+    </Home>
+  );
 }
