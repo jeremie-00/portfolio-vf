@@ -1,49 +1,53 @@
 "use client";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { FullSkill } from "@/types/prismaTypes";
-import { motion } from "motion/react";
+import { motion } from "framer-motion"; // Utilisation de 'framer-motion'
 import Image from "next/image";
 
 export default function Skills({
   skills,
-  translate,
+  direction = "left",
+  speed = 50,
 }: {
   skills: FullSkill[];
-  translate?: "left" | "right";
+  direction?: "left" | "right";
+  speed?: number;
 }) {
-  const translateX = translate === "left" ? "-100%" : "100%";
-  const animateX = translate === "left" ? ["0%", "-100%"] : ["-100%", "0%"];
+  const isMobile = useIsMobile();
+  const isLeft = direction === "left";
+  const translateX = "-50.5%";
+  const animation = isLeft ? ["0%", translateX] : [translateX, "0%"];
+
   return (
     <motion.div
-      className="inline-flex md:gap-20 gap-10"
-      initial={{ x: translateX }}
+      className="flex gap-10 whitespace-nowrap"
+      style={{
+        width: "max-content",
+      }}
       animate={{
-        x: animateX,
+        x: animation,
       }}
       transition={{
         repeat: Infinity,
-        duration: 50,
+        repeatType: "loop",
+        repeatDelay: 0,
+        duration: speed,
         ease: "linear",
       }}
     >
-      {skills.map((skill) => (
-        <Image
-          key={skill.id}
-          src={skill.image?.url || "/globe.svg"}
-          alt={`${skill.title} logo`}
-          className="object-cover"
-          width={100}
-          height={100}
-        />
-      ))}
-      {skills.map((skill) => (
-        <Image
-          key={skill.id}
-          src={skill.image?.url || "/globe.svg"}
-          alt={`${skill.title} logo`}
-          className="object-cover"
-          width={100}
-          height={100}
-        />
+      {[...skills, ...skills].map((skill, index) => (
+        <div
+          key={`${skill.id}-${index}`}
+          className="shadow-md rounded-xl border border-border dark:border-secondary dark:shadow-xl"
+        >
+          <Image
+            src={skill.image?.url || "/globe.svg"}
+            alt={`${skill.title} logo`}
+            className="object-cover rounded-xl p-1"
+            width={isMobile ? 70 : 100}
+            height={isMobile ? 70 : 100}
+          />
+        </div>
       ))}
     </motion.div>
   );

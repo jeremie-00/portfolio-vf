@@ -14,19 +14,16 @@ export default async function SkillsClientPage() {
   const section = await getSectionByTypeAction("skills");
   const shuffledSkillsLeft = shuffleArray(skills);
   const shuffledSkillsRight = shuffleArray(skills);
+
   return (
     <Transition>
       <HeroSection section={section} />
-      <section className="flex flex-1 flex-col gap-20 items-center justify-center border border-background border-1 overflow-hidden py-10">
-        <div className="bg-sidebar rotate-3 p-2 w-[110%]">
-          <div className="flex items-center justify-center py-2">
-            <Skills skills={shuffledSkillsLeft} translate={"left"} />
-          </div>
+      <section className="flex flex-1 flex-col gap-20 items-center justify-center border border-background border-1 overflow-hidden py-10 ">
+        <div className="bg-sidebar rotate-3 py-6 w-[110%] shadow-lg">
+          <Skills skills={shuffledSkillsLeft} />
         </div>
-        <div className="bg-sidebar rotate-negative-3 p-2 w-[110%] max-md:hidden">
-          <div className="flex items-center justify-center py-2">
-            <Skills skills={shuffledSkillsRight} translate={"right"} />
-          </div>
+        <div className="bg-sidebar rotate-negative-3 py-6 w-[110%] shadow-lg">
+          <Skills skills={shuffledSkillsRight} direction={"right"} speed={30} />
         </div>
       </section>
     </Transition>
