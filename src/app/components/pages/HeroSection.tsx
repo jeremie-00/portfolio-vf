@@ -14,7 +14,7 @@ export default function HeroSection({
   }
 
   return (
-    <section className="w-full h-full flex flex-col md:px-12 p-4 md:gap-4">
+    <section className="w-full flex flex-col md:px-12 p-4 md:gap-4">
       <div className="flex flex-col gap-8">
         <h1 className="text-center font-extrabold text-textColor xl:text-[60px] lg:text-[50px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
