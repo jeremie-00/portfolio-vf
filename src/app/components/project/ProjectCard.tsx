@@ -95,7 +95,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
             <Image
               src={project.cover.url}
               alt={project.cover.alt}
-              width={400}
+              width={800}
               height={200}
               className="object-cover flex items-center justify-center rounded-lg"
               priority={true}
