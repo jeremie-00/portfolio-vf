@@ -27,6 +27,7 @@ export function Logo() {
           className="rounded-lg w-9 h-9"
           priority={true}
           unoptimized={true}
+          aria-label="retour à la page d'accueil"
         />
       ) : (
         <Skeleton className="h-9 w-9 rounded" />

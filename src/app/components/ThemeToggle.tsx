@@ -33,6 +33,7 @@ export function ThemeToggle() {
       variant="outline"
       size={isMobile ? "iconSideBar" : "icon"}
       onClick={toggleTheme}
+      aria-label="Basculer entre le thème clair et sombre"
     >
       {resolvedTheme === "light" ? (
         <Sun className="absolute size-[1.2rem] rotate-90 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

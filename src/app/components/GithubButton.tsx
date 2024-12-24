@@ -29,6 +29,7 @@ export function GithubButton({ link }: { link: FullLink | null | undefined }) {
       href={link?.url || "/"}
       target={link?.target || "__blank"}
       onClick={isMobile ? toggleSidebar : undefined}
+      aria-label="Lien vers Github"
     >
       <DynamicIcon name={link?.icon?.name || "Github"} size={24} />
     </Link>

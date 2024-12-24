@@ -11,6 +11,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./components/collaps/style/collaps.css";
 import "./components/desktopSvg/style/animationSvg.css";
 import Footer from "./components/pages/Footer";
+
 import SessionWrapper from "./components/SessionWrapper";
 import { AppSidebar } from "./components/sidebar/AppSidebar";
 import "./globals.css";

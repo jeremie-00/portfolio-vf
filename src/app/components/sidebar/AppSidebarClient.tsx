@@ -123,7 +123,7 @@ export function AppSidebarClient({
                             <Skeleton className="h-5 w-5" />
                           ) : (
                             <SidebarGroupAction
-                              title={`Créer ${link.title}`}
+                              aria-label={`Accédez à la page pour créer une nouvelle ${link.title}`}
                               asChild
                             >
                               <Link
@@ -164,6 +164,7 @@ export function AppSidebarClient({
                   callbackUrl: "/",
                 });
               }}
+              aria-label="Deconnexion"
             >
               <SlLogout style={{ color: "white" }} />
             </Button>
