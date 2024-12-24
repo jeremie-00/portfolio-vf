@@ -65,10 +65,8 @@ async function main() {
   console.log("Seeding database...");
 
   for (const item of items) {
-    await prisma.link.upsert({
-      where: { url: item.url },
-      update: { ...item },
-      create: {
+    await prisma.link.create({
+      data: {
         ...item,
       },
     });
