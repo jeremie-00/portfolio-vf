@@ -18,6 +18,8 @@ export default {
       backgroundImage: {
         "radial-custom":
           "radial-gradient(at 50% 50%, var(--tw-gradient-from), var(--tw-gradient-to) )",
+        "linear-custom":
+          "linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to))",
       },
       container: {
         center: true,
