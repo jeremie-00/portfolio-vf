@@ -13,12 +13,12 @@ import { Eye, EyeClosed, Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { IconPencil } from "../dashboard/icons/components/DynamicIcon";
 import { ToastSectionAction } from "../dashboard/sections/components/ToastSection";
 import { deleteSectionAction } from "../dashboard/sections/services/section.action";
 import { ToastSkillAction } from "../dashboard/skills/components/ToastSkill";
 import { deleteSkillAction } from "../dashboard/skills/services/skill.action";
 import { DeleteAlerteButton } from "./Buttons";
-import { IconPencil } from "../dashboard/icons/components/DynamicIcon";
 
 interface CardsProps {
   title: string;
@@ -110,7 +110,7 @@ export function CardForm({ title, name, children }: CardsProps) {
 
 export function CardSwitch({ title, desc, children }: CardsProps) {
   return (
-    <Card className="flex items-center justify-center px-2 py-4">
+    <Card className="flex items-center justify-between px-2 py-4">
       <CardHeader className="flex flex-col">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{desc || "default description"}</CardDescription>
