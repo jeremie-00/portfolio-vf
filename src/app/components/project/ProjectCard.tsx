@@ -52,7 +52,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
   };
 
   return (
-    <Card className="max-w-[440px] justify-self-center relative w-full h-full flex flex-col items-center justify-between bg-sidebar p-2 gap-2 hover:border-primary duration-300">
+    <Card className="max-w-[440px] justify-self-center relative w-full h-full flex flex-col items-center justify-between bg-sidebar shadow-lg dark:shadow-md dark:shadow-primary/40 p-2 gap-2 hover:border-primary duration-300">
       <div className="absolute flex flex-col top-0 left-0 w-full h-full items-center justify-center rounded-xl p-4 bg-black bg-opacity-40 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
         {isAdmin ? (
           <div className="flex items-center justify-center w-full gap-8 p-3 md:flex-row h-16">
@@ -91,7 +91,7 @@ export default function ProjectCard({ project, isAdmin }: ProjectCardProps) {
         ) : null}
 
         {project.cover ? (
-          <div className="aspect-imgCard shadow-md w-full m-auto flex items-center justify-center border border-border dark:border-secondary dark:shadow-xl rounded-xl overflow-hidden object-cover">
+          <div className="aspect-imgCard shadow-lg w-full m-auto flex items-center justify-center border border-border dark:border-secondary dark:shadow-xl  rounded-xl overflow-hidden object-cover">
             <Image
               src={project.cover.url}
               alt={project.cover.alt}

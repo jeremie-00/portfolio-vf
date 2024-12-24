@@ -14,13 +14,13 @@ export default async function Home({ children }: { children: ReactNode }) {
     );
   }
   return (
-    <section className="w-full h-full flex md:px-12 py-4 px-10 md:gap-4">
+    <section className="w-full h-full flex md:px-12 py-4 px-4 md:gap-4">
       <div className="flex flex-col justify-start items-center mt-2 sm:mt-3 md:mt-4 xl:mt-5 max-md:hidden">
         <div className="w-5 h-5 rounded-full bg-primary" />
         <div className="w-1 min-[900px]:h-80 h-48 bg-gradient-to-b from-primary" />
       </div>
 
-      <div className="w-full h-full flex flex-col gap-3">
+      <div className="w-full h-full flex flex-col gap-3 max-md:text-center">
         <h1 className="font-extrabold text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
             index === 1 ? (
@@ -35,7 +35,7 @@ export default async function Home({ children }: { children: ReactNode }) {
         {section.contents.map((content) => (
           <p
             key={content.id}
-            className="flex-1 w-full h-full flex flex-col text-textColor font-medium xl:text-[24px] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px]"
+            className="flex-1 w-full h-full flex flex-col p-2 text-textColor font-medium xl:text-[24px] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px]"
           >
             {content.text}
           </p>

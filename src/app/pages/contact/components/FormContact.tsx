@@ -71,11 +71,11 @@ export default function FormContact() {
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-col">
-        <CardTitle className="px-4 py-8 text-center">
+    <Card className="bg-sidebar ">
+      <CardHeader className="flex flex-col p-8">
+        <CardTitle className="px-4 py-8 place-items-center border border-input dark:border-secondary rounded-lg shadow-xl">
           <h1 className=" text-2xl text-primary">Contactez-moi</h1>
-          <span className="block p-4 text-sm max-w-md">
+          <span className="block p-4 text-sm text-center max-w-md">
             Les informations que vous soumettez via ce formulaire sont
             uniquement utilisées pour vous répondre. Elles ne sont pas
             enregistrées dans une base de données et ne seront pas transmises à
