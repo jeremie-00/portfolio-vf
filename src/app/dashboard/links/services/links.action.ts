@@ -1,7 +1,9 @@
 "use server";
+import { handleFileUpload } from "@/lib/fileManager";
 import prisma from "@/lib/prisma";
 import { ActionError, authentificationAction } from "@/lib/safe-action";
 import { LinkIdSchema, LinkSchema } from "@/types/zodType";
+import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 export async function getAllLinksAction() {
@@ -9,7 +11,7 @@ export async function getAllLinksAction() {
     orderBy: {
       order: "asc",
     },
-    include: { project: true, icon: true },
+    include: { project: true, icon: true, image: true },
   });
   return links;
 }
@@ -22,7 +24,7 @@ export async function getAllLinksClientAction() {
     orderBy: {
       order: "asc",
     },
-    include: { project: true, icon: true },
+    include: { project: true, icon: true, image: true },
   });
   return links;
 }
@@ -35,7 +37,7 @@ export async function getAllLinksAdminAction() {
     orderBy: {
       order: "asc",
     },
-    include: { project: true, icon: true },
+    include: { project: true, icon: true, image: true },
   });
   return links;
 }
@@ -45,7 +47,7 @@ export async function getLinkByIdAction(id: string) {
     where: {
       id,
     },
-    include: { icon: true, project: true },
+    include: { icon: true, project: true, image: true },
   });
 
   if (!link) {
@@ -55,12 +57,30 @@ export async function getLinkByIdAction(id: string) {
   return link;
 }
 
+export async function getLinkByTitleAction(title: string) {
+  const links = await prisma.link.findMany({
+    where: {
+      title: title,
+    },
+    include: { icon: true, project: true, image: true },
+  });
+
+  if (!links) {
+    throw new ActionError("Link not found");
+  }
+
+  return links;
+}
+
 export const createLinkAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
-
+    const coverUrl = link.cover
+      ? await handleFileUpload({ file: link.cover, folder: "link-cover" })
+      : null;
+    console.log(link);
     const createdLink = await prisma.link.create({
       data: {
         url: link.url,
@@ -71,6 +91,12 @@ export const createLinkAction = authentificationAction
         isAdmin,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
+        image: {
+          create: {
+            url: coverUrl?.data as string,
+            alt: `Lien ${link.title}`,
+          },
+        },
       },
     });
     revalidatePath("/", "layout");
@@ -80,8 +106,22 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
+    console.log(link);
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
+
+    const existingLink = link.ID ? await getLinkByIdAction(link.ID) : null;
+
+    if (!existingLink) {
+      throw new ActionError("Lien introuvable.");
+    }
+
+    if (link.cover && link.cover.size > 0 && existingLink.image)
+      await del(existingLink.image.url);
+
+    const coverUrl =
+      link.cover &&
+      (await handleFileUpload({ file: link.cover, folder: "link-cover" }));
 
     const updatedLink = await prisma.link.update({
       where: { id: link.ID },
@@ -94,6 +134,20 @@ export const updateLinkActionAction = authentificationAction
         isAdmin: isAdmin,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
+        image: coverUrl
+          ? {
+              upsert: {
+                update: {
+                  url: coverUrl?.data as string,
+                  alt: `Lien ${link.title}`,
+                },
+                create: {
+                  url: coverUrl?.data as string,
+                  alt: `Lien ${link.title}`,
+                },
+              },
+            }
+          : undefined,
       },
     });
     revalidatePath("/", "layout");

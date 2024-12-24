@@ -24,7 +24,9 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SlLogout } from "react-icons/sl";
+
 import { GithubButton } from "../GithubButton";
+import { Logo } from "../Logo";
 import { ThemeToggle } from "../ThemeToggle";
 
 export function AppSidebarClient({
@@ -166,7 +168,9 @@ export function AppSidebarClient({
               <SlLogout style={{ color: "white" }} />
             </Button>
           )
-        ) : null}
+        ) : (
+          <Logo />
+        )}
       </SidebarFooter>
     </Sidebar>
   );

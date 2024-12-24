@@ -177,9 +177,7 @@ export function LinkTab({ links }: { links: FullLink[] }) {
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div>{row.getValue("inNav") === "on" ? "Oui" : "Non"}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("inNav") ? "Oui" : "Non"}</div>,
       sortingFn: (rowA, rowB, columnId) => {
         const a = rowA.getValue(columnId) ? 1 : 0; // "Oui" => 1, "Non" => 0
         const b = rowB.getValue(columnId) ? 1 : 0; // "Oui" => 1, "Non" => 0
@@ -200,9 +198,7 @@ export function LinkTab({ links }: { links: FullLink[] }) {
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div>{row.getValue("isAdmin") === "on" ? "Oui" : "Non"}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("isAdmin") ? "Oui" : "Non"}</div>,
       sortingFn: (rowA, rowB, columnId) => {
         const a = rowA.getValue(columnId) ? 1 : 0; // "Oui" => 1, "Non" => 0
         const b = rowB.getValue(columnId) ? 1 : 0; // "Oui" => 1, "Non" => 0

@@ -20,6 +20,7 @@ export const LinkSchema = zfd.formData({
   order: z.string().optional(),
   iconId: z.string().optional(),
   projectId: z.string().optional(),
+  cover: z.instanceof(File).optional(),
 });
 
 export const LinkIdSchema = z
@@ -33,6 +34,7 @@ export const LinkIdSchema = z
     order: z.string().optional(),
     iconId: z.string().optional(),
     projectId: z.string().optional(),
+    cover: z.instanceof(File).optional(),
   })
   .refine(async (data) => {
     const existingLink = await prisma.link.findUnique({
@@ -142,8 +144,6 @@ export const SkillSchema = zfd
 
     if (data.actionType === "supprimer") return true;
 
-    /*       if (existingSkill?.title.toLowerCase() === data.title.toLowerCase())
-        throw new ActionError("Aucun changement de titre n'a été effectué."); */
     // Vérifie que le nouveau titre n'existe pas déjà pour une autre compétence
     return true;
   });

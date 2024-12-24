@@ -20,6 +20,7 @@ export type FullLink = Prisma.LinkGetPayload<{
   include: {
     icon: true;
     project: true;
+    image: true;
   };
 }>;
 

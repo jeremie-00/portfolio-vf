@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
+import { SingleImageUpload } from "@/app/components/UploadImage/SingleImageUpload";
 import { ToastLinkAction } from "@/app/dashboard/links/components/ToastLink";
 import { FullIcon, FullLink } from "@/types/prismaTypes";
 import Form from "next/form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { IconPicker } from "../../icons/components/IconPicker";
 import { upsertLinkAction } from "../services/upsertLink.action";
@@ -20,6 +21,7 @@ interface LinksProps {
 }
 
 export default function LinkForm({ isCreate, link, icons }: LinksProps) {
+  const singleImageUploadRef = useRef<{ resetFile: () => void } | null>(null);
   const [linkCount, setLinkCount] = useState(1);
 
   const [iconId, setIconId] = useState<string>(
@@ -73,6 +75,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    console.log(formData.get("cover"));
     const result = await upsertLinkAction(formData);
     const actionType = isCreate ? "creer" : "modifier";
     // Vérification des erreurs spécifiques (serveur et validation)
@@ -114,6 +117,12 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
           icons={icons}
           selectedIcon={iconName}
           onChange={handleIconChange}
+        />
+        <SingleImageUpload
+          ref={singleImageUploadRef}
+          label="Image du lien"
+          image={link ? link.image : null}
+          isCreate={isCreate}
         />
         <Input
           type="text"

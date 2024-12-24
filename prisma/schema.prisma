@@ -36,25 +36,29 @@ model ImageFile {
   coverProjectId  String?      @unique
   mediasProjectId String?
   SectionPageId   String?
+  linkId          String?      @unique
   SectionPage     SectionPage? @relation("SectionPageImage", fields: [SectionPageId], references: [id], onDelete: Cascade)
   coverProject    Project?     @relation("CoverProject", fields: [coverProjectId], references: [id], onDelete: Cascade)
   mediasProject   Project?     @relation("MediasProject", fields: [mediasProjectId], references: [id], onDelete: Cascade)
   skill           Skill?       @relation("SkillImage", fields: [skillId], references: [id], onDelete: Cascade)
+  link            Link?        @relation("LinkImage", fields: [linkId], references: [id], onDelete: Cascade)
 }
 
 model Link {
-  id        String   @id @default(cuid())
-  url       String   @unique
+  id        String     @id @default(cuid())
+  url       String
   title     String
-  order     Int      @default(1)
-  target    String?  @default("__blank")
+  order     Int        @default(1)
+  target    String?    @default("__blank")
   type      String?
-  inNav     Boolean? @default(true)
-  isAdmin   Boolean? @default(false)
+  inNav     Boolean?   @default(true)
+  isAdmin   Boolean?   @default(false)
   projectId String?
   iconId    String?
-  icon      Icon?    @relation(fields: [iconId], references: [id])
-  project   Project? @relation("ProjectLinks", fields: [projectId], references: [id], onDelete: Cascade)
+  icon      Icon?      @relation(fields: [iconId], references: [id])
+  project   Project?   @relation("ProjectLinks", fields: [projectId], references: [id], onDelete: Cascade)
+  image     ImageFile? @relation("LinkImage")
+  imageId   String?    @unique
 }
 
 model Icon {

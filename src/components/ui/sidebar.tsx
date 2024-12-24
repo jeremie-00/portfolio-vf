@@ -1,10 +1,6 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
-import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
-import * as React from "react";
-
+import { Logo } from "@/app/components/Logo";
 import { DynamicIcon } from "@/app/dashboard/icons/components/DynamicIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +16,10 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import { Slot } from "@radix-ui/react-slot";
+import { VariantProps, cva } from "class-variance-authority";
+import { PanelLeft } from "lucide-react";
+import * as React from "react";
 import { DialogDescription } from "./dialog";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
@@ -274,20 +274,24 @@ const SidebarTrigger = React.forwardRef<
   const isMobile = useIsMobile();
   if (isMobile) {
     return (
-      <Button
-        ref={ref}
-        data-sidebar="trigger"
-        variant="default"
-        className={cn(`h-11 w-11 self-end mt-4 mr-4`, className)}
-        onClick={(event) => {
-          onClick?.(event);
-          toggleSidebar();
-        }}
-        {...props}
-      >
-        <DynamicIcon name="Menu" />
-        <span className="sr-only">Toggle Sidebar</span>
-      </Button>
+      <div className="flex items-center justify-between w-full pt-4 px-4">
+        <Logo />
+        <Button
+          ref={ref}
+          data-sidebar="trigger"
+          variant="unstyled"
+          size="svg"
+          //className={cn(`mt-4 mr-4`, className)}
+          onClick={(event) => {
+            onClick?.(event);
+            toggleSidebar();
+          }}
+          {...props}
+        >
+          <DynamicIcon name="AlignRight" size={42} className="text-primary" />
+          <span className="sr-only">Toggle Sidebar</span>
+        </Button>
+      </div>
     );
   }
   return (
@@ -346,7 +350,7 @@ const SidebarInset = React.forwardRef<
     <main
       ref={ref}
       className={cn(
-        "relative flex min-h-svh flex-1 flex-col bg-background",
+        "relative flex min-h-svh flex-1 flex-col bg-background z-0",
         "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
         className
       )}
