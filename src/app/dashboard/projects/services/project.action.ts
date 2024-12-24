@@ -179,7 +179,7 @@ export const updateProjectAction = authentificationAction
             url: { notIn: links?.map((link) => link.url) },
           },
           upsert: links?.map((link, index) => ({
-            where: { url: link.url },
+            where: { id: link.id },
             update: {
               url: link.url,
               title: link.title,
