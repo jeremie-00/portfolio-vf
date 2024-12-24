@@ -120,8 +120,11 @@ export const updateProjectAction = authentificationAction
     if (!existingProject) {
       throw new ActionError("Projet non trouvé.");
     }
+
     const coverUrl =
-      cover && (await handleFileUpload({ file: cover, folder: "cover" }));
+      cover &&
+      cover.size > 0 &&
+      (await handleFileUpload({ file: cover, folder: "cover" }));
 
     const mediasUrls = await Promise.all(
       medias?.map(async (media) => {
@@ -149,7 +152,7 @@ export const updateProjectAction = authentificationAction
         longDesc,
         order: parseInt(order),
         type,
-        cover: coverUrl?.data
+        cover: coverUrl
           ? {
               upsert: {
                 update: {

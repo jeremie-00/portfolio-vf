@@ -107,6 +107,7 @@ export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
     console.log(link);
+
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
 
@@ -121,6 +122,7 @@ export const updateLinkActionAction = authentificationAction
 
     const coverUrl =
       link.cover &&
+      link.cover.size > 0 &&
       (await handleFileUpload({ file: link.cover, folder: "link-cover" }));
 
     const updatedLink = await prisma.link.update({

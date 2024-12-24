@@ -62,6 +62,7 @@ export const updateSkillAction = authentificationAction
 
     const imageUrl =
       skill.file &&
+      skill.file.size > 0 &&
       (await handleFileUpload({ file: skill.file, folder: "cover" }));
 
     if (exitingSkill?.image && imageUrl)
@@ -74,7 +75,7 @@ export const updateSkillAction = authentificationAction
       data: {
         title: skill.title,
         display: display,
-        image: imageUrl?.data
+        image: imageUrl
           ? {
               upsert: {
                 update: {
