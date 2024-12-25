@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { FullSectionPage } from "@/types/prismaTypes";
 import { Label } from "@radix-ui/react-label";
 import { motion } from "framer-motion";
 import Form from "next/form";
@@ -12,7 +13,12 @@ import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { sendEmail } from "../services/contact.action";
 import { ToastContactAction } from "./ToastContact";
-export default function FormContact() {
+
+export default function FormContact({
+  section,
+}: {
+  section: FullSectionPage | null;
+}) {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
@@ -86,16 +92,25 @@ export default function FormContact() {
           transformOrigin: "top",
         }}
       ></motion.div>
-      <Card className="bg-sidebar shadow-none">
+      <Card className="bg-card shadow-none">
         <CardHeader className="flex flex-col p-8 ">
-          <CardTitle className="px-4 py-8 place-items-center border border-input dark:border-secondary rounded-lg shadow-md dark:shadow-md dark:shadow-primary/40">
-            <h1 className=" text-2xl  text-primary">Contactez-moi</h1>
-            <span className="block p-4 text-sm text-center max-w-md">
-              Les informations que vous soumettez via ce formulaire sont
-              uniquement utilisées pour vous répondre. Elles ne sont pas
-              enregistrées dans une base de données et ne seront pas transmises
-              à des tiers.
-            </span>
+          <CardTitle className="px-4 py-8 place-items-center border border-border rounded-lg shadow-md dark:shadow-primary/40">
+            {section?.titles.map((title) => (
+              <h1
+                key={title.text}
+                className=" text-2xl text-primary text-center"
+              >
+                {title.text}
+              </h1>
+            ))}
+            {section?.contents.map((content) => (
+              <span
+                key={content.text}
+                className="block p-4 text-sm text-center dark:text-muted-foreground max-w-md"
+              >
+                {content.text}
+              </span>
+            ))}
           </CardTitle>
         </CardHeader>
         <CardContent>
