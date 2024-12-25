@@ -10,10 +10,8 @@ export default {
   theme: {
     extend: {
       aspectRatio: {
-        roundedCard: "0.71",
         slider: "1.9",
         imgCard: "1.25",
-        card: "0.68",
       },
       backgroundImage: {
         "radial-custom":

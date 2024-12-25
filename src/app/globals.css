@@ -16,7 +16,7 @@ body {
     --muted-foreground: 123 0% 40%;
     --popover: 123 34% 98%;
     --popover-foreground: 123 79% 4%;
-    --card: 123 34% 98%;
+    --card: 117 17% 85%;
     --card-foreground: 123 79% 4%;
     --border: 123 3% 93%;
     --input: 123 3% 93%;
@@ -42,7 +42,7 @@ body {
   }
 
   .dark {
-    --font-color: 123 11% 96%;
+    --font-color: 123 11% 100%;
 
     --background: 123 43% 2%;
     --foreground: 123 21% 100%;
@@ -50,9 +50,9 @@ body {
     --muted-foreground: 123 0% 60%;
     --popover: 123 43% 2%;
     --popover-foreground: 123 21% 100%;
-    --card: 123 43% 2%;
+    --card: 117 5% 13%;
     --card-foreground: 123 21% 100%;
-    --border: 123 3% 13%;
+    --border: 123 13% 18%;
     --input: 123 3% 13%;
     --primary: 123 59% 36%;
     --primary-foreground: 0 0% 100%;

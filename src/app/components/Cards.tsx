@@ -53,7 +53,7 @@ export function CardSkill({ skill }: { skill: FullSkill }) {
     }
   };
   return (
-    <Card className="relative flex flex-col  px-2 py-4 bg-sidebar">
+    <Card className="relative flex flex-col  px-2 py-4 bg-card">
       <div className="absolute flex flex-col top-0 left-0 w-full h-full items-center justify-center rounded-xl p-4 bg-background/60 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center justify-center w-full gap-8 p-3 md:flex-row h-16">
           <Link href={`/dashboard/skills/${skill.id}`}>
@@ -97,7 +97,7 @@ export function CardSkill({ skill }: { skill: FullSkill }) {
 export function CardForm({ title, name, children }: CardsProps) {
   return (
     <Card className="w-full max-w-[700px]">
-      <CardHeader className="flex flex-col">
+      <CardHeader className="flex flex-col ">
         <CardTitle className="px-4 py-8 text-center">
           {title}
           <span className="text-primary text-2xl block p-4">{name}</span>

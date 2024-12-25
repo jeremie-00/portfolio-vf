@@ -48,7 +48,7 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
           className={
             pictures.length <= 1
               ? "hidden"
-              : "bg-sidebar text-primary text-center rounded-lg px-3 py-1 text-md font-semibold"
+              : "bg-card text-primary text-center rounded-lg px-3 py-1 text-md font-semibold"
           }
         >
           {activeIndex + 1} / {pictures.length}

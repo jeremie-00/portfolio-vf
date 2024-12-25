@@ -31,7 +31,11 @@ const buttonVariants = cva(
         full: "w-full h-full px-4 py-2 sm:w-auto",
         svg: "[&_svg]:size-10 [&_svg]:underline-12 [&_svg]:shrink-0",
       },
+      text: {
+        color: "text-textColor",
+      },
     },
+
     defaultVariants: {
       variant: "default",
       size: "default",

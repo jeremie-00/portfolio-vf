@@ -1,5 +1,6 @@
 .container-collaps {
   width: 100%;
+  cursor: pointer;
 }
 
 .container-collaps .collaps {

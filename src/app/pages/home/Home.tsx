@@ -25,10 +25,10 @@ export default async function Home({ children }: { children: ReactNode }) {
           {section.titles.map((title, index) =>
             index === 1 ? (
               <span key={title.id} className="text-primary">
-                {" " + title.text}
+                {title.text}
               </span>
             ) : (
-              <span key={title.id}>{title.text}</span>
+              <span key={title.id}>{title.text + " "}</span>
             )
           )}
         </h1>
@@ -41,11 +41,12 @@ export default async function Home({ children }: { children: ReactNode }) {
           </p>
         ))}
         <div className="flex w-full h-full flex-col max-sm:items-center justify-center">
-          <div className="pt-6">
+          <div className="pt-6 ">
             <Link
               className={buttonVariants({
                 variant: "default",
                 size: "default",
+                text: "color",
               })}
               href="/pages/contact"
             >

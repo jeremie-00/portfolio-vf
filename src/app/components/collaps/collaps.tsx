@@ -16,15 +16,15 @@ export default function Collaps({
   };
 
   return (
-    <div className="container-collaps">
+    <div className="container-collaps" onClick={handleToggle}>
       <div
-        className={`collaps bg-sidebar gap-4 p-5 rounded-t-lg  ${
+        className={`collaps bg-card gap-4 p-5 rounded-t-lg ${
           active ? "rounded-t-lg" : "rounded-lg"
         }`}
       >
         <DynamicIcon name="AlignLeft" size={24} className="text-primary" />
         <h2 className="flex flex-1 font-bold">{title}</h2>
-        <div onClick={handleToggle}>
+        <div>
           <DynamicIcon
             name="ChevronDown"
             size={40}

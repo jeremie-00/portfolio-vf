@@ -38,7 +38,7 @@ export default function Skills({
       {[...skills, ...skills].map((skill, index) => (
         <div
           key={`${skill.id}-${index}`}
-          className="shadow-md rounded-xl border border-border dark:border-secondary dark:shadow-xl"
+          className="shadow-md rounded-xl border border-border dark:shadow-xl"
         >
           <Image
             src={skill.image?.url || "/globe.svg"}

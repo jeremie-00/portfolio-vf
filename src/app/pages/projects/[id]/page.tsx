@@ -52,10 +52,10 @@ export default async function ProjectPage({
       )}
       <div className="w-full flex flex-col sm:flex-row gap-4">
         <Collaps title={"Description"}>
-          <p className="p bg-sidebar/40 rounded-b-lg"> {project?.longDesc} </p>
+          <p className="p bg-card/40 rounded-b-lg"> {project?.longDesc} </p>
         </Collaps>
         <Collaps title={"Skills"}>
-          <ul className="ul bg-sidebar/40 rounded-b-lg p-4">
+          <ul className="ul bg-card/40 rounded-b-lg p-4">
             {project?.skills.map((skill) => (
               <li className="li" key={skill.title}>
                 {skill.title}
