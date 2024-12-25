@@ -21,7 +21,7 @@ export default async function Home({ children }: { children: ReactNode }) {
       </div>
 
       <div className="w-full h-full flex flex-col gap-3 max-md:text-center">
-        <h1 className="font-extrabold text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
+        <h1 className="font-extrabold p-2 text-textColor xl:text-[50px] lg:text-[46px] md:text-[44px] sm:text-[40px] text-[28px]">
           {section.titles.map((title, index) =>
             index === 1 ? (
               <span key={title.id} className="text-primary">
