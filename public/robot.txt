@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: https://portfolio-vf-mu.vercel.app/sitemap.xml
