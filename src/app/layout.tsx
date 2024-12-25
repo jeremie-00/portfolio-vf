@@ -28,9 +28,53 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jeremie Herault portfolio",
+  title: "Portfolio de Jérémie Hérault | Développeur Web Full-Stack",
   description:
-    "Découvrez le portfolio de Jeremie Herault, développeur web passionné spécialisé dans les technologies modernes telles que React, Next.js et TailwindCSS. Plongez dans mes réalisations, qui combinent design élégant, performances optimisées et interactivité. Ce portfolio met en lumière mon parcours, mes compétences techniques, et mon approche créative pour concevoir des solutions numériques adaptées aux besoins actuels. Explorez un univers où professionnalisme et authenticité se rencontrent.",
+    "Explorez le portfolio de Jérémie Hérault, développeur web spécialisé en React, Next.js et TailwindCSS. Découvrez des projets modernes, interactifs et performants.",
+  keywords: [
+    "développeur web",
+    "portfolio développeur",
+    "React",
+    "Next.js",
+    "TailwindCSS",
+    "Jérémie Hérault",
+    "applications web",
+    "développement front-end",
+    "développement back-end",
+  ],
+
+  authors: [{ name: "Jérémie Hérault" }],
+  robots: "index, follow",
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-32x32.png",
+  },
+  manifest: "/site.webmanifest",
+  other: {
+    "Content-Language": "fr-FR",
+    "geo.region": "FR-60",
+    "geo.placename": "Neuilly-en-Thelle",
+    "geo.position": "49.2273;2.2486",
+    ICBM: "49.2273, 2.2486",
+  },
+  openGraph: {
+    title: "Portfolio de Jérémie Hérault | Développeur Web Full-Stack",
+    description:
+      "Découvrez les réalisations de Jérémie Hérault, développeur web passionné.",
+    url: "https://portfolio-vf-mu.vercel.app/",
+    siteName: "Portfolio de Jérémie Hérault",
+    images: [
+      {
+        url: "https://portfolio-vf-mu.vercel.app/preview-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Aperçu du portfolio de Jérémie Hérault",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
