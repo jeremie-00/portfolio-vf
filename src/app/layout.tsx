@@ -85,6 +85,13 @@ export default function RootLayout({
   return (
     <SessionWrapper>
       <html lang="fr" suppressHydrationWarning>
+        <head>
+          <meta
+            name="google-site-verification"
+            content="usZFY3vh51nbLjFMD7qeSQ7b2lm2Z2gjxKSvC6TB8ug"
+          />
+        </head>
+
         <body
           className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-mono)] antialiased`}
         >
