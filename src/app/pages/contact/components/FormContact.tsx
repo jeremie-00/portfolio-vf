@@ -106,7 +106,7 @@ export default function FormContact({
             {section?.contents.map((content) => (
               <span
                 key={content.text}
-                className="block p-4 text-sm text-center dark:text-muted-foreground max-w-md"
+                className="block p-4 text-sm text-center max-w-md"
               >
                 {content.text}
               </span>
