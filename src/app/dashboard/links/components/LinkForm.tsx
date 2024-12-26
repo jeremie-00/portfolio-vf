@@ -144,7 +144,7 @@ export default function LinkForm({ isCreate, link, icons }: LinksProps) {
         />
         <Label htmlFor="order">Ordre</Label>
         <Input
-          type="text"
+          type="number"
           id="order"
           name="order"
           placeholder="Ordre"

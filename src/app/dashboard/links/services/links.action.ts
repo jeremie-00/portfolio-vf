@@ -77,10 +77,12 @@ export const createLinkAction = authentificationAction
   .action(async ({ parsedInput: { ...link } }) => {
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
-    const coverUrl = link.cover
-      ? await handleFileUpload({ file: link.cover, folder: "link-cover" })
-      : null;
-    console.log(link);
+
+    const coverUrl =
+      link.cover && link.cover.size > 0
+        ? await handleFileUpload({ file: link.cover, folder: "link-cover" })
+        : null;
+
     const createdLink = await prisma.link.create({
       data: {
         url: link.url,
@@ -91,12 +93,14 @@ export const createLinkAction = authentificationAction
         isAdmin,
         iconId: link.iconId || undefined,
         projectId: link.projectId || undefined,
-        image: {
-          create: {
-            url: coverUrl?.data as string,
-            alt: `Lien ${link.title}`,
-          },
-        },
+        image: coverUrl
+          ? {
+              create: {
+                url: coverUrl?.data as string,
+                alt: `Lien ${link.title}`,
+              },
+            }
+          : undefined,
       },
     });
     revalidatePath("/", "layout");
@@ -106,8 +110,6 @@ export const createLinkAction = authentificationAction
 export const updateLinkActionAction = authentificationAction
   .schema(LinkSchema)
   .action(async ({ parsedInput: { ...link } }) => {
-    console.log(link);
-
     const inNav = link.inNav === "on";
     const isAdmin = link.isAdmin === "on";
 

@@ -145,8 +145,8 @@ export default function IconForm({ icons }: IconSettingsProps) {
         className="flex flex-col w-full items-left gap-12"
       >
         <div
-          className={`w-[100px] h-[100px] flex items-center justify-center border-2 ${
-            iconName ? "border-primary" : "border-input"
+          className={`w-[100px] h-[100px] flex items-center justify-center border-2 shadow-md ${
+            iconName ? "border-primary" : "border-border"
           } rounded-lg p-1`}
         >
           {iconName && isValidIcon && (
@@ -175,7 +175,9 @@ export default function IconForm({ icons }: IconSettingsProps) {
           <Button
             type={"button"}
             variant={"outline"}
-            className={"border-l-0 rounded-l-none hover:ring-1 hover:ring-ring"}
+            className={
+              "border-l-0 bg-card border-border shadow-md rounded-l-none hover:ring-1 hover:ring-ring"
+            }
             onClick={handleReset}
           >
             <Icons.RotateCcw />

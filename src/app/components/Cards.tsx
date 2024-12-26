@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FullSectionPage, FullSkill } from "@/types/prismaTypes";
-import { Eye, EyeClosed, Pencil } from "lucide-react";
+import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -110,7 +110,7 @@ export function CardForm({ title, name, children }: CardsProps) {
 
 export function CardSwitch({ title, desc, children }: CardsProps) {
   return (
-    <Card className="flex items-center justify-between px-2 py-4">
+    <Card className="flex items-center justify-between px-2 py-4 shadow-md">
       <CardHeader className="flex flex-col">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{desc || "default description"}</CardDescription>
@@ -174,12 +174,7 @@ export function CardsSectionDashboard({
       <CardFooter className="flex place-content-center gap-12 p-6">
         <Link href={`/dashboard/sections/${id}`}>
           <Button type="button" size="icon" variant="secondary">
-            <Pencil
-              style={{ width: "26px", height: "26px" }}
-              color="#ffffff"
-              strokeWidth={1.5}
-              absoluteStrokeWidth
-            />
+            <IconPencil pending={false} />
           </Button>
         </Link>
         <DeleteAlerteButton

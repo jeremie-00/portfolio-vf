@@ -91,7 +91,7 @@ export const SingleImageUpload = forwardRef<
               alt="Aperçu de l'image"
               width={400}
               height={200}
-              className="border border-primary rounded-lg object-cover p-1 w-full h-full"
+              className="border border-primary shadow-md rounded-lg object-cover p-1 w-full h-full"
               priority={true}
             />
             <PreviewDeleteButton
@@ -103,7 +103,7 @@ export const SingleImageUpload = forwardRef<
             />
           </div>
         ) : (
-          <div className="flex items-center justify-center border border-input rounded-lg p-8 h-[150px]">
+          <div className="flex items-center justify-center border border-border shadow-md rounded-lg p-8 h-[150px]">
             Aucune preview
           </div>
         )}
@@ -115,7 +115,7 @@ export const SingleImageUpload = forwardRef<
                 alt="Aperçu de l'image"
                 width={400}
                 height={200}
-                className="border border-primary rounded-lg object-cover p-1 w-full h-full"
+                className="border border-primary shadow-md rounded-lg object-cover p-1 w-full h-full"
                 priority={true}
               />
               <ImageDeleteButton
@@ -127,7 +127,7 @@ export const SingleImageUpload = forwardRef<
               />
             </div>
           ) : (
-            <div className="flex items-center justify-center border border-input rounded-lg p-8 h-[150px]">
+            <div className="flex items-center justify-center border border-border shadow-md rounded-lg p-8 h-[150px]">
               Aucune cover
             </div>
           )

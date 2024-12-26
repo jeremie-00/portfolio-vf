@@ -78,8 +78,8 @@ export default function SkillForm({ skill, image, isCreate }: SkillFormProps) {
         className="flex flex-col w-full items-left gap-6 relative"
       >
         <div
-          className={`w-[150px] h-[150px] flex border-2 ${
-            url ? "border-primary" : "border-input"
+          className={`w-[150px] h-[150px] flex border-2 shadow-md ${
+            url ? "border-primary" : "border-border"
           } rounded-lg p-1 `}
         >
           {url ? (

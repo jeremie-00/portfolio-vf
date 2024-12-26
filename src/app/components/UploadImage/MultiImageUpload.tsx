@@ -132,7 +132,7 @@ export const MultiImageUpload = forwardRef<
                   alt="Aperçu du média"
                   width={400}
                   height={200}
-                  className="flex items-center justify-center border border-primary rounded-lg object-cover p-1 h-full w-full"
+                  className="flex items-center justify-center border border-primary shadow-md rounded-lg object-cover p-1 h-full w-full"
                   priority={true}
                 />
                 <PreviewDeleteButton
@@ -145,7 +145,7 @@ export const MultiImageUpload = forwardRef<
               </div>
             ))
           ) : (
-            <div className="flex items-center justify-center border border-input rounded-lg p-8 h-[150px]">
+            <div className="flex items-center justify-center border border-border shadow-md rounded-lg p-8 h-[150px]">
               Aucune preview
             </div>
           )}
@@ -160,7 +160,7 @@ export const MultiImageUpload = forwardRef<
                     alt={`Aperçu de l'image ${index + 1}`}
                     width={400}
                     height={200}
-                    className="flex items-center justify-center border border-primary rounded-lg object-cover p-1 h-full w-full"
+                    className="flex items-center justify-center border border-primary shadow-md rounded-lg object-cover p-1 h-full w-full"
                     priority={true}
                   />
                   <ImageDeleteButton
@@ -173,7 +173,7 @@ export const MultiImageUpload = forwardRef<
                 </div>
               ))
             ) : (
-              <div className="flex items-center justify-center border border-input rounded-lg p-8 h-[150px]">
+              <div className="flex items-center justify-center border border-border shadow-md rounded-lg p-8 h-[150px]">
                 Aucun média
               </div>
             )
