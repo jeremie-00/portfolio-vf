@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       aspectRatio: {
-        slider: "1.9",
+        slider: "2.12",
         imgCard: "1.25",
       },
       backgroundImage: {

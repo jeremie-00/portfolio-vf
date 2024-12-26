@@ -25,13 +25,13 @@ export default function SlideShow({ pictures }: { pictures: string[] }) {
         {pictures.map((picture, index) => (
           <Image
             key={index}
-            className={`absolute w-full h-full bg-cover bg-center object-cover transition-opacity duration-700 rounded-xl ${
+            className={`absolute w-full h-full object-cover transition-opacity duration-700 rounded-xl ${
               index === activeIndex ? "opacity-100" : "opacity-0"
             }`}
             src={picture}
             alt={`image ${index}`}
-            width={1200}
-            height={540}
+            width={1400}
+            height={600}
             priority={true}
           />
         ))}

@@ -127,6 +127,9 @@ export default function ProjectForm({
         //setProjectCount((prevCount) => prevCount + 1);
         setSelectedSkills([]);
         setSelectedType("Professionnel");
+        if (linksFormProjectRef.current) {
+          linksFormProjectRef.current.resetLink();
+        }
       }
 
       // REMISE A ZERO DES LIENS ET DES IMAGES
@@ -135,9 +138,6 @@ export default function ProjectForm({
       }
       if (multiImageUploadRef.current) {
         multiImageUploadRef.current.resetFiles();
-      }
-      if (linksFormProjectRef.current) {
-        linksFormProjectRef.current.resetLink();
       }
     }
   };
