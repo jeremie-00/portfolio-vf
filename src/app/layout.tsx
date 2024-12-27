@@ -51,6 +51,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
     shortcut: "/favicon-32x32.png",
   },
+
   manifest: "/site.webmanifest",
   other: {
     "Content-Language": "fr-FR",
@@ -93,7 +94,7 @@ export default function RootLayout({
         </head>
 
         <body
-          className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-mono)] antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"
