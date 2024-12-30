@@ -8,7 +8,7 @@ export class ActionError extends Error {}
 export const contactAction = createSafeActionClient({
   handleContactError(error: ActionError) {
     if (error instanceof ActionError) {
-      console.log("error gdfg", error.message);
+      //console.log("error", error.message);
       return error.message;
     }
     return "Oh no, une erreur est survenue.";
